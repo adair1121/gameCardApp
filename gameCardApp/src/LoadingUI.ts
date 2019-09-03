@@ -34,9 +34,8 @@ class LoadingUI extends eui.UILayer implements RES.PromiseTaskReporter {
     private progressPanel:eui.Group;
     private progressMask:eui.Rect
     private static _instance:LoadingUI;
-    private _loadHorse:MovieClip;
     private _w:number;
-    private _total:number = 25.8;
+    private percentTxt:eui.Label;
     public constructor() {
         super();
         this.createView();
@@ -55,55 +54,70 @@ class LoadingUI extends eui.UILayer implements RES.PromiseTaskReporter {
     private textField: eui.Label;
 
     private createView(): void {
+        this.visible = false;
+        let self = this;
+        let timeout = setTimeout(function() {
+            clearTimeout(timeout);
+            self.visible = true;
+        }, 600);
+        let rect:eui.Rect = new eui.Rect();
+        this.addChild(rect);
+        rect.alpha = 0.3;
+        rect.left = 0;
+        rect.right = 0;
+        rect.top = 0;
+        rect.bottom = 0;
 
         this.progressPanel = new eui.Group();
         this.addChild(this.progressPanel);
         this._w = (StageUtils.ins<StageUtils>().getWidth() - 200);
         this.progressPanel.horizontalCenter = 0;
-        this.progressPanel.left = 100;
-        this.progressPanel.right = 100;
-        this.progressPanel.bottom = 80;
+        this.progressPanel.verticalCenter = 0;
 
         this.progressBg = new eui.Image();
         this.progressBg.source = "progress_bg_png";
         this.progressPanel.addChild(this.progressBg);
-        this.progressBg.left = 0;
-        this.progressBg.right = 0;
+        this.progressBg.horizontalCenter = 0;
+        this.progressBg.verticalCenter = 0;
 
         this.progressBar = new eui.Image();
-        this.progressBar.source = "progress_pro_png";
-        this.progressBar.left = 0;
-        this.progressBar.right = 0;
+        this.progressBar.source = "progress_bar_png";
+        this.progressBar.horizontalCenter = 0;
+        this.progressBar.verticalCenter = 0;
         this.progressPanel.addChild(this.progressBar);
 
-        this._loadHorse = new MovieClip();
-        this.progressPanel.addChild(this._loadHorse);
-        this._loadHorse.playFile(`${EFFECT}loading_horse`,-1);
+        
 
-        this.progressMask = new eui.Rect;
-        this.progressMask.height = 37;
-        this.progressMask.width=0;
+        this.progressMask = new eui.Rect();
+        this.progressMask.height = 110;
+        this.progressMask.width = 104;
         this.progressPanel.addChild(this.progressMask);
-        this._loadHorse.y = this.progressMask.y;
-        this._loadHorse.x = this.progressMask.x + this.progressMask.width;
+        this.progressMask.horizontalCenter = 0;
+        this.progressMask.verticalCenter = 0;
+       
 
-        this.progressBar.mask = this.progressMask;
+        // this.progressBar.mask = this.progressMask;
 
         this.textField = new eui.Label();
         this.progressPanel.addChild(this.textField);
         this.textField.fontFamily = `HuaWen KaiTi`
         this.textField.size = 20;
-        this.textField.y = -35;
+        this.textField.bottom = 0;
         this.textField.horizontalCenter = 0;
+
+        this.percentTxt = new eui.Label();
+        this.progressPanel.addChild(this.percentTxt);
+        this.percentTxt.fontFamily = `HuaWen KaiTi`
+        this.percentTxt.size = 20;
+        this.percentTxt.verticalCenter = 0;
+        this.percentTxt.horizontalCenter = 0;
     }
 
     public onProgress(current: number, total: number): void {
-        let cutsize:string = (current/total*this._total).toFixed(1)
-        
-        let w:number = (current/total)*this._w
-        if(w >= this._w){w = this._w,cutsize=this._total.toString()}
-        this.textField.text = `正在加载游戏资源...请稍候(${current}/${total})-(${cutsize}MB/${this._total}MB)`;
-        this.progressMask.width = w;
-        this._loadHorse.x = this.progressMask.width;
+        let h:number = 110 - (current/total)*110;
+        if(h <=0 ){h = 0};
+        this.percentTxt.text = ((current/total)>>0)*100 +"%";
+        this.textField.text = `正在加载游戏资源...请稍候(${current}/${total})`;
+        this.progressMask.height = h;
     }
 }

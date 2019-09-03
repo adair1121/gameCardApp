@@ -102,7 +102,6 @@ class Main extends eui.UILayer {
     protected createGameScene(): void {
         //开发功能测试
 		// egret.localStorage.clear();
-        GameApp.prompt = true;
 		//
         LayerManager.ins<LayerManager>().iniaizlize(this);
         let data = RES.getRes("config_zip");

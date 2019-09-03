@@ -171,7 +171,6 @@ var Main = (function (_super) {
     Main.prototype.createGameScene = function () {
         //开发功能测试
         // egret.localStorage.clear();
-        GameApp.prompt = true;
         //
         LayerManager.ins().iniaizlize(this);
         var data = RES.getRes("config_zip");

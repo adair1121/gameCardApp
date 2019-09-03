@@ -29,27 +29,9 @@
 		"resource/eui_skins/ToggleSwitchSkin.exml",
 		"resource/eui_skins/VScrollBarSkin.exml",
 		"resource/eui_skins/VSliderSkin.exml",
-		"resource/skins/BattleViewSkin.exml",
 		"resource/skins/components/VirtualJoystickSkin.exml",
-		"resource/skins/CollectViewSkin.exml",
-		"resource/skins/components/ItemSkin.exml",
-		"resource/skins/components/MainProgressSkin.exml",
-		"resource/skins/components/RoleHeadComSkin.exml",
-		"resource/skins/components/ShopItemSkin.exml",
-		"resource/skins/components/SoldierRectSkin.exml",
-		"resource/skins/GameLoadingUISkin.exml",
-		"resource/skins/GameMainViewSkin.exml",
-		"resource/skins/LevelSelectViewSkin.exml",
-		"resource/skins/popup/AnswerPopUpSkin.exml",
-		"resource/skins/popup/BagPopUpSkin.exml",
-		"resource/skins/popup/ResultPopUpSkin.exml",
-		"resource/skins/popup/SelectWayPopUpSkin.exml",
-		"resource/skins/popup/TrainingPopUpSkin.exml",
-		"resource/skins/popup/TransTipPopUpSkin.exml",
-		"resource/skins/ShopViewSkin.exml",
 		"resource/skins/StartGameViewSkin.exml",
-		"resource/skins/TipsSkin.exml",
-		"resource/skins/TrainingShowViewSkin.exml"
+		"resource/skins/TipsSkin.exml"
 	],
 	"path": "resource/default.thm.json"
 }

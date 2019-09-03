@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="ShopItemSkin" width="889" height="100" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Image source="shop_item_png" left="0" top="0"/>
-	<e:Image id="icon" source="gold_60_png" x="15" y="10"/>
-	<e:Label id="goldNum" text="60元宝" size="20" left="113" top="21" textColor="0xf2dc9b" fontFamily="HuaWen KaiTi"/>
-	<e:Label id="costNum" text="￥6" size="20" top="21" textColor="0xF2DC9B" right="219" fontFamily="HuaWen KaiTi"/>
-	<e:Label id="desc" text="花费6元可获得60元宝" size="20" left="113" top="59" textColor="0xF2DC9B" anchorOffsetX="0" width="449" fontFamily="HuaWen KaiTi"/>
-	<e:Image id="buyBtn" source="buyBtn_png" verticalCenter="0" right="32"/>
-</e:Skin>

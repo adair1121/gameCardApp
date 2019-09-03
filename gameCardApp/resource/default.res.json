@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "description_json,config_zip,map_json,bg_png,_DS_Store,egret_icon_png,button_down_png,button_up_png,checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,thumb_pb_png,track_pb_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,track_sb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png",
+			"keys": "description_json,config_zip,map_json,egret_icon_png,button_down_png,button_up_png,checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,thumb_pb_png,track_pb_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,track_sb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,bg_jpg,progress_bg_png,progress_bar_png,enter_down_png,enter_up_png",
 			"name": "preload"
 		}
 	],
@@ -20,11 +20,6 @@
 			"url": "map/map.json",
 			"type": "json",
 			"name": "map_json"
-		},
-		{
-			"url": "assets/bg.png",
-			"type": "image",
-			"name": "bg_png"
 		},
 		{
 			"url": "assets/egret_icon.png",
@@ -145,6 +140,31 @@
 			"url": "assets/ToggleSwitch/on.png",
 			"type": "image",
 			"name": "on_png"
+		},
+		{
+			"url": "assets/bg.jpg",
+			"type": "image",
+			"name": "bg_jpg"
+		},
+		{
+			"name": "progress_bg_png",
+			"type": "image",
+			"url": "loading/progress_bg.png"
+		},
+		{
+			"name": "progress_bar_png",
+			"type": "image",
+			"url": "loading/progress_bar.png"
+		},
+		{
+			"name": "enter_down_png",
+			"type": "image",
+			"url": "res/button/enter_down.png"
+		},
+		{
+			"name": "enter_up_png",
+			"type": "image",
+			"url": "res/button/enter_up.png"
 		}
 	]
 }
