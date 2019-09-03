@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="TrainingPopUpSkin" width="1136" height="640" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect left="0" top="0" right="0" bottom="0" alpha="0.3"/>
+	<e:Group id="content" touchChildren="true" touchEnabled="false" touchThrough="true" horizontalCenter="0" verticalCenter="-600" scaleX="0.8" scaleY="0.8">
+		<e:Image anchorOffsetX="0" anchorOffsetY="0" source="common_panel5_png" y="0" x="0"/>
+		<e:Image id="btnClose" source="close_btn_png" x="1025" y="4.72"/>
+		<e:Image source="font_bottom_png" x="390.32" y="367"/>
+		<e:Label id="cost" text="000" x="529.83" y="369" size="20" textColor="0xe8971e" fontFamily="HuaWen KaiTi"/>
+		<e:Image source="gold_icon2_png" x="499.82" y="368"/>
+		<e:Image id="startBtn" source="trainingBtn_png" x="392.5" y="410.67"/>
+	</e:Group>
+</e:Skin>

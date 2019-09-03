@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="ItemSkin" width="96" height="96" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image source="pack_item_png" left="0" top="0"/>
+	<e:Image id="img" anchorOffsetX="0" anchorOffsetY="0" left="0" top="0" right="0" bottom="0"/>
+	<e:Label id="numLab" text="0" x="12.53" y="69.34" size="20" anchorOffsetX="0" width="72.13" textAlign="right" anchorOffsetY="0" height="18.4" verticalAlign="middle" fontFamily="HuaWen KaiTi"/>
+	<e:Label id="itemName" text="木头" size="20" anchorOffsetX="0" width="74.33" textAlign="center" horizontalCenter="0" top="74" visible="false"/>
+</e:Skin>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="GameLoadingUISkin" width="1136" height="640" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect left="0" top="0" right="0" bottom="0" alpha="0.3"/>
+	<e:Group horizontalCenter="0" verticalCenter="28.5" anchorOffsetY="0" height="263">
+		<e:Image source="loading_black_bg_png" x="0" y="0"/>
+		<e:Image id="proBar" source="loading_icon_png" x="0" y="0"/>
+		<e:Rect id="barMask" width="401.33" height="0" x="0" y="206.67" anchorOffsetX="0" anchorOffsetY="0" scaleY="-1"/>
+		<e:Label id="progressLab" text="90%请稍候..." horizontalCenter="0.5" bottom="12" fontFamily="HuaWen KaiTi"/>
+	</e:Group>
+</e:Skin>

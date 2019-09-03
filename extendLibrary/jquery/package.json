@@ -1,0 +1,5 @@
+{
+	"name": "jquery",
+	"compilerVersion": "5.2.9",
+	"typings": "libs/jquery.d.ts"
+}

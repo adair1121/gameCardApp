@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="TrainingShowViewSkin" width="960" height="640" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Group id="content" left="980" top="0" bottom="0" touchChildren="true" touchEnabled="false" touchThrough="true" right="-980">
+		<e:Image anchorOffsetX="0" source="trainingBg_png" left="0" top="0" right="0" bottom="0"/>
+		<e:Group right="38" top="28">
+			<e:Image source="training_info_bg_png" x="0" y="0"/>
+			<e:Label id="exp" text="本次练兵总经验:0" textAlign="right" size="16" textColor="0xefbc5d" horizontalCenter="0" top="13" fontFamily="HuaWen KaiTi"/>
+			<e:Group horizontalCenter="0" bottom="12">
+				<e:Label text="倒计时:" x="0" y="0" size="16" textColor="0xf4dbb5" fontFamily="HuaWen KaiTi"/>
+				<e:Label id="remainTimeLab" text="99:99" x="55" y="0" size="16" textColor="0xf4dbb5" fontFamily="HuaWen KaiTi"/>
+			</e:Group>
+		</e:Group>
+		<e:Image id="returnBtn" source="return_arrow_png" right="38" bottom="29"/>
+	</e:Group>
+</e:Skin>

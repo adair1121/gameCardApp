@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="MainProgressSkin" width="960" height="20" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Group id="progressGroup" left="0" right="0" bottom="0">
+		<e:Image source="main_bar_bg_png" left="0" right="0" bottom="2"/>
+		<e:Image id="exp_bar" source="main_exp_png" x="0" y="1"/>
+		<e:Label id="progressLab" text="0/100" size="12" horizontalCenter="0" bottom="0" fontFamily="HuaWen KaiTi"/>
+	</e:Group>
+</e:Skin>

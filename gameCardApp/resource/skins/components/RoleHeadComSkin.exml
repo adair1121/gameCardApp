@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="RoleHeadComSkin" width="259" height="105" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Group id="content" x="0" y="0" touchChildren="false" touchEnabled="true" touchThrough="false" scaleX="0.8" scaleY="0.8">
+		<e:Image source="role_head_com_png" x="0" y="0"/>
+		<e:Image id="headIcon" x="9.06" y="10.9" anchorOffsetX="0" anchorOffsetY="0" source="headicon_noraml_png"/>
+		<e:Label id="goldNum" text="0" x="140.06" y="5" size="14" anchorOffsetX="0" width="124" textColor="0xedcd0e"/>
+		<e:Label id="roleName2" text="刘备 字 玄德" x="143.06" y="94" size="18" anchorOffsetX="0" width="116.5" maxChars="7" textColor="0xd89745" fontFamily="HuaWen KaiTi"/>
+		<e:Image id="hpBar" source="role_hp_bar_png" x="108" y="28"/>
+		<e:Rect id="hpMask" width="212.17" height="20" x="108" y="26" anchorOffsetX="0"/>
+		<e:Label id="hpLab" text="0/100" size="15" anchorOffsetX="0" width="174" textAlign="center" x="124" y="29" fontFamily="HuaWen KaiTi"/>
+		<e:Image id="levelName" source="title_job_0_png" x="26.06" y="113"/>
+		<e:Image source="gold_icon2_png" x="111.06" y="1"/>
+		<e:Image id="expBar" source="role_exp_bar_png" x="67.56" y="55.5" anchorOffsetX="0" width="214"/>
+		<e:Rect id="expMask" width="169.67" height="20" x="111.83" y="53.5" anchorOffsetX="0"/>
+		<e:Label id="expLab" text="0/100" size="15" anchorOffsetX="0" width="168.67" textAlign="center" x="114" y="57" fontFamily="HuaWen KaiTi"/>
+	</e:Group>
+</e:Skin>

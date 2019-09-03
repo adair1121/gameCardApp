@@ -1,0 +1,5 @@
+{
+	"name": "jszip",
+	"compilerVersion": "5.2.9",
+	"typings": "libs/jszip.d.ts"
+}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="BagPopUpSkin" width="1136" height="640" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect left="0" top="0" right="0" bottom="0" alpha="0.3"/>
+	<e:Group id="content" touchChildren="true" touchEnabled="false" touchThrough="true" horizontalCenter="0" width="1088" verticalCenter="-600" height="502" scaleX="0.8" scaleY="0.8">
+		<e:Image source="packBg_png" left="0" top="0" right="0" bottom="0"/>
+		<e:Scroller id="scroller" anchorOffsetX="0" anchorOffsetY="0" left="128" top="107" right="124" bottom="161">
+			<e:List id="list">
+				<e:layout>
+					<e:HorizontalLayout horizontalAlign="left" verticalAlign="top"/>
+				</e:layout>
+			</e:List>
+		</e:Scroller>
+		<e:Image id="btnClose" source="close_btn_png" right="0" top="0"/>
+		<e:Image id="sellBtn" source="sellBtn_png" horizontalCenter="0.5" bottom="70"/>
+	</e:Group>
+</e:Skin>

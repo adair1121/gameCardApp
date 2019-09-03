@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="SelectWayPopUpSkin" width="1136" height="640" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect left="0" top="0" right="0" bottom="0" alpha="0.3"/>
+	<e:Group id="content" verticalCenter="-650" horizontalCenter="0" width="1028" height="587" scaleX="0.8" scaleY="0.8">
+		<e:Image source="common_panel3_png" anchorOffsetX="0" anchorOffsetY="0" left="0" top="0" right="0" bottom="0"/>
+		<e:Image id="btnClose" source="close_btn_png" right="0" top="85"/>
+		<e:Image source="role_normal_png" left="38" top="135" right="707" bottom="43"/>
+		<e:Image source="role_info_bg_png" left="65" top="151" right="739"/>
+		<e:Label id="job" text="平民" size="20" textColor="0xefbb3e" anchorOffsetX="0" textAlign="center" verticalAlign="middle" fontFamily="HuaWen KaiTi" left="104" top="159" right="781"/>
+		<e:Image source="font_bottom_png" left="44" top="443"/>
+		<e:Image source="gold_icon2_png" left="137" top="444"/>
+		<e:Label id="cost1" text="100" size="20" textColor="0xd8b52f" fontFamily="HuaWen KaiTi" left="163" top="445"/>
+		<e:Image id="way1" source="btn_prompt_png" left="107" top="482"/>
+		<e:Image id="light" source="light_png" anchorOffsetX="92" anchorOffsetY="86.67" x="463" y="268.67"/>
+		<e:Image id="job_1" source="job_1_png" anchorOffsetX="52" anchorOffsetY="54.67" x="463" y="268.67"/>
+		<e:Image id="job_2" source="job_2_png" anchorOffsetX="52" anchorOffsetY="56" x="631" y="269"/>
+		<e:Image id="job_3" source="job_3_png" anchorOffsetX="52" anchorOffsetY="56" x="797" y="270"/>
+		<e:Image id="job_4" source="job_4_png" anchorOffsetX="52" anchorOffsetY="57.33" x="463" y="437.33"/>
+		<e:Image id="job_5" source="job_5_png" anchorOffsetX="52" anchorOffsetY="56" x="631" y="437"/>
+		<e:Image id="job_6" source="job_6_png" anchorOffsetX="52" anchorOffsetY="54.67" x="797" y="436.67"/>
+	</e:Group>
+</e:Skin>
