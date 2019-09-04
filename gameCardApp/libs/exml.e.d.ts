@@ -52,6 +52,10 @@ declare module skins{
 }
 declare class VirtualJoystickSkin extends eui.Skin{
 }
+declare class GameMainViewSkin extends eui.Skin{
+}
+declare class StoryPopUpSkin extends eui.Skin{
+}
 declare class StartGameViewSkin extends eui.Skin{
 }
 declare class TipsSkin extends eui.Skin{

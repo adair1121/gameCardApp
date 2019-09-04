@@ -9,4 +9,5 @@
 			</e:Skin>
 		</e:skinName>
 	</e:Button>
+	<e:Image id="storyBtn" source="storyBtn_png" right="39" top="28"/>
 </e:Skin>

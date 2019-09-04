@@ -60,7 +60,7 @@ var LoadingUI = (function (_super) {
         var timeout = setTimeout(function () {
             clearTimeout(timeout);
             self.visible = true;
-        }, 600);
+        }, 300);
         var rect = new eui.Rect();
         this.addChild(rect);
         rect.alpha = 0.3;
@@ -87,9 +87,12 @@ var LoadingUI = (function (_super) {
         this.progressMask.height = 110;
         this.progressMask.width = 104;
         this.progressPanel.addChild(this.progressMask);
-        this.progressMask.horizontalCenter = 0;
-        this.progressMask.verticalCenter = 0;
-        // this.progressBar.mask = this.progressMask;
+        this.progressMask.x = (399 >> 1) - (this.progressMask.width >> 1);
+        this.progressMask.bottom = (399 >> 1) - (110 >> 1);
+        // this.progressMask.height = 0
+        // this.progressMask.horizontalCenter = 0;
+        // this.progressMask.verticalCenter = 0;
+        this.progressBar.mask = this.progressMask;
         this.textField = new eui.Label();
         this.progressPanel.addChild(this.textField);
         this.textField.fontFamily = "HuaWen KaiTi";
@@ -104,12 +107,12 @@ var LoadingUI = (function (_super) {
         this.percentTxt.horizontalCenter = 0;
     };
     LoadingUI.prototype.onProgress = function (current, total) {
-        var h = 110 - (current / total) * 110;
+        var h = (current / total) * 110;
         if (h <= 0) {
             h = 0;
         }
         ;
-        this.percentTxt.text = ((current / total) >> 0) * 100 + "%";
+        this.percentTxt.text = ((current / total * 100) >> 0) + "%";
         this.textField.text = "\u6B63\u5728\u52A0\u8F7D\u6E38\u620F\u8D44\u6E90...\u8BF7\u7A0D\u5019(" + current + "/" + total + ")";
         this.progressMask.height = h;
     };

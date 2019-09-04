@@ -59,7 +59,7 @@ class LoadingUI extends eui.UILayer implements RES.PromiseTaskReporter {
         let timeout = setTimeout(function() {
             clearTimeout(timeout);
             self.visible = true;
-        }, 600);
+        }, 300);
         let rect:eui.Rect = new eui.Rect();
         this.addChild(rect);
         rect.alpha = 0.3;
@@ -92,11 +92,14 @@ class LoadingUI extends eui.UILayer implements RES.PromiseTaskReporter {
         this.progressMask.height = 110;
         this.progressMask.width = 104;
         this.progressPanel.addChild(this.progressMask);
-        this.progressMask.horizontalCenter = 0;
-        this.progressMask.verticalCenter = 0;
+        this.progressMask.x = (399 >>1) - (this.progressMask.width>>1);
+        this.progressMask.bottom = (399 >>1) - (110>>1);
+        // this.progressMask.height = 0
+        // this.progressMask.horizontalCenter = 0;
+        // this.progressMask.verticalCenter = 0;
        
 
-        // this.progressBar.mask = this.progressMask;
+        this.progressBar.mask = this.progressMask;
 
         this.textField = new eui.Label();
         this.progressPanel.addChild(this.textField);
@@ -114,9 +117,9 @@ class LoadingUI extends eui.UILayer implements RES.PromiseTaskReporter {
     }
 
     public onProgress(current: number, total: number): void {
-        let h:number = 110 - (current/total)*110;
+        let h:number =  (current/total)*110;
         if(h <=0 ){h = 0};
-        this.percentTxt.text = ((current/total)>>0)*100 +"%";
+        this.percentTxt.text = ((current/total*100)>>0) +"%";
         this.textField.text = `正在加载游戏资源...请稍候(${current}/${total})`;
         this.progressMask.height = h;
     }

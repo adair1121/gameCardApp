@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="StoryPopUpSkin" width="1136" height="640" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect left="0" top="0" right="0" bottom="0" alpha="0.3"/>
+	<e:Group id="content" touchChildren="true" touchEnabled="false" touchThrough="true" scaleX="0.8" scaleY="0.8" horizontalCenter="0" verticalCenter="-600">
+		<e:Image source="story_bg_png" x="0" y="0" scale9Grid="134,80,805,484"/>
+		<e:Image id="font" source="story_font_png" right="228" top="63"/>
+		<e:Image id="returnBtn" source="common_close_png" x="1017.56" y="41.79"/>
+		<e:Rect id="fontMask" width="733.94" height="549.61" anchorOffsetX="735" anchorOffsetY="0" right="209" top="42"/>
+	</e:Group>
+</e:Skin>
