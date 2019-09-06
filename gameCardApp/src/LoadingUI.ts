@@ -103,14 +103,14 @@ class LoadingUI extends eui.UILayer implements RES.PromiseTaskReporter {
 
         this.textField = new eui.Label();
         this.progressPanel.addChild(this.textField);
-        this.textField.fontFamily = `HuaWen KaiTi`
+        this.textField.fontFamily = `yt`
         this.textField.size = 20;
         this.textField.bottom = 0;
         this.textField.horizontalCenter = 0;
 
         this.percentTxt = new eui.Label();
         this.progressPanel.addChild(this.percentTxt);
-        this.percentTxt.fontFamily = `HuaWen KaiTi`
+        this.percentTxt.fontFamily = `yt`
         this.percentTxt.size = 20;
         this.percentTxt.verticalCenter = 0;
         this.percentTxt.horizontalCenter = 0;
