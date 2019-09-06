@@ -5,7 +5,11 @@ class GameMainView extends BaseEuiView{
 		super();
 	}
 	public open(...param):void{
-		console.log(111)
+		
+	}
+	public initialize():void{
+		//初始化
+		console.log("game---initialize")
 	}
 	public close():void{
 

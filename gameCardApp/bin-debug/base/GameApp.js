@@ -21,6 +21,7 @@ var GameApp = (function (_super) {
         GlobalConfig.parserData();
         GameMap.init(RES.getRes("map_json"));
         LoadingUI.inst().hide();
+        ViewManager.ins().open(GameMainView);
         ViewManager.ins().open(StartGameView);
     };
     GameApp.prototype.onDataCallBack = function (value) {

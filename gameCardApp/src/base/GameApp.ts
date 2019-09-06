@@ -16,6 +16,7 @@ class GameApp extends BaseClass {
 		GlobalConfig.parserData();
 		GameMap.init(RES.getRes("map_json"));
 		LoadingUI.inst().hide();
+		ViewManager.ins<ViewManager>().open(GameMainView);
 		ViewManager.ins<ViewManager>().open(StartGameView);
 	}
 	private onDataCallBack(value:string):void{

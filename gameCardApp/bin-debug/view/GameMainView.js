@@ -18,7 +18,10 @@ var GameMainView = (function (_super) {
         for (var _i = 0; _i < arguments.length; _i++) {
             param[_i] = arguments[_i];
         }
-        console.log(111);
+    };
+    GameMainView.prototype.initialize = function () {
+        //初始化
+        console.log("game---initialize");
     };
     GameMainView.prototype.close = function () {
     };
