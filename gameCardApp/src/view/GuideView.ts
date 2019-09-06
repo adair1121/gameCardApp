@@ -9,6 +9,7 @@ class GuideView extends BaseEuiView{
 	/**id值 引导的对象 宽 高 */
 	private data:{ "id": string, "comObj": any, width: number, height: number ,offsetX?:number,offsetY?:number};
 	private rectData: Array<number>;
+	private _handMc:MovieClip
 	public constructor() {
 
 		super();
@@ -16,6 +17,22 @@ class GuideView extends BaseEuiView{
 	public open(...param):void{
 		// this.data = param[0].data 
 		// this.setRect();
+		this._handMc = new MovieClip();
+		this.addChild(this._handMc);
+		this._handMc.touchEnabled = false;
+		this.rect.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onGuideTap,this);
+	}
+	private onGuideTap(evt:egret.TouchEvent):void{
+		let guideId:string = this.data.id;
+		let guideCfgs:any  = GuideCfg.guidecfg;
+		let itemCfg:any = guideCfgs[guideId];
+
+		let event:StartGameEvent = new StartGameEvent(itemCfg.event,itemCfg.param);
+		StageUtils.ins<StageUtils>().getStage().dispatchEvent(event);
+
+		if(!itemCfg.next){
+			ViewManager.ins<ViewManager>().close(GuideView);
+		}
 	}
 	//执行下一步
 	public nextStep(data:{ "id": string, "comObj": any, width: number, height: number ,offsetX?:number,offsetY?:number}):void{
@@ -23,16 +40,21 @@ class GuideView extends BaseEuiView{
 		this.setRect();
 	}
 	private setRect(): void {
-		let point: egret.Point = this.data.comObj.parent.localToGlobal(this.data.comObj.x, this.data.comObj.y);
-		if((this.data.offsetX==40)&&(this.data.offsetY==50))
-		{
-			this.data.offsetX=0;
-			this.data.offsetY=0;
-			this.rectData = [point.x + (this.data.offsetX||0), point.y + (this.data.offsetY||0), this.data.width-(this.data.offsetX||0), this.data.height];
-		}else
-		{
-			this.rectData = [point.x + (this.data.offsetX||0), point.y + (this.data.offsetY||0), this.data.width, this.data.height];
+		if(this.data.comObj instanceof egret.DisplayObject){
+			let point: egret.Point = this.data.comObj.parent.localToGlobal(this.data.comObj.x, this.data.comObj.y);
+			if((this.data.offsetX==40)&&(this.data.offsetY==50))
+			{
+				this.data.offsetX=0;
+				this.data.offsetY=0;
+				this.rectData = [point.x + (this.data.offsetX||0), point.y + (this.data.offsetY||0), this.data.width-(this.data.offsetX||0), this.data.height];
+			}else
+			{
+				this.rectData = [point.x + (this.data.offsetX||0), point.y + (this.data.offsetY||0), this.data.width, this.data.height];
+			}
+		}else{
+			this.rectData = [this.data.comObj.x,this.data.comObj.y, this.data.width, this.data.height];
 		}
+		
 		
 		this.rect.x = this.rectData[0];
 		this.rect.y = this.rectData[1];
@@ -71,10 +93,14 @@ class GuideView extends BaseEuiView{
 	}
 	//设置焦点箭头
 	private setArrow(): void {
-			
+		this._handMc.playFile(`${EFFECT}fingerClick`,-1);
+		this._handMc.x = this.rect.x + (this.rect.width);
+		this._handMc.y = this.rect.y + (this.rect.height);
 	}
 	public close():void{
-
+		this.removeChildren();
+		this._handMc = null;
+		this.rect.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.onGuideTap,this);
 	}
 }
 ViewManager.ins<ViewManager>().reg(GuideView,LayerManager.UI_Pop);

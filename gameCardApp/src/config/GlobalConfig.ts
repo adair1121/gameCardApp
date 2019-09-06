@@ -56,8 +56,7 @@ class GlobalConfig {
 			}
 		}
 	}
-	static QuestionCfg:QuestionCfg[];
 	private static keys = {
-		"QuestionCfg": 1
+		// "QuestionCfg": 1
 	};
 }

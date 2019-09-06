@@ -6,6 +6,10 @@ var LocalStorageEnum = (function () {
     }
     /**first enter */
     LocalStorageEnum.ENTER_FIRST = "enter_first";
+    /**是否已经过了新手引导 */
+    LocalStorageEnum.IS_PASS_GUIDE = "is_pass_guide";
+    /**当前关卡 */
+    LocalStorageEnum.LEVEL = "level";
     return LocalStorageEnum;
 }());
 __reflect(LocalStorageEnum.prototype, "LocalStorageEnum");

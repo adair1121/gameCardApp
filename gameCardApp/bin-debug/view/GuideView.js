@@ -20,6 +20,20 @@ var GuideView = (function (_super) {
         }
         // this.data = param[0].data 
         // this.setRect();
+        this._handMc = new MovieClip();
+        this.addChild(this._handMc);
+        this._handMc.touchEnabled = false;
+        this.rect.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGuideTap, this);
+    };
+    GuideView.prototype.onGuideTap = function (evt) {
+        var guideId = this.data.id;
+        var guideCfgs = GuideCfg.guidecfg;
+        var itemCfg = guideCfgs[guideId];
+        var event = new StartGameEvent(itemCfg.event, itemCfg.param);
+        StageUtils.ins().getStage().dispatchEvent(event);
+        if (!itemCfg.next) {
+            ViewManager.ins().close(GuideView);
+        }
     };
     //执行下一步
     GuideView.prototype.nextStep = function (data) {
@@ -27,14 +41,19 @@ var GuideView = (function (_super) {
         this.setRect();
     };
     GuideView.prototype.setRect = function () {
-        var point = this.data.comObj.parent.localToGlobal(this.data.comObj.x, this.data.comObj.y);
-        if ((this.data.offsetX == 40) && (this.data.offsetY == 50)) {
-            this.data.offsetX = 0;
-            this.data.offsetY = 0;
-            this.rectData = [point.x + (this.data.offsetX || 0), point.y + (this.data.offsetY || 0), this.data.width - (this.data.offsetX || 0), this.data.height];
+        if (this.data.comObj instanceof egret.DisplayObject) {
+            var point = this.data.comObj.parent.localToGlobal(this.data.comObj.x, this.data.comObj.y);
+            if ((this.data.offsetX == 40) && (this.data.offsetY == 50)) {
+                this.data.offsetX = 0;
+                this.data.offsetY = 0;
+                this.rectData = [point.x + (this.data.offsetX || 0), point.y + (this.data.offsetY || 0), this.data.width - (this.data.offsetX || 0), this.data.height];
+            }
+            else {
+                this.rectData = [point.x + (this.data.offsetX || 0), point.y + (this.data.offsetY || 0), this.data.width, this.data.height];
+            }
         }
         else {
-            this.rectData = [point.x + (this.data.offsetX || 0), point.y + (this.data.offsetY || 0), this.data.width, this.data.height];
+            this.rectData = [this.data.comObj.x, this.data.comObj.y, this.data.width, this.data.height];
         }
         this.rect.x = this.rectData[0];
         this.rect.y = this.rectData[1];
@@ -68,8 +87,14 @@ var GuideView = (function (_super) {
     };
     //设置焦点箭头
     GuideView.prototype.setArrow = function () {
+        this._handMc.playFile(EFFECT + "fingerClick", -1);
+        this._handMc.x = this.rect.x + (this.rect.width);
+        this._handMc.y = this.rect.y + (this.rect.height);
     };
     GuideView.prototype.close = function () {
+        this.removeChildren();
+        this._handMc = null;
+        this.rect.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onGuideTap, this);
     };
     return GuideView;
 }(BaseEuiView));

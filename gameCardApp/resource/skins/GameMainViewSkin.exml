@@ -12,7 +12,7 @@
 		<e:Label text="11111" x="48.55" y="4" anchorOffsetY="0" height="36.06" anchorOffsetX="0" width="136.12" textAlign="center" verticalAlign="middle" size="20"/>
 		<e:Label text="11111" x="292.24" y="6.42" anchorOffsetY="0" height="36.06" anchorOffsetX="0" width="134.61" textAlign="center" verticalAlign="middle" size="20"/>
 	</e:Group>
-	<e:Image source="main_setting_btn_png" right="21" top="10"/>
+	<e:Image id="settingBtn" source="main_setting_btn_png" right="21" top="10"/>
 	<e:Group touchChildren="false" touchEnabled="false" touchThrough="false" right="108" top="14">
 		<e:Image source="main_font_count_png" x="144" y="0"/>
 		<e:Label id="countNumLab" text="5/6" x="209.67" y="4" size="20" anchorOffsetX="0" width="52"/>
@@ -27,4 +27,11 @@
 	</e:Group>
 	<e:Image id="upgradeBtn" source="main_upgrade_btn_png" right="17" top="62"/>
 	<e:Image source="main_skill_bg_png" anchorOffsetY="0" height="447" scale9Grid="44,66,44,399" right="-13" verticalCenter="37.5"/>
+	<e:Scroller id="scroller" width="87.88" height="384" anchorOffsetX="0" anchorOffsetY="0" right="4" verticalCenter="37" scrollPolicyH="off">
+		<e:List id="list" anchorOffsetX="0" width="89.4">
+			<e:layout>
+				<e:VerticalLayout horizontalAlign="center" verticalAlign="top"/>
+			</e:layout>
+		</e:List>
+	</e:Scroller>
 </e:Skin>

@@ -25,11 +25,6 @@ var StartGameView = (function (_super) {
         }
         this.addTouchEvent(this.storyBtn, this.onLookStory, true);
         this.enterBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onEnter, this);
-        // ViewManager.ins<ViewManager>().open(GuideView);
-        // let guideView:GuideView = ViewManager.ins<ViewManager>().getView(GuideView) as GuideView;
-        // let offestX:number = (StageUtils.ins<StageUtils>().getWidth()>>1) - (this.enterBtn.width>>1);
-        // let offestY:number = 467/640*StageUtils.ins<StageUtils>().getHeight();
-        // guideView.nextStep({id:"1_1",comObj:this.enterBtn,width:256,height:65,offsetX:offestX,offsetY:offestY}) ;
         var vertexSrc = "attribute vec2 aVertexPosition;\n" +
             "attribute vec2 aTextureCoord;\n" +
             "attribute vec2 aColor;\n" +

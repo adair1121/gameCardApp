@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="SkillItemSkin" width="71" height="72" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Group id="itemGroup" x="0" y="0" touchChildren="false" touchEnabled="true" touchThrough="false" scaleX="0.8" scaleY="0.8">
+		<e:Image source="main_item_bg_png" x="0" y="0"/>
+		<e:Image id="skillIcon" source="skill_101_png" x="15" y="15"/>
+		<e:Image id="skillTitle" source="skill_101_title_png" x="28.5" y="58"/>
+	</e:Group>
+</e:Skin>

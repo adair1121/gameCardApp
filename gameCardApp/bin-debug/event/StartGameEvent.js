@@ -22,6 +22,8 @@ var StartGameEvent = (function (_super) {
     StartGameEvent.VJ_END = "vjEnd";
     StartGameEvent.GAMELOADINGEND = "gameloadingend";
     StartGameEvent.REMOVE_ITEM = "remove_item";
+    StartGameEvent.CLICK_GUIDE_SKILL = "click_guide_skill";
+    StartGameEvent.USE_GUIDE_SKILL = "use_guide_skill";
     return StartGameEvent;
 }(egret.Event));
 __reflect(StartGameEvent.prototype, "StartGameEvent");

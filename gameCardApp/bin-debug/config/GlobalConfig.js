@@ -61,9 +61,7 @@ var GlobalConfig = (function () {
             }
         }
     };
-    GlobalConfig.keys = {
-        "QuestionCfg": 1
-    };
+    GlobalConfig.keys = {};
     return GlobalConfig;
 }());
 __reflect(GlobalConfig.prototype, "GlobalConfig");
