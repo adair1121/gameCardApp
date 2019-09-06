@@ -28,5 +28,12 @@
       "name": "jszip",
       "path": "../extendLibrary/jszipEgret"
     }
-  ]
+  ],
+  "targets": {
+    "ios": {
+      "appname": "dragon",
+      "packagename": "adair",
+      "hybrid": false
+    }
+  }
 }

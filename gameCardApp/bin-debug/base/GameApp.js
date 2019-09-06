@@ -31,10 +31,49 @@ var GameApp = (function (_super) {
             UserTips.ins().showTips("\u8D2D\u4E70\u6210\u529F,\u83B7\u5F97\u5143\u5B9Dx" + value);
         }
     };
+    GameApp.prototype.refreshTimespan = function () {
+        var refreshTimestr = egret.localStorage.getItem(LocalStorageEnum.BOX_REFRESH_TIMESPAN);
+        if (refreshTimestr) {
+            var nowTime = new Date().getTime();
+            if (nowTime >= parseInt(refreshTimestr)) {
+                //刷新
+                egret.localStorage.setItem(LocalStorageEnum.BOX_REWARD_GET, "0");
+                egret.localStorage.setItem(LocalStorageEnum.BOX_REFRESH_TIMESPAN, "0");
+                egret.localStorage.setItem(LocalStorageEnum.BOX_REFRESH_TIMESPAN, GlobalFun.getBoxRfreshTimeSpan().toString());
+            }
+        }
+        else {
+            egret.localStorage.setItem(LocalStorageEnum.BOX_REFRESH_TIMESPAN, GlobalFun.getBoxRfreshTimeSpan().toString());
+        }
+    };
+    Object.defineProperty(GameApp.prototype, "gold", {
+        get: function () {
+            return GameApp.roleGold;
+        },
+        set: function (value) {
+            GameApp.roleGold = value;
+            egret.localStorage.setItem(LocalStorageEnum.ROLE_GOLD, value.toString());
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(GameApp.prototype, "gem", {
+        get: function () {
+            return GameApp.roleGem;
+        },
+        set: function (value) {
+            GameApp.roleGem = value;
+            egret.localStorage.setItem(LocalStorageEnum.ROLE_GEM, value.toString());
+        },
+        enumerable: true,
+        configurable: true
+    });
     GameApp.prototype.postPerLoadProgress = function (itemsLoaded, itemsTotal) {
         return [itemsLoaded, itemsTotal];
     };
     GameApp.phurseState = false;
+    GameApp.roleGold = 0;
+    GameApp.roleGem = 0;
     return GameApp;
 }(BaseClass));
 __reflect(GameApp.prototype, "GameApp");

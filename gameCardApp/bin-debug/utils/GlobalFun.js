@@ -87,6 +87,12 @@ var GlobalFun = (function () {
     GlobalFun.payCallBack = function (_cb) {
         GameApp.pay_cbDdata = _cb;
     };
+    /**获取宝箱刷新时间戳 */
+    GlobalFun.getBoxRfreshTimeSpan = function () {
+        var startTp = new Date(new Date(new Date().toLocaleDateString()).getTime() + 24 * 60 * 60 * 1000 - 1).getTime();
+        var time = 5 * 60 * 60 * 1000;
+        return startTp + time;
+    };
     GlobalFun.count = 0; //计时器次数
     GlobalFun.timer = new egret.Timer(1000);
     return GlobalFun;

@@ -94,5 +94,11 @@ class GlobalFun {
     public static payCallBack(_cb):void{
         GameApp.pay_cbDdata = _cb;
     }
+    /**获取宝箱刷新时间戳 */
+    public static getBoxRfreshTimeSpan():number{
+        let startTp:number = new Date(new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1).getTime();
+        let time:number = 5*60*60*1000;
+        return startTp + time;
+    }
 
 }

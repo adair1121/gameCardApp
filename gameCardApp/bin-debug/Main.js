@@ -169,9 +169,7 @@ var Main = (function (_super) {
      * Create scene interface
      */
     Main.prototype.createGameScene = function () {
-        //开发功能测试
-        // egret.localStorage.clear();
-        //
+        GameApp.ins().refreshTimespan();
         LayerManager.ins().iniaizlize(this);
         var data = RES.getRes("config_zip");
         JSZip.loadAsync(data).then(function (zipdata) {

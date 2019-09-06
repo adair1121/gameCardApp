@@ -11,13 +11,23 @@ r.prototype = e.prototype, t.prototype = new r();
 var GameMainView = (function (_super) {
     __extends(GameMainView, _super);
     function GameMainView() {
-        return _super.call(this) || this;
+        var _this = _super.call(this) || this;
+        //十分钟 时间戳  ms
+        _this.awardBoxGetTime = 10 * 60 * 1000;
+        _this.totalGetCount = 3;
+        //宝箱领取金币
+        _this.goldGetNum = 50;
+        return _this;
     }
     GameMainView.prototype.open = function () {
         var param = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             param[_i] = arguments[_i];
         }
+        /**
+         * 测试 --
+         */
+        ///
         this.addTouchEvent(this.settingBtn, this.onSetHandler, true);
         this.arraycollect = new eui.ArrayCollection();
         this.list.itemRenderer = SkilItem;
@@ -28,6 +38,22 @@ var GameMainView = (function (_super) {
         this.list.addEventListener(eui.ItemTapEvent.ITEM_TAP, this.onItemTap, this);
         StageUtils.ins().getStage().addEventListener(StartGameEvent.CLICK_GUIDE_SKILL, this.onClickGuideSkill, this);
         StageUtils.ins().getStage().addEventListener(StartGameEvent.USE_GUIDE_SKILL, this.onUseGuideSkill, this);
+        this.awardBox.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onRewardGet, this);
+        this.timer = new egret.Timer(1000);
+        this.timer.addEventListener(egret.TimerEvent.TIMER, this.onTimer, this);
+        this.refreshRewardBoxState();
+        var boo = this.changeTime();
+        if (boo) {
+            this.timer.start();
+        }
+        this.goldWatcher = eui.Binding.bindHandler(GameApp, ["roleGold"], this.roleGoldChange, this);
+        this.gemWatcher = eui.Binding.bindHandler(GameApp, ["roleGem"], this.roleGemChange, this);
+    };
+    GameMainView.prototype.roleGoldChange = function (value) {
+        this.goldLab.text = value.toString();
+    };
+    GameMainView.prototype.roleGemChange = function (value) {
+        this.gemLab.text = value.toString();
     };
     /**点击了引导技能 */
     GameMainView.prototype.onClickGuideSkill = function (evt) {
@@ -40,6 +66,68 @@ var GameMainView = (function (_super) {
     /**点击使用了技能-- 神将 */
     GameMainView.prototype.onUseGuideSkill = function (evt) {
         console.log("使用了技能-----" + evt.data.skillId + "----神将召唤");
+    };
+    GameMainView.prototype.onRewardGet = function (evt) {
+        var getcountstr = egret.localStorage.getItem(LocalStorageEnum.BOX_REWARD_GET);
+        var boxTimestr = egret.localStorage.getItem(LocalStorageEnum.BOX_REWARD_TIMESPAN);
+        var nowTime = new Date().getTime();
+        if (!getcountstr || (getcountstr && getcountstr == "0") || (boxTimestr && (nowTime - parseInt(boxTimestr)) > this.awardBoxGetTime)) {
+            //第一次进入 。第二天重置 。现在的时间-创建时间 〉 10分钟 。可以领取
+            //增加金币数量
+            GameApp.ins().gold += this.goldGetNum;
+            //刷新新的宝箱倒计时时间戳
+            var countStr = egret.localStorage.getItem(LocalStorageEnum.BOX_REWARD_GET);
+            egret.localStorage.setItem(LocalStorageEnum.BOX_REWARD_GET, (parseInt(countStr) + 1).toString());
+            egret.localStorage.setItem(LocalStorageEnum.BOX_REWARD_TIMESPAN, new Date().getTime().toString());
+            this.refreshRewardBoxState(1);
+        }
+        else {
+            UserTips.ins().showTips("未达领取时间");
+        }
+    };
+    /**刷新宝箱盒子状态 */
+    GameMainView.prototype.refreshRewardBoxState = function (num) {
+        if (num === void 0) { num = 0; }
+        GameApp.ins().refreshTimespan();
+        var countstr = egret.localStorage.getItem(LocalStorageEnum.BOX_REWARD_GET);
+        if (countstr) {
+            var count = parseInt(countstr) + num;
+            this.awardBox.visible = !(count >= this.totalGetCount);
+            if (this.awardBox.visible == false) {
+                //说明当前次数已经使用完了
+                this.timer.stop();
+            }
+            else {
+                if (num) {
+                    //当前有加的值 而且awardBox.visible = true 
+                    this.timer.start();
+                }
+            }
+        }
+        else {
+            egret.localStorage.setItem(LocalStorageEnum.BOX_REWARD_GET, "0");
+            this.awardBox.visible = true;
+            this.boxLab.text = "领取";
+        }
+    };
+    GameMainView.prototype.changeTime = function () {
+        //刷新界面的相关显示
+        var boxTimestr = egret.localStorage.getItem(LocalStorageEnum.BOX_REWARD_TIMESPAN);
+        var nowTime = new Date().getTime();
+        var offValue = (nowTime - parseInt(boxTimestr));
+        if (!boxTimestr || (boxTimestr && offValue >= this.awardBoxGetTime)) {
+            //当前宝箱已经领取时间已超 可以领取
+            this.timer.stop();
+            this.boxLab.text = "领取";
+            return false;
+        }
+        else {
+            this.boxLab.text = DateUtils.getFormatBySecond((this.awardBoxGetTime - offValue) / 1000, DateUtils.TIME_FORMAT_3);
+            return true;
+        }
+    };
+    GameMainView.prototype.onTimer = function () {
+        this.changeTime();
     };
     GameMainView.prototype.onSetHandler = function () {
     };
@@ -92,6 +180,14 @@ var GameMainView = (function (_super) {
         this.list.removeEventListener(eui.ItemTapEvent.ITEM_TAP, this.onItemTap, this);
         StageUtils.ins().getStage().removeEventListener(StartGameEvent.CLICK_GUIDE_SKILL, this.onClickGuideSkill, this);
         StageUtils.ins().getStage().removeEventListener(StartGameEvent.USE_GUIDE_SKILL, this.onUseGuideSkill, this);
+        this.awardBox.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onRewardGet, this);
+        this.timer.removeEventListener(egret.TimerEvent.TIMER, this.onTimer, this);
+        if (this.goldWatcher) {
+            this.goldWatcher.unwatch();
+        }
+        if (this.gemWatcher) {
+            this.gemWatcher.unwatch();
+        }
     };
     return GameMainView;
 }(BaseEuiView));

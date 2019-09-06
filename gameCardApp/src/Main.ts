@@ -100,9 +100,9 @@ class Main extends eui.UILayer {
      * Create scene interface
      */
     protected createGameScene(): void {
-        //开发功能测试
-		// egret.localStorage.clear();
-		//
+       
+        GameApp.ins<GameApp>().refreshTimespan();
+        
         LayerManager.ins<LayerManager>().iniaizlize(this);
         let data = RES.getRes("config_zip");
         JSZip.loadAsync(data).then((zipdata) => {

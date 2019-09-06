@@ -9,8 +9,8 @@
 		<e:Image source="main_gem_png" x="255.64" y="7.58"/>
 		<e:Image source="main_add_btn_png" x="184.16" y="2"/>
 		<e:Image source="main_add_btn_png" x="429" y="2.48"/>
-		<e:Label text="11111" x="48.55" y="4" anchorOffsetY="0" height="36.06" anchorOffsetX="0" width="136.12" textAlign="center" verticalAlign="middle" size="20"/>
-		<e:Label text="11111" x="292.24" y="6.42" anchorOffsetY="0" height="36.06" anchorOffsetX="0" width="134.61" textAlign="center" verticalAlign="middle" size="20"/>
+		<e:Label id="goldLab" text="11111" x="48.55" y="4" anchorOffsetY="0" height="36.06" anchorOffsetX="0" width="136.12" textAlign="center" verticalAlign="middle" size="20"/>
+		<e:Label id="gemLab" text="11111" x="292.24" y="6.42" anchorOffsetY="0" height="36.06" anchorOffsetX="0" width="134.61" textAlign="center" verticalAlign="middle" size="20"/>
 	</e:Group>
 	<e:Image id="settingBtn" source="main_setting_btn_png" right="21" top="10"/>
 	<e:Group touchChildren="false" touchEnabled="false" touchThrough="false" right="108" top="14">
@@ -19,7 +19,6 @@
 		<e:Label id="levelNumLab" text="100" x="61.67" y="5" size="20" anchorOffsetX="0" width="52"/>
 		<e:Image source="main_font_level_png" x="0" y="0.58"/>
 	</e:Group>
-	<e:Image id="awardBox" source="main_icon_award_png" left="17" top="62"/>
 	<e:Group right="0" bottom="0" touchChildren="false" touchEnabled="false" touchThrough="false">
 		<e:Image source="main_progressBg_png" x="0" y="0"/>
 		<e:Image id="progressBar" source="main_progressBar_png" x="14" y="27.5" anchorOffsetX="0" width="277"/>
@@ -34,4 +33,8 @@
 			</e:layout>
 		</e:List>
 	</e:Scroller>
+	<e:Group id="awardBox" touchChildren="false" touchEnabled="true" touchThrough="false" left="17" top="62">
+		<e:Image source="main_icon_award_png" x="0" y="0"/>
+		<e:Label id="boxLab" text="Label" size="20" fontFamily="yt" textColor="0x00ff00" left="71" verticalCenter="0" touchEnabled="false"/>
+	</e:Group>
 </e:Skin>
