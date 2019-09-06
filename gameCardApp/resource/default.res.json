@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "description_json,config_zip,map_json,egret_icon_png,button_down_png,button_up_png,checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,thumb_pb_png,track_pb_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,track_sb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,bg_jpg,progress_bg_png,progress_bar_png,enter_down_png,enter_up_png,storyBtn_png,common_close_png,story_bg_png,story_font_png,main_bg_jpg,main_font_bg_png,main_gold_png,main_gem_png,main_add_btn_png,main_setting_btn_png,main_font_level_png,main_font_count_png,main_icon_award_png,main_bg_2_jpg,main_upgrade_btn_png,main_skill_bg_png,main_item_bg_png,main_progressBg_png,main_progressBar_png,main_area_line_png,main_top_bg_png,skill_101_png,skill_101_title_png,skill_102_png,skill_102_title_png,skill_103_png,skill_103_title_png,skill_104_png,skill_104_title_png,skill_105_png,skill_105_title_png",
+			"keys": "description_json,config_zip,map_json,egret_icon_png,button_down_png,button_up_png,checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,thumb_pb_png,track_pb_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,track_sb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,bg_jpg,progress_bg_png,progress_bar_png,enter_down_png,enter_up_png,storyBtn_png,common_close_png,story_bg_png,story_font_png,main_bg_jpg,main_font_bg_png,main_gold_png,main_gem_png,main_add_btn_png,main_setting_btn_png,main_font_level_png,main_font_count_png,main_icon_award_png,main_bg_2_jpg,main_upgrade_btn_png,main_skill_bg_png,main_item_bg_png,main_progressBg_png,main_progressBar_png,main_area_line_png,main_top_bg_png,skill_101_png,skill_101_title_png,skill_102_png,skill_102_title_png,skill_103_png,skill_103_title_png,skill_104_png,skill_104_title_png,skill_105_png,skill_105_title_png,common_xuanzhong_png",
 			"name": "preload"
 		}
 	],
@@ -147,179 +147,184 @@
 			"name": "bg_jpg"
 		},
 		{
-			"name": "progress_bg_png",
+			"url": "loading/progress_bg.png",
 			"type": "image",
-			"url": "loading/progress_bg.png"
+			"name": "progress_bg_png"
 		},
 		{
-			"name": "progress_bar_png",
+			"url": "loading/progress_bar.png",
 			"type": "image",
-			"url": "loading/progress_bar.png"
+			"name": "progress_bar_png"
 		},
 		{
-			"name": "enter_down_png",
+			"url": "res/button/enter_down.png",
 			"type": "image",
-			"url": "res/button/enter_down.png"
+			"name": "enter_down_png"
 		},
 		{
-			"name": "enter_up_png",
+			"url": "res/button/enter_up.png",
 			"type": "image",
-			"url": "res/button/enter_up.png"
+			"name": "enter_up_png"
 		},
 		{
-			"name": "storyBtn_png",
+			"url": "res/button/storyBtn.png",
 			"type": "image",
-			"url": "res/button/storyBtn.png"
+			"name": "storyBtn_png"
 		},
 		{
-			"name": "common_close_png",
+			"url": "res/common/common_close.png",
 			"type": "image",
-			"url": "res/common/common_close.png"
+			"name": "common_close_png"
 		},
 		{
-			"name": "story_bg_png",
+			"url": "res/view/story/story_bg.png",
 			"type": "image",
-			"url": "res/view/story/story_bg.png"
+			"name": "story_bg_png"
 		},
 		{
-			"name": "story_font_png",
+			"url": "res/view/story/story_font.png",
 			"type": "image",
-			"url": "res/view/story/story_font.png"
+			"name": "story_font_png"
 		},
 		{
-			"name": "main_bg_jpg",
+			"url": "res/view/main/main_bg.jpg",
 			"type": "image",
-			"url": "res/view/main/main_bg.jpg"
+			"name": "main_bg_jpg"
 		},
 		{
-			"name": "main_font_bg_png",
+			"url": "res/view/main/main_font_bg.png",
 			"type": "image",
-			"url": "res/view/main/main_font_bg.png"
+			"name": "main_font_bg_png"
 		},
 		{
-			"name": "main_gold_png",
+			"url": "res/view/main/main_gold.png",
 			"type": "image",
-			"url": "res/view/main/main_gold.png"
+			"name": "main_gold_png"
 		},
 		{
-			"name": "main_gem_png",
+			"url": "res/view/main/main_gem.png",
 			"type": "image",
-			"url": "res/view/main/main_gem.png"
+			"name": "main_gem_png"
 		},
 		{
-			"name": "main_add_btn_png",
+			"url": "res/view/main/main_add_btn.png",
 			"type": "image",
-			"url": "res/view/main/main_add_btn.png"
+			"name": "main_add_btn_png"
 		},
 		{
-			"name": "main_setting_btn_png",
+			"url": "res/view/main/main_setting_btn.png",
 			"type": "image",
-			"url": "res/view/main/main_setting_btn.png"
+			"name": "main_setting_btn_png"
 		},
 		{
-			"name": "main_font_level_png",
+			"url": "res/view/main/main_font_level.png",
 			"type": "image",
-			"url": "res/view/main/main_font_level.png"
+			"name": "main_font_level_png"
 		},
 		{
-			"name": "main_font_count_png",
+			"url": "res/view/main/main_font_count.png",
 			"type": "image",
-			"url": "res/view/main/main_font_count.png"
+			"name": "main_font_count_png"
 		},
 		{
-			"name": "main_icon_award_png",
+			"url": "res/view/main/main_icon_award.png",
 			"type": "image",
-			"url": "res/view/main/main_icon_award.png"
+			"name": "main_icon_award_png"
 		},
 		{
-			"name": "main_bg_2_jpg",
+			"url": "res/view/main/main_bg_2.jpg",
 			"type": "image",
-			"url": "res/view/main/main_bg_2.jpg"
+			"name": "main_bg_2_jpg"
 		},
 		{
-			"name": "main_upgrade_btn_png",
+			"url": "res/view/main/main_upgrade_btn.png",
 			"type": "image",
-			"url": "res/view/main/main_upgrade_btn.png"
+			"name": "main_upgrade_btn_png"
 		},
 		{
-			"name": "main_skill_bg_png",
+			"url": "res/view/main/main_skill_bg.png",
 			"type": "image",
-			"url": "res/view/main/main_skill_bg.png"
+			"name": "main_skill_bg_png"
 		},
 		{
-			"name": "main_item_bg_png",
+			"url": "res/view/main/main_item_bg.png",
 			"type": "image",
-			"url": "res/view/main/main_item_bg.png"
+			"name": "main_item_bg_png"
 		},
 		{
-			"name": "main_progressBg_png",
+			"url": "res/view/main/main_progressBg.png",
 			"type": "image",
-			"url": "res/view/main/main_progressBg.png"
+			"name": "main_progressBg_png"
 		},
 		{
-			"name": "main_progressBar_png",
+			"url": "res/view/main/main_progressBar.png",
 			"type": "image",
-			"url": "res/view/main/main_progressBar.png"
+			"name": "main_progressBar_png"
 		},
 		{
-			"name": "main_area_line_png",
+			"url": "res/view/main/main_area_line.png",
 			"type": "image",
-			"url": "res/view/main/main_area_line.png"
+			"name": "main_area_line_png"
 		},
 		{
-			"name": "main_top_bg_png",
+			"url": "res/view/main/main_top_bg.png",
 			"type": "image",
-			"url": "res/view/main/main_top_bg.png"
+			"name": "main_top_bg_png"
 		},
 		{
-			"name": "skill_101_png",
+			"url": "res/view/skill/skill_101.png",
 			"type": "image",
-			"url": "res/view/skill/skill_101.png"
+			"name": "skill_101_png"
 		},
 		{
-			"name": "skill_101_title_png",
+			"url": "res/view/skill/skill_101_title.png",
 			"type": "image",
-			"url": "res/view/skill/skill_101_title.png"
+			"name": "skill_101_title_png"
 		},
 		{
-			"name": "skill_102_png",
+			"url": "res/view/skill/skill_102.png",
 			"type": "image",
-			"url": "res/view/skill/skill_102.png"
+			"name": "skill_102_png"
 		},
 		{
-			"name": "skill_102_title_png",
+			"url": "res/view/skill/skill_102_title.png",
 			"type": "image",
-			"url": "res/view/skill/skill_102_title.png"
+			"name": "skill_102_title_png"
 		},
 		{
-			"name": "skill_103_png",
+			"url": "res/view/skill/skill_103.png",
 			"type": "image",
-			"url": "res/view/skill/skill_103.png"
+			"name": "skill_103_png"
 		},
 		{
-			"name": "skill_103_title_png",
+			"url": "res/view/skill/skill_103_title.png",
 			"type": "image",
-			"url": "res/view/skill/skill_103_title.png"
+			"name": "skill_103_title_png"
 		},
 		{
-			"name": "skill_104_png",
+			"url": "res/view/skill/skill_104.png",
 			"type": "image",
-			"url": "res/view/skill/skill_104.png"
+			"name": "skill_104_png"
 		},
 		{
-			"name": "skill_104_title_png",
+			"url": "res/view/skill/skill_104_title.png",
 			"type": "image",
-			"url": "res/view/skill/skill_104_title.png"
+			"name": "skill_104_title_png"
 		},
 		{
-			"name": "skill_105_png",
+			"url": "res/view/skill/skill_105.png",
 			"type": "image",
-			"url": "res/view/skill/skill_105.png"
+			"name": "skill_105_png"
 		},
 		{
-			"name": "skill_105_title_png",
+			"url": "res/view/skill/skill_105_title.png",
 			"type": "image",
-			"url": "res/view/skill/skill_105_title.png"
+			"name": "skill_105_title_png"
+		},
+		{
+			"url": "res/common/common_xuanzhong.png",
+			"type": "image",
+			"name": "common_xuanzhong_png"
 		}
 	]
 }

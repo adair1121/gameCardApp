@@ -25,6 +25,11 @@ var StartGameView = (function (_super) {
         }
         this.addTouchEvent(this.storyBtn, this.onLookStory, true);
         this.enterBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onEnter, this);
+        ViewManager.ins().open(GuideView);
+        var guideView = ViewManager.ins().getView(GuideView);
+        var offestX = (StageUtils.ins().getWidth() >> 1) - (this.enterBtn.width >> 1);
+        var offestY = 467 / 640 * StageUtils.ins().getHeight();
+        guideView.nextStep({ id: "1_1", comObj: this.enterBtn, width: 256, height: 65, offsetX: offestX, offsetY: offestY });
     };
     /**进入游戏 */
     StartGameView.prototype.onEnter = function (evt) {

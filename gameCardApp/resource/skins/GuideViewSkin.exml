@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="GuideViewSkin" width="1136" height="640" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect id="bg_left" width="456" height="320" anchorOffsetX="0" anchorOffsetY="0" alpha="0.3" left="0" top="0"/>
+	<e:Rect id="bg_bottom" width="530.66" height="320" anchorOffsetX="0" anchorOffsetY="0" alpha="0.3" left="0" x="10" bottom="0"/>
+	<e:Rect id="bg_top" width="681.33" height="245.33" anchorOffsetX="0" anchorOffsetY="0" alpha="0.3" right="0" top="0"/>
+	<e:Rect id="bg_right" width="608" height="396" anchorOffsetX="0" anchorOffsetY="0" alpha="0.3" right="0" bottom="0"/>
+	<e:Image id="rect" source="common_xuanzhong_png" x="454.75" y="246" scale9Grid="9,9,57,56"/>
+</e:Skin>
