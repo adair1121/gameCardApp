@@ -24,7 +24,8 @@ class GameMainView extends BaseEuiView{
 		super();
 	}
 	public open(...param):void{
-		
+		this.touchEnabled = false;
+		this.touchChildren = false;
 		this.addTouchEvent(this.settingBtn,this.onSetHandler,true);
 		this.arraycollect = new eui.ArrayCollection();
 		this.list.itemRenderer = SkilItem;
@@ -47,6 +48,28 @@ class GameMainView extends BaseEuiView{
 
 		this.goldWatcher = eui.Binding.bindHandler(GameApp,["roleGold"],this.roleGoldChange,this);
 		this.gemWatcher = eui.Binding.bindHandler(GameApp,["roleGem"],this.roleGemChange,this);
+	}
+	public initialize():void{
+		//初始化
+		console.log("game---initialize");
+		this.touchEnabled = false;
+		this.touchChildren = false;
+		this.showLevelTxt(()=>{
+			let guidepassStr:string = egret.localStorage.getItem(LocalStorageEnum.IS_PASS_GUIDE);
+			this.touchEnabled = true;
+			this.touchChildren = true;
+			if(guidepassStr){
+				//执行正常出怪的逻辑
+			}else{
+				//需要过一下新手 指引操作
+				egret.localStorage.setItem(LocalStorageEnum.IS_PASS_GUIDE,"1");
+				ViewManager.ins<ViewManager>().open(GuideView);
+				let item:SkilItem = this.list.getChildAt(2) as SkilItem;
+				this.guideView = ViewManager.ins<ViewManager>().getView(GuideView) as GuideView;
+				this.guideView.nextStep({id:"1_1",comObj:item,width:75,height:75}) ;
+			}
+		})
+		
 	}
 	private roleGoldChange(value:number):void{
 		this.goldLab.text = value.toString();
@@ -121,36 +144,22 @@ class GameMainView extends BaseEuiView{
 			return true;
 		}
 	}
+	/**路由回界面的刷新方法 */
+	public refreshPage():void{
+		
+	}
 	private onTimer():void{
 		this.changeTime();
 	}	
+	/**音频设置界面 */
 	private onSetHandler():void{
-		
+		ViewManager.ins<ViewManager>().open(SettingPopUp);
 	}
 	private onItemTap(evt:eui.ItemTapEvent):void{
 		let skillId:number = evt.item.skillId;
 		console.log("触发了技能----"+skillId);
 	}
-	public initialize():void{
-		//初始化
-		console.log("game---initialize");
-		this.touchEnabled = false;
-		this.showLevelTxt(()=>{
-			let guidepassStr:string = egret.localStorage.getItem(LocalStorageEnum.IS_PASS_GUIDE);
-			this.touchEnabled = true;
-			if(guidepassStr){
-				//执行正常出怪的逻辑
-			}else{
-				//需要过一下新手 指引操作
-				// egret.localStorage.setItem(LocalStorageEnum.IS_PASS_GUIDE,"1");
-				ViewManager.ins<ViewManager>().open(GuideView);
-				let item:SkilItem = this.list.getChildAt(2) as SkilItem;
-				this.guideView = ViewManager.ins<ViewManager>().getView(GuideView) as GuideView;
-				this.guideView.nextStep({id:"1_1",comObj:item,width:75,height:75}) ;
-			}
-		})
-		
-	}
+	
 	/**展示关卡显示文字 */
 	private showLevelTxt(cb:()=>void){
 		let txt:eui.Label = new eui.Label();

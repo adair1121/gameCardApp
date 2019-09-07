@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "description_json,config_zip,map_json,egret_icon_png,button_down_png,button_up_png,checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,thumb_pb_png,track_pb_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,track_sb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,bg_jpg,progress_bg_png,progress_bar_png,enter_down_png,enter_up_png,storyBtn_png,common_close_png,story_bg_png,story_font_png,main_bg_jpg,main_font_bg_png,main_gold_png,main_gem_png,main_add_btn_png,main_setting_btn_png,main_font_level_png,main_font_count_png,main_icon_award_png,main_bg_2_jpg,main_upgrade_btn_png,main_skill_bg_png,main_item_bg_png,main_progressBg_png,main_progressBar_png,main_area_line_png,main_top_bg_png,skill_101_png,skill_101_title_png,skill_102_png,skill_102_title_png,skill_103_png,skill_103_title_png,skill_104_png,skill_104_title_png,skill_105_png,skill_105_title_png,common_xuanzhong_png",
+			"keys": "description_json,config_zip,map_json,egret_icon_png,button_down_png,button_up_png,checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,thumb_pb_png,track_pb_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,track_sb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,bg_jpg,progress_bg_png,progress_bar_png,enter_down_png,enter_up_png,storyBtn_png,common_close_png,story_bg_png,story_font_png,main_bg_jpg,main_font_bg_png,main_gold_png,main_gem_png,main_add_btn_png,main_setting_btn_png,main_font_level_png,main_font_count_png,main_icon_award_png,main_bg_2_jpg,main_upgrade_btn_png,main_skill_bg_png,main_item_bg_png,main_progressBg_png,main_progressBar_png,main_area_line_png,main_top_bg_png,skill_101_png,skill_101_title_png,skill_102_png,skill_102_title_png,skill_103_png,skill_103_title_png,skill_104_png,skill_104_title_png,skill_105_png,skill_105_title_png,common_xuanzhong_png,common_close_2_png,audio_bar_bg_png,audio_bar_png,audio_icon_png,autio_title_png,effect_title_png,setting_panel_png",
 			"name": "preload"
 		}
 	],
@@ -325,6 +325,41 @@
 			"url": "res/common/common_xuanzhong.png",
 			"type": "image",
 			"name": "common_xuanzhong_png"
+		},
+		{
+			"name": "common_close_2_png",
+			"type": "image",
+			"url": "res/common/common_close_2.png"
+		},
+		{
+			"name": "audio_bar_bg_png",
+			"type": "image",
+			"url": "res/view/setting/audio_bar_bg.png"
+		},
+		{
+			"name": "audio_bar_png",
+			"type": "image",
+			"url": "res/view/setting/audio_bar.png"
+		},
+		{
+			"name": "audio_icon_png",
+			"type": "image",
+			"url": "res/view/setting/audio_icon.png"
+		},
+		{
+			"name": "autio_title_png",
+			"type": "image",
+			"url": "res/view/setting/autio_title.png"
+		},
+		{
+			"name": "effect_title_png",
+			"type": "image",
+			"url": "res/view/setting/effect_title.png"
+		},
+		{
+			"name": "setting_panel_png",
+			"type": "image",
+			"url": "res/view/setting/setting_panel.png"
 		}
 	]
 }

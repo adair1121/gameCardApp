@@ -13,7 +13,7 @@ class StartGameView extends BaseEuiView{
 			ViewManager.ins<ViewManager>().open(StoryPopUp);
 		}
 		this.addTouchEvent(this.storyBtn,this.onLookStory,true);
-		this.enterBtn.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onEnter,this);
+		this.addTouchEvent(this.enterBtn,this.onEnter,true);
 
 		 let vertexSrc =
             "attribute vec2 aVertexPosition;\n" +
@@ -67,6 +67,7 @@ class StartGameView extends BaseEuiView{
             }
         );
 		this.filters = [this.customFilter4];
+		SoundManager.ins<SoundManager>().playBg(`${RES_AUDIO}game.mp3`);
 		
 	}
 	private onFrame(evt:egret.TouchEvent):void{
@@ -81,6 +82,7 @@ class StartGameView extends BaseEuiView{
 	/**进入游戏 */
 	private onEnter(evt:egret.TouchEvent):void{
 		this.touchEnabled = false;
+		SoundManager.ins<SoundManager>().touchBg();
 		this.addEventListener(egret.Event.ENTER_FRAME,this.onFrame,this);
 	}
 	/**查看故事 */
@@ -88,8 +90,8 @@ class StartGameView extends BaseEuiView{
 		ViewManager.ins<ViewManager>().open(StoryPopUp);
 	}
 	public close():void{
-		this.addTouchEvent(this.storyBtn,this.onLookStory,true);
-		this.enterBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.onEnter,this);
+		this.removeTouchEvent(this.storyBtn,this.onLookStory);
+		this.removeTouchEvent(this.enterBtn,this.onEnter);
 		this.removeEventListener(egret.Event.ENTER_FRAME,this.onFrame,this);
 	}
 }

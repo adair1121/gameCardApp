@@ -60,6 +60,8 @@ declare class GuideViewSkin extends eui.Skin{
 }
 declare class StoryPopUpSkin extends eui.Skin{
 }
+declare class SettingPopUpSkin extends eui.Skin{
+}
 declare class StartGameViewSkin extends eui.Skin{
 }
 declare class TipsSkin extends eui.Skin{

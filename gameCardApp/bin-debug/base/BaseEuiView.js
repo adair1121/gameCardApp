@@ -78,6 +78,8 @@ var BaseEuiView = (function (_super) {
         if (evt.target && evt.target.filters) {
             evt.target.filters = [];
         }
+        SoundManager.ins().stopEffect();
+        SoundManager.ins().playEffect(RES_AUDIO + "buttonClick.mp3");
     };
     BaseEuiView.prototype.changeFilter = function (obj) {
         var colorMatrix = [

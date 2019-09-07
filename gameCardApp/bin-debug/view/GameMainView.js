@@ -24,10 +24,8 @@ var GameMainView = (function (_super) {
         for (var _i = 0; _i < arguments.length; _i++) {
             param[_i] = arguments[_i];
         }
-        /**
-         * 测试 --
-         */
-        ///
+        this.touchEnabled = false;
+        this.touchChildren = false;
         this.addTouchEvent(this.settingBtn, this.onSetHandler, true);
         this.arraycollect = new eui.ArrayCollection();
         this.list.itemRenderer = SkilItem;
@@ -48,6 +46,29 @@ var GameMainView = (function (_super) {
         }
         this.goldWatcher = eui.Binding.bindHandler(GameApp, ["roleGold"], this.roleGoldChange, this);
         this.gemWatcher = eui.Binding.bindHandler(GameApp, ["roleGem"], this.roleGemChange, this);
+    };
+    GameMainView.prototype.initialize = function () {
+        var _this = this;
+        //初始化
+        console.log("game---initialize");
+        this.touchEnabled = false;
+        this.touchChildren = false;
+        this.showLevelTxt(function () {
+            var guidepassStr = egret.localStorage.getItem(LocalStorageEnum.IS_PASS_GUIDE);
+            _this.touchEnabled = true;
+            _this.touchChildren = true;
+            if (guidepassStr) {
+                //执行正常出怪的逻辑
+            }
+            else {
+                //需要过一下新手 指引操作
+                egret.localStorage.setItem(LocalStorageEnum.IS_PASS_GUIDE, "1");
+                ViewManager.ins().open(GuideView);
+                var item = _this.list.getChildAt(2);
+                _this.guideView = ViewManager.ins().getView(GuideView);
+                _this.guideView.nextStep({ id: "1_1", comObj: item, width: 75, height: 75 });
+            }
+        });
     };
     GameMainView.prototype.roleGoldChange = function (value) {
         this.goldLab.text = value.toString();
@@ -129,32 +150,13 @@ var GameMainView = (function (_super) {
     GameMainView.prototype.onTimer = function () {
         this.changeTime();
     };
+    /**音频设置界面 */
     GameMainView.prototype.onSetHandler = function () {
+        ViewManager.ins().open(SettingPopUp);
     };
     GameMainView.prototype.onItemTap = function (evt) {
         var skillId = evt.item.skillId;
         console.log("触发了技能----" + skillId);
-    };
-    GameMainView.prototype.initialize = function () {
-        var _this = this;
-        //初始化
-        console.log("game---initialize");
-        this.touchEnabled = false;
-        this.showLevelTxt(function () {
-            var guidepassStr = egret.localStorage.getItem(LocalStorageEnum.IS_PASS_GUIDE);
-            _this.touchEnabled = true;
-            if (guidepassStr) {
-                //执行正常出怪的逻辑
-            }
-            else {
-                //需要过一下新手 指引操作
-                // egret.localStorage.setItem(LocalStorageEnum.IS_PASS_GUIDE,"1");
-                ViewManager.ins().open(GuideView);
-                var item = _this.list.getChildAt(2);
-                _this.guideView = ViewManager.ins().getView(GuideView);
-                _this.guideView.nextStep({ id: "1_1", comObj: item, width: 75, height: 75 });
-            }
-        });
     };
     /**展示关卡显示文字 */
     GameMainView.prototype.showLevelTxt = function (cb) {

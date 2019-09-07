@@ -24,7 +24,7 @@ var StartGameView = (function (_super) {
             ViewManager.ins().open(StoryPopUp);
         }
         this.addTouchEvent(this.storyBtn, this.onLookStory, true);
-        this.enterBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onEnter, this);
+        this.addTouchEvent(this.enterBtn, this.onEnter, true);
         var vertexSrc = "attribute vec2 aVertexPosition;\n" +
             "attribute vec2 aTextureCoord;\n" +
             "attribute vec2 aColor;\n" +
@@ -62,6 +62,7 @@ var StartGameView = (function (_super) {
             offset: 1
         });
         this.filters = [this.customFilter4];
+        SoundManager.ins().playBg(RES_AUDIO + "game.mp3");
     };
     StartGameView.prototype.onFrame = function (evt) {
         this.customFilter4.uniforms.offset -= 0.05;
@@ -75,6 +76,7 @@ var StartGameView = (function (_super) {
     /**进入游戏 */
     StartGameView.prototype.onEnter = function (evt) {
         this.touchEnabled = false;
+        SoundManager.ins().touchBg();
         this.addEventListener(egret.Event.ENTER_FRAME, this.onFrame, this);
     };
     /**查看故事 */
@@ -82,8 +84,8 @@ var StartGameView = (function (_super) {
         ViewManager.ins().open(StoryPopUp);
     };
     StartGameView.prototype.close = function () {
-        this.addTouchEvent(this.storyBtn, this.onLookStory, true);
-        this.enterBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onEnter, this);
+        this.removeTouchEvent(this.storyBtn, this.onLookStory);
+        this.removeTouchEvent(this.enterBtn, this.onEnter);
         this.removeEventListener(egret.Event.ENTER_FRAME, this.onFrame, this);
     };
     return StartGameView;

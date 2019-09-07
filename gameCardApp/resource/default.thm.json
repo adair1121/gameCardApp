@@ -34,6 +34,7 @@
 		"resource/skins/GameMainViewSkin.exml",
 		"resource/skins/GuideViewSkin.exml",
 		"resource/skins/popup/StoryPopUpSkin.exml",
+		"resource/skins/SettingPopUpSkin.exml",
 		"resource/skins/StartGameViewSkin.exml",
 		"resource/skins/TipsSkin.exml"
 	],
