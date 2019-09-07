@@ -23,7 +23,7 @@ class SettingPopUp extends BaseEuiView{
 		super();
 	}
 	public open(...param):void{
-		egret.Tween.get(this).to({verticalCenter:0},600,egret.Ease.circOut).call(()=>{
+		egret.Tween.get(this.content).to({verticalCenter:0},600,egret.Ease.circOut).call(()=>{
 			egret.Tween.removeTweens(this);
 		},this)
 
@@ -51,8 +51,8 @@ class SettingPopUp extends BaseEuiView{
 		this.addTouchEvent(this.btnClose,this.onReturn,true);
 	}
 	private onReturn():void{
-		egret.Tween.get(this).to({verticalCenter:-500},600,egret.Ease.circOut).call(()=>{
-			egret.Tween.removeTweens(this);
+		egret.Tween.get(this.content).to({verticalCenter:-500},600,egret.Ease.circOut).call(()=>{
+			egret.Tween.removeTweens(this.content);
 			ViewManager.ins<ViewManager>().close(SettingPopUp);
 			//只为了调刷新接口
 			ViewManager.ins<ViewManager>().open(GameMainView);

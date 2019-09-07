@@ -100,7 +100,14 @@ class Main extends eui.UILayer {
      * Create scene interface
      */
     protected createGameScene(): void {
-       
+
+        //获取平台参数;
+        let platform_param:string = GlobalFun.getOption("pf");
+        if(!platform){
+            GameConfig.platform.setting = "ios"
+        }else{
+            GameConfig.platform.setting = platform_param;
+        }
         GameApp.ins<GameApp>().refreshTimespan();
         
         LayerManager.ins<LayerManager>().iniaizlize(this);

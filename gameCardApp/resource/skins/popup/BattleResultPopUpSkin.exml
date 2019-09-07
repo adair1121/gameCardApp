@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="BattleResultPopUpSkin" width="1136" height="768" currentState="win" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" states="win,fail" >
+	<e:Image source="result_bg_png" anchorOffsetX="0" left="0" top="0" right="0" bottom="0"/>
+	<e:Image source="win_icon_png" left="63" top="96" source.fail="fail_icon_png" left.fail="15" top.fail="96"/>
+	<e:Image source="win_font_png" top="96" left="638" source.fail="fail_font_png"/>
+	<e:Label text="时间:" top="302" left="638"/>
+	<e:Label id="timeLab" text="8.55" anchorOffsetX="0" width="189" textAlign="left" verticalAlign="middle" top="302" left="736"/>
+	<e:Label id="goldNumLab" text="1000" anchorOffsetX="0" width="189" textAlign="left" verticalAlign="middle" top="394" left="785"/>
+	<e:Label text="奖励:" left="638" top="394"/>
+	<e:Image id="nextBtn" source="nextLevelBtn_png" left="673" top="482" includeIn="win"/>
+	<e:Image source="prompt_gold_png" top="399" left="736"/>
+	<e:Image id="continueBtn" source="continueBtn_png" includeIn="fail" left="530" top="491"/>
+	<e:Image id="exitBtn" source="exitBtn_png" includeIn="fail" left="831" top="491"/>
+</e:Skin>

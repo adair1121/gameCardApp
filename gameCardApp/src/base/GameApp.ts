@@ -2,9 +2,7 @@
  * @author
  */
 class GameApp extends BaseClass {
-
 	
-
 	public static pay_cbDdata:string;
 	public static phurseState:boolean = false;
 	

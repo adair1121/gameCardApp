@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="RebornTipPopUpSkin" width="1136" height="640" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect left="0" top="0" right="0" bottom="0" alpha="0.3"/>
+	<e:Group id="content" horizontalCenter="0" verticalCenter="-600" touchChildren="true" touchEnabled="false" touchThrough="true">
+		<e:Image source="prompt_bg_png" x="0" y="0"/>
+		<e:Image id="returnBtn" source="common_close_2_png" x="410.5" y="17.5"/>
+		<e:Image source="prompt_gold_png" x="148.62" y="133.5"/>
+		<e:Image id="cancleBtn" source="prompt_cancleBtn_png" x="316.5" y="195.17"/>
+		<e:Image id="sureBtn" source="prompt_sureBtn_png" x="72.12" y="195.17"/>
+		<e:Label id="costLab" text="111111" x="185.5" y="133.5" fontFamily="yt" size="20" anchorOffsetX="0" width="140.33" textAlign="center"/>
+		<e:Label id="tipLab" text="是否消耗次金币转生" x="50.5" y="67.02" size="25" anchorOffsetX="0" width="381" anchorOffsetY="0" height="49" textAlign="center" fontFamily="yt" verticalAlign="middle"/>
+	</e:Group>
+</e:Skin>
