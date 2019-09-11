@@ -58,6 +58,14 @@ declare class GameMainViewSkin extends eui.Skin{
 }
 declare class GuideViewSkin extends eui.Skin{
 }
+declare class BattleResultPopUpSkin extends eui.Skin{
+}
+declare class RebornTipPopUpSkin extends eui.Skin{
+}
+declare class ShopItemSkin extends eui.Skin{
+}
+declare class ShopPopUpSkin extends eui.Skin{
+}
 declare class StoryPopUpSkin extends eui.Skin{
 }
 declare class SettingPopUpSkin extends eui.Skin{

@@ -20,6 +20,8 @@ class GameMainView extends BaseEuiView{
 
 	private goldWatcher:eui.Watcher;
 	private gemWatcher:eui.Watcher;
+	private addGoldBtn:eui.Image;
+	private addGemBtn:eui.Image;
 	public constructor() {
 		super();
 	}
@@ -48,6 +50,15 @@ class GameMainView extends BaseEuiView{
 
 		this.goldWatcher = eui.Binding.bindHandler(GameApp,["roleGold"],this.roleGoldChange,this);
 		this.gemWatcher = eui.Binding.bindHandler(GameApp,["roleGem"],this.roleGemChange,this);
+
+		this.addTouchEvent(this.addGemBtn,this.onaddGem,true);
+		this.addTouchEvent(this.addGoldBtn,this.onaddGold,true);
+	}
+	private onaddGem():void{
+		ViewManager.ins<ViewManager>().open(ShopPopUp,[{selectIndex:1}])
+	}
+	private onaddGold():void{
+		ViewManager.ins<ViewManager>().open(ShopPopUp,[{selectIndex:0}])
 	}
 	public initialize():void{
 		//初始化

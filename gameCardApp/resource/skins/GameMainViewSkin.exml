@@ -7,8 +7,8 @@
 		<e:Image source="main_font_bg_png" x="245" y="0"/>
 		<e:Image source="main_gold_png" x="9.12" y="12.08"/>
 		<e:Image source="main_gem_png" x="255.64" y="7.58"/>
-		<e:Image source="main_add_btn_png" x="184.16" y="2"/>
-		<e:Image source="main_add_btn_png" x="429" y="2.48"/>
+		<e:Image id="addGoldBtn" source="main_add_btn_png" x="184.16" y="2"/>
+		<e:Image id="addGemBtn" source="main_add_btn_png" x="429" y="2.48"/>
 		<e:Label id="goldLab" text="11111" x="48.55" y="4" anchorOffsetY="0" height="36.06" anchorOffsetX="0" width="136.12" textAlign="center" verticalAlign="middle" size="20"/>
 		<e:Label id="gemLab" text="11111" x="292.24" y="6.42" anchorOffsetY="0" height="36.06" anchorOffsetX="0" width="134.61" textAlign="center" verticalAlign="middle" size="20"/>
 	</e:Group>

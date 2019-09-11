@@ -169,6 +169,14 @@ var Main = (function (_super) {
      * Create scene interface
      */
     Main.prototype.createGameScene = function () {
+        //获取平台参数;
+        var platform_param = GlobalFun.getOption("pf");
+        if (!platform) {
+            GameConfig.platform.setting = "ios";
+        }
+        else {
+            GameConfig.platform.setting = platform_param;
+        }
         GameApp.ins().refreshTimespan();
         LayerManager.ins().iniaizlize(this);
         var data = RES.getRes("config_zip");

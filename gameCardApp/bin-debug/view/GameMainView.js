@@ -46,6 +46,14 @@ var GameMainView = (function (_super) {
         }
         this.goldWatcher = eui.Binding.bindHandler(GameApp, ["roleGold"], this.roleGoldChange, this);
         this.gemWatcher = eui.Binding.bindHandler(GameApp, ["roleGem"], this.roleGemChange, this);
+        this.addTouchEvent(this.addGemBtn, this.onaddGem, true);
+        this.addTouchEvent(this.addGoldBtn, this.onaddGold, true);
+    };
+    GameMainView.prototype.onaddGem = function () {
+        ViewManager.ins().open(ShopPopUp, [{ selectIndex: 1 }]);
+    };
+    GameMainView.prototype.onaddGold = function () {
+        ViewManager.ins().open(ShopPopUp, [{ selectIndex: 0 }]);
     };
     GameMainView.prototype.initialize = function () {
         var _this = this;
@@ -146,6 +154,9 @@ var GameMainView = (function (_super) {
             this.boxLab.text = DateUtils.getFormatBySecond((this.awardBoxGetTime - offValue) / 1000, DateUtils.TIME_FORMAT_3);
             return true;
         }
+    };
+    /**路由回界面的刷新方法 */
+    GameMainView.prototype.refreshPage = function () {
     };
     GameMainView.prototype.onTimer = function () {
         this.changeTime();

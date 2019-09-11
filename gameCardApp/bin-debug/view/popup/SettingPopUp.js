@@ -23,10 +23,14 @@ var SettingPopUp = (function (_super) {
         return _this;
     }
     SettingPopUp.prototype.open = function () {
+        var _this = this;
         var param = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             param[_i] = arguments[_i];
         }
+        egret.Tween.get(this.content).to({ verticalCenter: 0 }, 600, egret.Ease.circOut).call(function () {
+            egret.Tween.removeTweens(_this);
+        }, this);
         this.musicBar.mask = this.musicBarMask;
         this.effectBar.mask = this.effectBarMask;
         this._minx = this.musicBar.x;
@@ -43,10 +47,16 @@ var SettingPopUp = (function (_super) {
         this.addEventListener(egret.TouchEvent.TOUCH_END, this.onMusicTouchEnd, this);
         this.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.onMusicTouchEnd, this);
         this.e_sound_control.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onEffectTouchBegin, this);
-        // this.e_sound_control.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.onEffectTouchMove,this);
-        // this.e_sound_control.addEventListener(egret.TouchEvent.TOUCH_CANCEL,this.onEffectTouchEnd,this);
-        // this.e_sound_control.addEventListener(egret.TouchEvent.TOUCH_END,this.onEffectTouchEnd,this);
-        // this.e_sound_control.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE,this.onEffectTouchEnd,this);
+        this.addTouchEvent(this.btnClose, this.onReturn, true);
+    };
+    SettingPopUp.prototype.onReturn = function () {
+        var _this = this;
+        egret.Tween.get(this.content).to({ verticalCenter: -500 }, 600, egret.Ease.circOut).call(function () {
+            egret.Tween.removeTweens(_this.content);
+            ViewManager.ins().close(SettingPopUp);
+            //只为了调刷新接口
+            ViewManager.ins().open(GameMainView);
+        }, this);
     };
     SettingPopUp.prototype.onMusicTouchBegin = function (evt) {
         this.musicTouch = true;
@@ -86,10 +96,11 @@ var SettingPopUp = (function (_super) {
     ;
     SettingPopUp.prototype.close = function () {
         this.m_sound_control.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onMusicTouchBegin, this);
-        this.m_sound_control.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.onMusicTouchMove, this);
-        this.m_sound_control.removeEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onMusicTouchEnd, this);
-        this.m_sound_control.removeEventListener(egret.TouchEvent.TOUCH_END, this.onMusicTouchEnd, this);
-        this.m_sound_control.removeEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.onMusicTouchEnd, this);
+        StageUtils.ins().getStage().removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.onMusicTouchMove, this);
+        this.removeEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onMusicTouchEnd, this);
+        this.removeEventListener(egret.TouchEvent.TOUCH_END, this.onMusicTouchEnd, this);
+        this.removeEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.onMusicTouchEnd, this);
+        this.removeTouchEvent(this.btnClose, this.onReturn);
         this.e_sound_control.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onEffectTouchBegin, this);
     };
     return SettingPopUp;
