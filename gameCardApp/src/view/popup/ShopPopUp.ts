@@ -35,14 +35,17 @@ class ShopPopUp extends BaseEuiView{
 			ViewManager.ins<ViewManager>().close(ShopPopUp);
 		},this)
 	}
+	/**点击金币商城 */
 	private onClickGold():void{
 		this.selectIndex = 0;
 		this.refreshDataANDview();
 	}
+	/**点击钻石商城 */
 	private onClickGem():void{
 		this.selectIndex = 1;
 		this.refreshDataANDview();
 	}
+	/**刷新商城数据以及页面 */
 	private refreshDataANDview():void{
 		this.dataArr = [];
 		if(this.selectIndex ==0){
