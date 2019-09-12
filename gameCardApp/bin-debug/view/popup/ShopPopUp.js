@@ -44,14 +44,17 @@ var ShopPopUp = (function (_super) {
             ViewManager.ins().close(ShopPopUp);
         }, this);
     };
+    /**点击金币商城 */
     ShopPopUp.prototype.onClickGold = function () {
         this.selectIndex = 0;
         this.refreshDataANDview();
     };
+    /**点击钻石商城 */
     ShopPopUp.prototype.onClickGem = function () {
         this.selectIndex = 1;
         this.refreshDataANDview();
     };
+    /**刷新商城数据以及页面 */
     ShopPopUp.prototype.refreshDataANDview = function () {
         this.dataArr = [];
         if (this.selectIndex == 0) {

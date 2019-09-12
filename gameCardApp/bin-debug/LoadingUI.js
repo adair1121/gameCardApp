@@ -74,12 +74,12 @@ var LoadingUI = (function (_super) {
         this.progressPanel.horizontalCenter = 0;
         this.progressPanel.verticalCenter = 0;
         this.progressBg = new eui.Image();
-        this.progressBg.source = "progress_bg_png";
+        this.progressBg.source = "";
         this.progressPanel.addChild(this.progressBg);
         this.progressBg.horizontalCenter = 0;
         this.progressBg.verticalCenter = 0;
         this.progressBar = new eui.Image();
-        this.progressBar.source = "progress_bar_png";
+        this.progressBar.source = "";
         this.progressBar.horizontalCenter = 0;
         this.progressBar.verticalCenter = 0;
         this.progressPanel.addChild(this.progressBar);

@@ -15,37 +15,15 @@ var ActionState = (function () {
     return ActionState;
 }());
 __reflect(ActionState.prototype, "ActionState");
-var ActionEnum;
-(function (ActionEnum) {
-    ActionEnum[ActionEnum["run"] = 0] = "run";
-    ActionEnum[ActionEnum["attack"] = 1] = "attack";
-    ActionEnum[ActionEnum["dead"] = 2] = "dead";
-    ActionEnum[ActionEnum["stand"] = 3] = "stand";
-})(ActionEnum || (ActionEnum = {}));
-var EntityType;
-(function (EntityType) {
-    EntityType[EntityType["enemy"] = 0] = "enemy";
-    EntityType[EntityType["energy"] = 1] = "energy";
-})(EntityType || (EntityType = {}));
-var DirectionEnum;
-(function (DirectionEnum) {
-    DirectionEnum[DirectionEnum["TOP"] = 1] = "TOP";
-    DirectionEnum[DirectionEnum["TR"] = 2] = "TR";
-    DirectionEnum[DirectionEnum["RIGHT"] = 3] = "RIGHT";
-    DirectionEnum[DirectionEnum["RB"] = 4] = "RB";
-    DirectionEnum[DirectionEnum["BOTTOM"] = 5] = "BOTTOM";
-})(DirectionEnum || (DirectionEnum = {}));
-var SoldierType;
-(function (SoldierType) {
-    /**枪兵 */
-    SoldierType[SoldierType["SOLDIER_QIANG"] = 0] = "SOLDIER_QIANG";
-    /**刀兵 */
-    SoldierType[SoldierType["SOLDIER_DAO"] = 1] = "SOLDIER_DAO";
-    /**骑兵 */
-    SoldierType[SoldierType["SOLDIER_QI"] = 2] = "SOLDIER_QI";
-    /**弓箭手 */
-    SoldierType[SoldierType["SOLDIER_GONG"] = 3] = "SOLDIER_GONG";
-    /**投石车 */
-    SoldierType[SoldierType["SOLDIER_TOUSHICHE"] = 4] = "SOLDIER_TOUSHICHE";
-})(SoldierType || (SoldierType = {}));
+var SoldierShapType;
+(function (SoldierShapType) {
+    SoldierShapType[SoldierShapType["TYPE_RECT"] = 0] = "TYPE_RECT";
+    SoldierShapType[SoldierShapType["TYPE_CIRCLE"] = 1] = "TYPE_CIRCLE";
+    SoldierShapType[SoldierShapType["TYPE_HALFCIRCLE"] = 2] = "TYPE_HALFCIRCLE";
+    SoldierShapType[SoldierShapType["TYPE_LINGXING"] = 3] = "TYPE_LINGXING";
+    SoldierShapType[SoldierShapType["TYPE_TRIANGLE"] = 4] = "TYPE_TRIANGLE";
+    SoldierShapType[SoldierShapType["TYPE_TIXING"] = 5] = "TYPE_TIXING";
+    SoldierShapType[SoldierShapType["TYPE_ARROW"] = 6] = "TYPE_ARROW";
+    SoldierShapType[SoldierShapType["TYPE_CROSS"] = 7] = "TYPE_CROSS";
+})(SoldierShapType || (SoldierShapType = {}));
 //# sourceMappingURL=CounstDataType.js.map

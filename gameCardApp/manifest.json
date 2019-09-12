@@ -36,6 +36,7 @@
 		"bin-debug/core/sound/SoundManager.js",
 		"bin-debug/display/BitmapNumber.js",
 		"bin-debug/display/MovieClip.js",
+		"bin-debug/display/SoldierShapeEntity.js",
 		"bin-debug/enum/CounstDataType.js",
 		"bin-debug/enum/LocalStorageEnum.js",
 		"bin-debug/enum/ResDir.js",

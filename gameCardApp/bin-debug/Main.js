@@ -170,22 +170,24 @@ var Main = (function (_super) {
      */
     Main.prototype.createGameScene = function () {
         //获取平台参数;
-        var platform_param = GlobalFun.getOption("pf");
-        if (!platform) {
-            GameConfig.platform.setting = "ios";
-        }
-        else {
-            GameConfig.platform.setting = platform_param;
-        }
-        GameApp.ins().refreshTimespan();
-        LayerManager.ins().iniaizlize(this);
-        var data = RES.getRes("config_zip");
-        JSZip.loadAsync(data).then(function (zipdata) {
-            return zipdata.file('config.json').async('text');
-        }).then(function (text) {
-            GlobalConfig.setData(JSON.parse(text));
-            GameApp.ins().load();
-        });
+        // let platform_param:string = GlobalFun.getOption("pf");
+        // if(!platform){
+        //     GameConfig.platform.setting = "ios"
+        // }else{
+        //     GameConfig.platform.setting = platform_param;
+        // }
+        // GameApp.ins<GameApp>().refreshTimespan();
+        // LayerManager.ins<LayerManager>().iniaizlize(this);
+        // let data = RES.getRes("config_zip");
+        // JSZip.loadAsync(data).then((zipdata) => {
+        //     return zipdata.file('config.json').async('text');
+        // }).then(text => {
+        //     GlobalConfig.setData(JSON.parse(text));
+        //     GameApp.ins<GameApp>().load();
+        // })
+        var soldier = new SoldierShapeEntity(SoldierShapType.TYPE_CROSS);
+        this.addChild(soldier);
+        soldier.x = soldier.y = 300;
     };
     /**
      * 描述文件加载成功，开始播放动画
