@@ -22,10 +22,20 @@ class GameMainView extends BaseEuiView{
 	private gemWatcher:eui.Watcher;
 	private addGoldBtn:eui.Image;
 	private addGemBtn:eui.Image;
+
+	private upgradeBtn:eui.Image;
 	public constructor() {
 		super();
 	}
 	public open(...param):void{
+		for(let i:number = 1;i<=5;i++){
+			let skill1Level:string = egret.localStorage.getItem(LocalStorageEnum.SKILL_LEVEL+(100+i))
+			if(!skill1Level){
+				egret.localStorage.setItem(LocalStorageEnum.SKILL_LEVEL+(100+i),"1");
+			}
+		}
+		
+
 		this.touchEnabled = false;
 		this.touchChildren = false;
 		this.addTouchEvent(this.settingBtn,this.onSetHandler,true);
@@ -53,12 +63,16 @@ class GameMainView extends BaseEuiView{
 
 		this.addTouchEvent(this.addGemBtn,this.onaddGem,true);
 		this.addTouchEvent(this.addGoldBtn,this.onaddGold,true);
+		this.addTouchEvent(this.upgradeBtn,this.onUpgrade,true);
 	}
 	private onaddGem():void{
 		ViewManager.ins<ViewManager>().open(ShopPopUp,[{selectIndex:1}])
 	}
 	private onaddGold():void{
 		ViewManager.ins<ViewManager>().open(ShopPopUp,[{selectIndex:0}])
+	}
+	private onUpgrade():void{
+		ViewManager.ins<ViewManager>().open(UpgradePopUp);
 	}
 	public initialize():void{
 		//初始化
@@ -191,7 +205,8 @@ class GameMainView extends BaseEuiView{
 		},this)
 	}
 	public close():void{
-		this.addTouchEvent(this.settingBtn,this.onSetHandler);
+		this.removeTouchEvent(this.settingBtn,this.onSetHandler);
+		this.removeTouchEvent(this.upgradeBtn,this.onUpgrade);
 		this.list.removeEventListener(eui.ItemTapEvent.ITEM_TAP,this.onItemTap,this);
 		StageUtils.ins<StageUtils>().getStage().removeEventListener(StartGameEvent.CLICK_GUIDE_SKILL,this.onClickGuideSkill,this);
 		StageUtils.ins<StageUtils>().getStage().removeEventListener(StartGameEvent.USE_GUIDE_SKILL,this.onUseGuideSkill,this);

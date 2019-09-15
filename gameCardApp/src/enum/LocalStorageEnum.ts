@@ -22,4 +22,7 @@ class LocalStorageEnum {
 	public static readonly ROLE_GOLD:string = "role_gold";
 	/**人物宝石数量 */
 	public static readonly ROLE_GEM:string = "role_gem";
+
+	/**当前技能等级 */
+	public static readonly SKILL_LEVEL:string = "skill_level"
 }

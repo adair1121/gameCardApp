@@ -24,6 +24,12 @@ var GameMainView = (function (_super) {
         for (var _i = 0; _i < arguments.length; _i++) {
             param[_i] = arguments[_i];
         }
+        for (var i = 1; i <= 5; i++) {
+            var skill1Level = egret.localStorage.getItem(LocalStorageEnum.SKILL_LEVEL + (100 + i));
+            if (!skill1Level) {
+                egret.localStorage.setItem(LocalStorageEnum.SKILL_LEVEL + (100 + i), "1");
+            }
+        }
         this.touchEnabled = false;
         this.touchChildren = false;
         this.addTouchEvent(this.settingBtn, this.onSetHandler, true);
@@ -48,12 +54,16 @@ var GameMainView = (function (_super) {
         this.gemWatcher = eui.Binding.bindHandler(GameApp, ["roleGem"], this.roleGemChange, this);
         this.addTouchEvent(this.addGemBtn, this.onaddGem, true);
         this.addTouchEvent(this.addGoldBtn, this.onaddGold, true);
+        this.addTouchEvent(this.upgradeBtn, this.onUpgrade, true);
     };
     GameMainView.prototype.onaddGem = function () {
         ViewManager.ins().open(ShopPopUp, [{ selectIndex: 1 }]);
     };
     GameMainView.prototype.onaddGold = function () {
         ViewManager.ins().open(ShopPopUp, [{ selectIndex: 0 }]);
+    };
+    GameMainView.prototype.onUpgrade = function () {
+        ViewManager.ins().open(UpgradePopUp);
     };
     GameMainView.prototype.initialize = function () {
         var _this = this;
@@ -189,7 +199,8 @@ var GameMainView = (function (_super) {
         }, this);
     };
     GameMainView.prototype.close = function () {
-        this.addTouchEvent(this.settingBtn, this.onSetHandler);
+        this.removeTouchEvent(this.settingBtn, this.onSetHandler);
+        this.removeTouchEvent(this.upgradeBtn, this.onUpgrade);
         this.list.removeEventListener(eui.ItemTapEvent.ITEM_TAP, this.onItemTap, this);
         StageUtils.ins().getStage().removeEventListener(StartGameEvent.CLICK_GUIDE_SKILL, this.onClickGuideSkill, this);
         StageUtils.ins().getStage().removeEventListener(StartGameEvent.USE_GUIDE_SKILL, this.onUseGuideSkill, this);

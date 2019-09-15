@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "description_json,config_zip,map_json,egret_icon_png,button_down_png,button_up_png,checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,thumb_pb_png,track_pb_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,track_sb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,bg_jpg,progress_bg_png,progress_bar_png,enter_down_png,enter_up_png,storyBtn_png,common_close_png,story_bg_png,story_font_png,main_bg_jpg,main_font_bg_png,main_gold_png,main_gem_png,main_add_btn_png,main_setting_btn_png,main_font_level_png,main_font_count_png,main_icon_award_png,main_bg_2_jpg,main_upgrade_btn_png,main_skill_bg_png,main_item_bg_png,main_progressBg_png,main_progressBar_png,main_area_line_png,main_top_bg_png,skill_101_png,skill_101_title_png,skill_102_png,skill_102_title_png,skill_103_png,skill_103_title_png,skill_104_png,skill_104_title_png,skill_105_png,skill_105_title_png,common_xuanzhong_png,common_close_2_png,audio_bar_bg_png,audio_bar_png,audio_icon_png,autio_title_png,effect_title_png,setting_panel_png,prompt_bg_png,prompt_cancleBtn_png,prompt_gold_png,prompt_sureBtn_png,continueBtn_png,exitBtn_png,fail_font_png,fail_icon_png,nextLevelBtn_png,result_bg_png,win_font_png,win_icon_png,gem_font_1_png,gem_font_2_png,gem_font_3_png,gem_font_4_png,gemBtn_down_png,gemBtn_up_png,gemIcon_1_png,gemIcon_2_png,gemIcon_3_png,gemIcon_4_png,gold_font_1_png,gold_font_2_png,gold_font_3_png,gold_font_4_png,goldBtn_down_png,goldBtn_up_png,goldIcon_1_png,goldIcon_2_png,goldIcon_3_png,goldIcon_4_png,shopBg_png,shopBtn_png,shopItemBg_png",
+			"keys": "description_json,config_zip,map_json,egret_icon_png,button_down_png,button_up_png,checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,thumb_pb_png,track_pb_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,track_sb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,bg_jpg,progress_bg_png,progress_bar_png,enter_down_png,enter_up_png,storyBtn_png,common_close_png,story_bg_png,story_font_png,main_bg_jpg,main_font_bg_png,main_gold_png,main_gem_png,main_add_btn_png,main_setting_btn_png,main_font_level_png,main_font_count_png,main_icon_award_png,main_bg_2_jpg,main_upgrade_btn_png,main_skill_bg_png,main_item_bg_png,main_progressBg_png,main_progressBar_png,main_area_line_png,main_top_bg_png,skill_101_png,skill_101_title_png,skill_102_png,skill_102_title_png,skill_103_png,skill_103_title_png,skill_104_png,skill_104_title_png,skill_105_png,skill_105_title_png,common_xuanzhong_png,common_close_2_png,audio_bar_bg_png,audio_bar_png,audio_icon_png,autio_title_png,effect_title_png,setting_panel_png,prompt_bg_png,prompt_cancleBtn_png,prompt_gold_png,prompt_sureBtn_png,continueBtn_png,exitBtn_png,fail_font_png,fail_icon_png,nextLevelBtn_png,result_bg_png,win_font_png,win_icon_png,gem_font_1_png,gem_font_2_png,gem_font_3_png,gem_font_4_png,gemBtn_down_png,gemBtn_up_png,gemIcon_1_png,gemIcon_2_png,gemIcon_3_png,gemIcon_4_png,gold_font_1_png,gold_font_2_png,gold_font_3_png,gold_font_4_png,goldBtn_down_png,goldBtn_up_png,goldIcon_1_png,goldIcon_2_png,goldIcon_3_png,goldIcon_4_png,shopBg_png,shopBtn_png,shopItemBg_png,upgrade_panel_png,upgrade_item_png,atkFont_png,general_bottom_png,goldBtn_png,reborn_head_1_png,reborn_head_2_png,reborn_head_3_png,reborn_head_4_png,reborn_item_png,reborn_panel_png,reborn_title_1_png,reborn_title_2_png,reborn_title_3_png,reborn_title_4_png,rebornBtn_png,skill_bottom_png,upgarde_close_png,upgrade_font_bg_png",
 			"name": "preload"
 		}
 	],
@@ -535,6 +535,101 @@
 			"name": "shopItemBg_png",
 			"type": "image",
 			"url": "res/view/shop/shopItemBg.png"
+		},
+		{
+			"name": "upgrade_panel_png",
+			"type": "image",
+			"url": "res/view/upgrade/upgrade_panel.png"
+		},
+		{
+			"name": "upgrade_item_png",
+			"type": "image",
+			"url": "res/view/upgrade/upgrade_item.png"
+		},
+		{
+			"name": "atkFont_png",
+			"type": "image",
+			"url": "res/view/upgrade/atkFont.png"
+		},
+		{
+			"name": "general_bottom_png",
+			"type": "image",
+			"url": "res/view/upgrade/general_bottom.png"
+		},
+		{
+			"name": "goldBtn_png",
+			"type": "image",
+			"url": "res/view/upgrade/goldBtn.png"
+		},
+		{
+			"name": "reborn_head_1_png",
+			"type": "image",
+			"url": "res/view/upgrade/reborn_head_1.png"
+		},
+		{
+			"name": "reborn_head_2_png",
+			"type": "image",
+			"url": "res/view/upgrade/reborn_head_2.png"
+		},
+		{
+			"name": "reborn_head_3_png",
+			"type": "image",
+			"url": "res/view/upgrade/reborn_head_3.png"
+		},
+		{
+			"name": "reborn_head_4_png",
+			"type": "image",
+			"url": "res/view/upgrade/reborn_head_4.png"
+		},
+		{
+			"name": "reborn_item_png",
+			"type": "image",
+			"url": "res/view/upgrade/reborn_item.png"
+		},
+		{
+			"name": "reborn_panel_png",
+			"type": "image",
+			"url": "res/view/upgrade/reborn_panel.png"
+		},
+		{
+			"name": "reborn_title_1_png",
+			"type": "image",
+			"url": "res/view/upgrade/reborn_title_1.png"
+		},
+		{
+			"name": "reborn_title_2_png",
+			"type": "image",
+			"url": "res/view/upgrade/reborn_title_2.png"
+		},
+		{
+			"name": "reborn_title_3_png",
+			"type": "image",
+			"url": "res/view/upgrade/reborn_title_3.png"
+		},
+		{
+			"name": "reborn_title_4_png",
+			"type": "image",
+			"url": "res/view/upgrade/reborn_title_4.png"
+		},
+		{
+			"name": "rebornBtn_png",
+			"type": "image",
+			"url": "res/view/upgrade/rebornBtn.png"
+		},
+		{
+			"name": "skill_bottom_png",
+			"type": "image",
+			"url": "res/view/upgrade/skill_bottom.png"
+		},
+		{
+			"name": "upgarde_close_png",
+			"type": "image",
+			"url": "res/view/upgrade/upgarde_close.png"
+		},
+		{
+			"name": "upgrade_font_bg_png",
+			"type": "image",
+			"url": "res/view/upgrade/upgrade_font_bg.png"
 		}
 	]
 }

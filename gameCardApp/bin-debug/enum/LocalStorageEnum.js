@@ -20,6 +20,8 @@ var LocalStorageEnum = (function () {
     LocalStorageEnum.ROLE_GOLD = "role_gold";
     /**人物宝石数量 */
     LocalStorageEnum.ROLE_GEM = "role_gem";
+    /**当前技能等级 */
+    LocalStorageEnum.SKILL_LEVEL = "skill_level";
     return LocalStorageEnum;
 }());
 __reflect(LocalStorageEnum.prototype, "LocalStorageEnum");

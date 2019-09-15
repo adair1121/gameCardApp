@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="UpgradeItemSkin" width="550" height="105" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image source="upgrade_item_png" x="0" y="0" anchorOffsetX="0" width="550"/>
+	<e:Image source="main_item_bg_png" x="9.34" y="8"/>
+	<e:Image id="skillIcon" source="skill_101_png" x="22.67" y="21.65"/>
+	<e:Image id="skillTitle" source="skill_101_title_png" x="36.66" y="69"/>
+	<e:Image source="skill_bottom_png" x="99" y="16"/>
+	<e:Image source="atkFont_png" x="107" y="25"/>
+	<e:Label id="atkLab" text="10000" x="153" y="26" size="18" fontFamily="yt"/>
+	<e:Label id="skillDesc" text="连续攻击敌人可造成大量伤害" x="102" y="60" size="16" anchorOffsetX="0" width="263.67" anchorOffsetY="0" height="33.33" verticalAlign="middle" textAlign="left"/>
+	<e:Image id="rebornBtn" source="rebornBtn_png" x="350" y="17"/>
+	<e:Group id="upgradeBtn" x="447" y="17" touchChildren="false" touchEnabled="true" touchThrough="false">
+		<e:Image source="goldBtn_png" x="0" y="0"/>
+		<e:Label id="costLab" text="100000" x="29.5" y="5" size="12" fontFamily="yt" anchorOffsetX="0" width="53" anchorOffsetY="0" height="22" verticalAlign="middle" textAlign="center"/>
+	</e:Group>
+	<e:Label id="levelLab" text="Lv.1" x="239" y="27" size="18" fontFamily="yt"/>
+</e:Skin>
