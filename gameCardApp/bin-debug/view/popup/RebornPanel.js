@@ -23,6 +23,34 @@ var RebornPanel = (function (_super) {
             egret.Tween.removeTweens(_this.rebornGroup);
         });
         this.addTouchEvent(this.btnReturn, this.onReturn, true);
+        this.arrayCollect = new eui.ArrayCollection();
+        this.list.itemRenderer = RebornItem;
+        this.list.dataProvider = this.arrayCollect;
+        this.scroller.viewport = this.list;
+        this.scroller.verticalScrollBar.autoVisibility = false;
+        this.scroller.verticalScrollBar.visible = false;
+        var dataArr = [];
+        var cfgs = RebornCfg.cfg;
+        for (var key in cfgs) {
+            var obj = cfgs[key];
+            if (!!~GameApp.rebornIds.indexOf(cfgs[key].id)) {
+                obj["rebornBoo"] = true;
+            }
+            else {
+                obj["rebornBoo"] = false;
+            }
+            dataArr.push(obj);
+        }
+        this.arrayCollect.source = dataArr;
+        this.list.addEventListener(eui.ItemTapEvent.ITEM_TAP, this.onItemTap, this);
+    };
+    RebornPanel.prototype.onItemTap = function (evt) {
+        var item = this.list.getChildAt(evt.itemIndex);
+        if (item.ifReborn) {
+            UserTips.ins().showTips("已转生过此职业");
+            return;
+        }
+        ViewManager.ins().open(RebornTipPopUp, [{ cost: item.cost, mid: item.mid }]);
     };
     RebornPanel.prototype.onReturn = function () {
         var _this = this;
@@ -33,6 +61,7 @@ var RebornPanel = (function (_super) {
     };
     RebornPanel.prototype.close = function () {
         this.removeTouchEvent(this.btnReturn, this.onReturn);
+        this.list.removeEventListener(eui.ItemTapEvent.ITEM_TAP, this.onItemTap, this);
     };
     return RebornPanel;
 }(BaseEuiView));

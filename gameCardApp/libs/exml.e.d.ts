@@ -50,6 +50,8 @@ declare module skins{
 	class VSliderSkin extends eui.Skin{
 	}
 }
+declare class RebornItemSkin extends eui.Skin{
+}
 declare class SkillItemSkin extends eui.Skin{
 }
 declare class UpgradeItemSkin extends eui.Skin{

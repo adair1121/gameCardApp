@@ -22,6 +22,8 @@ var LocalStorageEnum = (function () {
     LocalStorageEnum.ROLE_GEM = "role_gem";
     /**当前技能等级 */
     LocalStorageEnum.SKILL_LEVEL = "skill_level";
+    /**当前技能召唤 转生id */
+    LocalStorageEnum.REBORNIDS = "rebornIds";
     return LocalStorageEnum;
 }());
 __reflect(LocalStorageEnum.prototype, "LocalStorageEnum");

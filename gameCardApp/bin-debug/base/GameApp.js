@@ -16,6 +16,7 @@ var GameApp = (function (_super) {
     function GameApp() {
         return _super.call(this) || this;
     }
+    /**总波数 */ ;
     GameApp.prototype.load = function () {
         eui.Label.default_fontFamily = "Microsoft YaHei";
         GlobalConfig.parserData();
@@ -23,6 +24,38 @@ var GameApp = (function (_super) {
         LoadingUI.inst().hide();
         ViewManager.ins().open(GameMainView);
         ViewManager.ins().open(StartGameView);
+        var goldstr = egret.localStorage.getItem(LocalStorageEnum.ROLE_GOLD);
+        if (!goldstr) {
+            GameApp.roleGold = 1000;
+        }
+        else {
+            GameApp.roleGold = parseInt(goldstr);
+        }
+        var gemstr = egret.localStorage.getItem(LocalStorageEnum.ROLE_GEM);
+        if (!gemstr) {
+            GameApp.roleGem = 10;
+        }
+        else {
+            GameApp.roleGem = parseInt(gemstr);
+        }
+        var rebonidstr = egret.localStorage.getItem(LocalStorageEnum.REBORNIDS);
+        if (!rebonidstr) {
+            GameApp.rebornIds = [];
+        }
+        else {
+            GameApp.rebornIds = JSON.parse(rebonidstr);
+        }
+        var levelstr = egret.localStorage.getItem(LocalStorageEnum.LEVEL);
+        if (!levelstr) {
+            GameApp.level = 1;
+        }
+        else {
+            GameApp.level = parseInt(levelstr);
+        }
+        eui.Binding.bindHandler(GameApp, ["level"], this.levelChange, this);
+    };
+    GameApp.prototype.levelChange = function () {
+        egret.localStorage.setItem(LocalStorageEnum.LEVEL, GameApp.level.toString());
     };
     GameApp.prototype.onDataCallBack = function (value) {
         if (value) {
@@ -74,6 +107,9 @@ var GameApp = (function (_super) {
     GameApp.phurseState = false;
     GameApp.roleGold = 0;
     GameApp.roleGem = 0;
+    GameApp.rebornIds = [];
+    GameApp.level = 1;
+    GameApp.totalCount = 5;
     return GameApp;
 }(BaseClass));
 __reflect(GameApp.prototype, "GameApp");

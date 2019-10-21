@@ -24,5 +24,8 @@ class LocalStorageEnum {
 	public static readonly ROLE_GEM:string = "role_gem";
 
 	/**当前技能等级 */
-	public static readonly SKILL_LEVEL:string = "skill_level"
+	public static readonly SKILL_LEVEL:string = "skill_level";
+
+	/**当前技能召唤 转生id */
+	public static readonly REBORNIDS:string = "rebornIds";
 }

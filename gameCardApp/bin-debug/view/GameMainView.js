@@ -17,6 +17,10 @@ var GameMainView = (function (_super) {
         _this.totalGetCount = 3;
         //宝箱领取金币
         _this.goldGetNum = 50;
+        //当前波数
+        _this.curCount = 1;
+        //当前关卡总波数
+        _this.totalCount = 1;
         return _this;
     }
     GameMainView.prototype.open = function () {
@@ -55,6 +59,15 @@ var GameMainView = (function (_super) {
         this.addTouchEvent(this.addGemBtn, this.onaddGem, true);
         this.addTouchEvent(this.addGoldBtn, this.onaddGold, true);
         this.addTouchEvent(this.upgradeBtn, this.onUpgrade, true);
+        eui.Binding.bindHandler(GameApp, ["level"], this.onLevelChange, this);
+    };
+    GameMainView.prototype.onLevelChange = function () {
+        this.levelNumLab.text = GameApp.level.toString();
+        this.totalCount = ((GameApp.level / GameApp.totalCount) >> 0) + 1;
+        if (this.totalCount >= GameApp.totalCount) {
+            this.totalCount = GameApp.totalCount;
+        }
+        this.countNumLab.text = this.curCount + "/" + this.totalCount;
     };
     GameMainView.prototype.onaddGem = function () {
         ViewManager.ins().open(ShopPopUp, [{ selectIndex: 1 }]);

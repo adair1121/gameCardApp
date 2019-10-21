@@ -24,6 +24,13 @@ class GameMainView extends BaseEuiView{
 	private addGemBtn:eui.Image;
 
 	private upgradeBtn:eui.Image;
+	private levelNumLab:eui.Label;
+	private countNumLab:eui.Label;
+
+	//当前波数
+	private curCount:number = 1;
+	//当前关卡总波数
+	private totalCount:number = 1;
 	public constructor() {
 		super();
 	}
@@ -64,6 +71,16 @@ class GameMainView extends BaseEuiView{
 		this.addTouchEvent(this.addGemBtn,this.onaddGem,true);
 		this.addTouchEvent(this.addGoldBtn,this.onaddGold,true);
 		this.addTouchEvent(this.upgradeBtn,this.onUpgrade,true);
+
+		eui.Binding.bindHandler(GameApp,["level"],this.onLevelChange,this);
+	}
+	private onLevelChange():void{
+		this.levelNumLab.text = GameApp.level.toString();
+		this.totalCount = ((GameApp.level/GameApp.totalCount)>>0)+1;
+		if(this.totalCount >= GameApp.totalCount){
+			this.totalCount = GameApp.totalCount;
+		}
+		this.countNumLab.text = this.curCount+"/"+this.totalCount
 	}
 	private onaddGem():void{
 		ViewManager.ins<ViewManager>().open(ShopPopUp,[{selectIndex:1}])

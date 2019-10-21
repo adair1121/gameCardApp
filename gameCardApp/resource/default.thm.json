@@ -29,6 +29,7 @@
 		"resource/eui_skins/ToggleSwitchSkin.exml",
 		"resource/eui_skins/VScrollBarSkin.exml",
 		"resource/eui_skins/VSliderSkin.exml",
+		"resource/skins/components/RebornItemSkin.exml",
 		"resource/skins/components/SkillItemSkin.exml",
 		"resource/skins/components/UpgradeItemSkin.exml",
 		"resource/skins/components/VirtualJoystickSkin.exml",

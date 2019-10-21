@@ -14,6 +14,7 @@ class RebornTipPopUp extends BaseEuiView{
 	private sureBtn:eui.Image;
 	private cancleBtn:eui.Image;
 	private _cost:number;
+	private _mid:number;
 	public constructor() {
 		super();
 	}
@@ -27,6 +28,10 @@ class RebornTipPopUp extends BaseEuiView{
 		if(param && param.length){
 			if(param[0].cost){
 				this._cost = param[0].cost;
+				this.costLab.text = this._cost.toString();
+			}
+			if(param[0].mid){
+				this._mid = param[0].mid;
 			}
 			if(param[0].cb){
 				this._cb = param[0].cb;
@@ -47,6 +52,8 @@ class RebornTipPopUp extends BaseEuiView{
 			}else{
 				GameApp.ins<GameApp>().gold -= this._cost;
 				UserTips.ins<UserTips>().showTips("转生成功");
+				GameApp.rebornIds.push(this._mid);
+				egret.localStorage.setItem(LocalStorageEnum.REBORNIDS,JSON.stringify(GameApp.rebornIds));
 			}
 		}else{
 			this._param = -1;

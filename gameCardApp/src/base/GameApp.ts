@@ -8,6 +8,11 @@ class GameApp extends BaseClass {
 	
 	public static roleGold:number = 0;
 	public static roleGem:number = 0;
+	public static rebornIds:number[]= [];
+	public static level:number = 1;
+
+	/**总波数 */;
+	public static totalCount:number = 5;
 	public constructor() {
 		super();
 	}
@@ -18,6 +23,39 @@ class GameApp extends BaseClass {
 		LoadingUI.inst().hide();
 		ViewManager.ins<ViewManager>().open(GameMainView);
 		ViewManager.ins<ViewManager>().open(StartGameView);
+
+		let goldstr:string = egret.localStorage.getItem(LocalStorageEnum.ROLE_GOLD);
+		if(!goldstr){
+			GameApp.roleGold = 1000;
+		}else{
+			GameApp.roleGold = parseInt(goldstr);
+		}
+		let gemstr:string = egret.localStorage.getItem(LocalStorageEnum.ROLE_GEM);
+		if(!gemstr){
+			GameApp.roleGem = 10;
+		}else{
+			GameApp.roleGem = parseInt(gemstr);
+		}
+
+		let rebonidstr:string = egret.localStorage.getItem(LocalStorageEnum.REBORNIDS);
+		if(!rebonidstr){
+			GameApp.rebornIds = [];
+		}else{
+			GameApp.rebornIds = JSON.parse(rebonidstr);
+		}
+
+		
+		let levelstr:string = egret.localStorage.getItem(LocalStorageEnum.LEVEL);
+		if(!levelstr){
+			GameApp.level = 1;
+		}else{
+			GameApp.level = parseInt(levelstr);
+		}
+		eui.Binding.bindHandler(GameApp,["level"],this.levelChange,this);
+
+	}
+	private levelChange():void{
+		egret.localStorage.setItem(LocalStorageEnum.LEVEL,GameApp.level.toString());
 	}
 	private onDataCallBack(value:string):void{
 		if(value){
