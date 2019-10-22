@@ -60,6 +60,8 @@ var GameMainView = (function (_super) {
         this.addTouchEvent(this.addGoldBtn, this.onaddGold, true);
         this.addTouchEvent(this.upgradeBtn, this.onUpgrade, true);
         eui.Binding.bindHandler(GameApp, ["level"], this.onLevelChange, this);
+        this.descLab.visible = false;
+        this.descLab.alpha = 0;
     };
     GameMainView.prototype.onLevelChange = function () {
         this.levelNumLab.text = GameApp.level.toString();
@@ -190,6 +192,22 @@ var GameMainView = (function (_super) {
     };
     GameMainView.prototype.onItemTap = function (evt) {
         var skillId = evt.item.skillId;
+        var skillCfg = GlobalFun.getSkillCfg(skillId);
+        if (skillCfg) {
+            this.descLab.visible = true;
+            this.descLab.alpha = 0;
+            this.descLab.text = skillCfg.desc;
+            egret.Tween.removeTweens(this.descLab);
+            if (this.timeout) {
+                clearTimeout(this.timeout);
+            }
+            egret.Tween.get(this.descLab, { loop: true }).to({ alpha: 1 }, 500).to({ alpha: 0 });
+            var self_1 = this;
+            this.timeout = setTimeout(function () {
+                clearTimeout(self_1.timeout);
+                egret.Tween.removeTweens(self_1.descLab);
+            }, 2000);
+        }
         console.log("触发了技能----" + skillId);
     };
     /**展示关卡显示文字 */

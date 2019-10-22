@@ -93,6 +93,14 @@ var GlobalFun = (function () {
         var time = 5 * 60 * 60 * 1000;
         return startTp + time;
     };
+    GlobalFun.getSkillCfg = function (id) {
+        var skillcfgs = SkillCfg.skillCfg;
+        for (var key in skillcfgs) {
+            if (skillcfgs[key].skillId == id) {
+                return skillcfgs[key];
+            }
+        }
+    };
     GlobalFun.count = 0; //计时器次数
     GlobalFun.timer = new egret.Timer(1000);
     return GlobalFun;

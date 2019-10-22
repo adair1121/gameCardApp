@@ -31,6 +31,10 @@ class GameMainView extends BaseEuiView{
 	private curCount:number = 1;
 	//当前关卡总波数
 	private totalCount:number = 1;
+
+	private descLab:eui.Label;
+
+	private clickRect:eui.Rect;
 	public constructor() {
 		super();
 	}
@@ -41,8 +45,6 @@ class GameMainView extends BaseEuiView{
 				egret.localStorage.setItem(LocalStorageEnum.SKILL_LEVEL+(100+i),"1");
 			}
 		}
-		
-
 		this.touchEnabled = false;
 		this.touchChildren = false;
 		this.addTouchEvent(this.settingBtn,this.onSetHandler,true);
@@ -71,8 +73,16 @@ class GameMainView extends BaseEuiView{
 		this.addTouchEvent(this.addGemBtn,this.onaddGem,true);
 		this.addTouchEvent(this.addGoldBtn,this.onaddGold,true);
 		this.addTouchEvent(this.upgradeBtn,this.onUpgrade,true);
+		this.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onTouchTap,this);
 
 		eui.Binding.bindHandler(GameApp,["level"],this.onLevelChange,this);
+		this.descLab.visible = false;
+		this.descLab.alpha = 0;
+	}
+	private onTouchTap():void{
+		if(this.releaseSkill103){
+			//当前可以释放技人物;
+		}
 	}
 	private onLevelChange():void{
 		this.levelNumLab.text = GameApp.level.toString();
@@ -80,7 +90,7 @@ class GameMainView extends BaseEuiView{
 		if(this.totalCount >= GameApp.totalCount){
 			this.totalCount = GameApp.totalCount;
 		}
-		this.countNumLab.text = this.curCount+"/"+this.totalCount
+		this.countNumLab.text = this.curCount+"/"+this.totalCount;
 	}
 	private onaddGem():void{
 		ViewManager.ins<ViewManager>().open(ShopPopUp,[{selectIndex:1}])
@@ -197,8 +207,45 @@ class GameMainView extends BaseEuiView{
 	private onSetHandler():void{
 		ViewManager.ins<ViewManager>().open(SettingPopUp);
 	}
+	private timeout;
+	private releaseSkill103:boolean = false;
 	private onItemTap(evt:eui.ItemTapEvent):void{
 		let skillId:number = evt.item.skillId;
+		let skillCfg:any = GlobalFun.getSkillCfg(skillId);
+		if(skillCfg){
+			this.descLab.visible = true;
+			this.descLab.alpha = 0;
+			this.descLab.text = skillCfg.desc;
+			egret.Tween.removeTweens(this.descLab);
+			if(this.timeout){
+				clearTimeout(this.timeout);
+			}
+			egret.Tween.get(this.descLab,{loop:true}).to({alpha:1},500).to({alpha:0},500);
+			let self = this;
+			this.timeout = setTimeout(function() {
+				clearTimeout(self.timeout);
+				egret.Tween.removeTweens(self.descLab)
+			}, 2000);
+
+			for(let i:number = 0;i<this.list.numChildren;i++){
+				let item:SkilItem = this.list.$children[i] as SkilItem;
+				item.focus = false;
+			}
+			let curItem:SkilItem = this.list.getChildAt(evt.itemIndex) as SkilItem;
+			curItem.focus = true;
+			if(curItem.skillId == 103){
+				//当前是神将召唤
+				if(!curItem.num){
+					//神将已经召唤完毕
+					UserTips.ins<UserTips>().showTips("已无更多的神将");	
+				}else{
+					this.releaseSkill103 = true;
+				}
+			}else{
+				this.releaseSkill103 = false;
+				// 释放其他技能
+			}
+		}
 		console.log("触发了技能----"+skillId);
 	}
 	

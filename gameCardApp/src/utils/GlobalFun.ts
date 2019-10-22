@@ -100,5 +100,13 @@ class GlobalFun {
         let time:number = 5*60*60*1000;
         return startTp + time;
     }
+    public static getSkillCfg(id:number):any{
+        let skillcfgs:any[] = SkillCfg.skillCfg;
+        for(let key in skillcfgs){
+            if(skillcfgs[key].skillId == id){
+                return skillcfgs[key];
+            }
+        }
+    }
 
 }

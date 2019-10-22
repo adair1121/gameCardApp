@@ -4,5 +4,7 @@
 		<e:Image source="main_item_bg_png" x="0" y="0"/>
 		<e:Image id="skillIcon" source="skill_101_png" x="15" y="15"/>
 		<e:Image id="skillTitle" source="skill_101_title_png" x="28.5" y="58"/>
+		<e:Image id="rect" source="common_xuanzhong_png" x="6.25" y="8.75" scale9Grid="9,9,57,56" touchEnabled="false" pixelHitTest="false"/>
+		<e:Label id="numLab" text="10" size="20" touchEnabled="false" textColor="0xe5ad24" right="16" top="15"/>
 	</e:Group>
 </e:Skin>
