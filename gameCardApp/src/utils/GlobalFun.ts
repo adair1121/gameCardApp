@@ -94,6 +94,37 @@ class GlobalFun {
     public static payCallBack(_cb):void{
         GameApp.pay_cbDdata = _cb;
     }
+    /**获取所有boss配置 */
+    public static getBossCfg():CardVo[]{
+        let cfgs:CardVo[] = MonsterCfg.cfgs;
+        let arr:CardVo[] = [];
+        for(let key in cfgs){
+            if(cfgs[key].type == 1){
+                arr.push(cfgs[key])
+            }
+        }
+        return arr;
+    }
+    /**获取所有小怪配置 */
+    public static getMonsterCfg():CardVo[]{
+        let cfgs:CardVo[] = MonsterCfg.cfgs;
+        let arr:CardVo[] = [];
+        for(let key in cfgs){
+            if(cfgs[key].type == 2){
+                arr.push(cfgs[key])
+            }
+        }
+        return arr;
+    }
+    /**根据id获取配置 */
+    public static getCardDataFromId(id:number):CardVo{
+         let cfgs:CardVo[] = MonsterCfg.cfgs;
+         for(let key in cfgs){
+            if(cfgs[key].id == id){
+                return cfgs[key];
+            }
+        }
+    }
     /**获取宝箱刷新时间戳 */
     public static getBoxRfreshTimeSpan():number{
         let startTp:number = new Date(new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1).getTime();

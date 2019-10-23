@@ -34,7 +34,7 @@ var StoryPopUp = (function (_super) {
         egret.Tween.removeAllTweens();
         egret.Tween.get(this.content).to({ verticalCenter: -600 }, 600, egret.Ease.circOut).call(function () {
             egret.Tween.removeTweens(_this.content);
-            ViewManager.ins().close(StoryPopUp);
+            ViewManager.inst().close(StoryPopUp);
         }, this);
     };
     StoryPopUp.prototype.close = function () {
@@ -43,5 +43,5 @@ var StoryPopUp = (function (_super) {
     return StoryPopUp;
 }(BaseEuiView));
 __reflect(StoryPopUp.prototype, "StoryPopUp");
-ViewManager.ins().reg(StoryPopUp, LayerManager.UI_Pop);
+ViewManager.inst().reg(StoryPopUp, LayerManager.UI_Pop);
 //# sourceMappingURL=StoryPopUp.js.map

@@ -47,16 +47,16 @@ var RebornPanel = (function (_super) {
     RebornPanel.prototype.onItemTap = function (evt) {
         var item = this.list.getChildAt(evt.itemIndex);
         if (item.ifReborn) {
-            UserTips.ins().showTips("已转生过此职业");
+            UserTips.inst().showTips("已转生过此职业");
             return;
         }
-        ViewManager.ins().open(RebornTipPopUp, [{ cost: item.cost, mid: item.mid }]);
+        ViewManager.inst().open(RebornTipPopUp, [{ cost: item.cost, mid: item.mid }]);
     };
     RebornPanel.prototype.onReturn = function () {
         var _this = this;
         egret.Tween.get(this.rebornGroup).to({ left: -500 }, 600, egret.Ease.circOut).call(function () {
             egret.Tween.removeTweens(_this.rebornGroup);
-            ViewManager.ins().close(RebornPanel);
+            ViewManager.inst().close(RebornPanel);
         });
     };
     RebornPanel.prototype.close = function () {
@@ -66,5 +66,5 @@ var RebornPanel = (function (_super) {
     return RebornPanel;
 }(BaseEuiView));
 __reflect(RebornPanel.prototype, "RebornPanel");
-ViewManager.ins().reg(RebornPanel, LayerManager.UI_Pop);
+ViewManager.inst().reg(RebornPanel, LayerManager.UI_Pop);
 //# sourceMappingURL=RebornPanel.js.map

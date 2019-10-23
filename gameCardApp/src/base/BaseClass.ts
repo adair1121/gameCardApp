@@ -5,7 +5,7 @@ class BaseClass {
 	 * 获取一个单例
 	 * @returns {any}
 	 */
-	public static ins<T>(...args:any[]):T {
+	public static single<T>(...args:any[]):T {
 		let Class:any = this;
 		if (!Class._instance) {
 			let argsLen:number = args.length;
@@ -25,7 +25,4 @@ class BaseClass {
 		}
 		return Class._instance;
 	}
-}
-class GameData{
-	public static level:number = 1;
 }

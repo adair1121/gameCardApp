@@ -36,15 +36,15 @@ class RebornPanel extends BaseEuiView{
 	private onItemTap(evt:eui.ItemTapEvent):void{
 		let item:RebornItem = this.list.getChildAt(evt.itemIndex) as RebornItem;
 		if(item.ifReborn){
-			UserTips.ins<UserTips>().showTips("已转生过此职业");
+			UserTips.inst().showTips("已转生过此职业");
 			return;
 		}
-		ViewManager.ins<ViewManager>().open(RebornTipPopUp,[{cost:item.cost,mid:item.mid}])
+		ViewManager.inst().open(RebornTipPopUp,[{cost:item.cost,mid:item.mid}])
 	}
 	private onReturn():void{
 		egret.Tween.get(this.rebornGroup).to({left:-500},600,egret.Ease.circOut).call(()=>{
 			egret.Tween.removeTweens(this.rebornGroup);
-			ViewManager.ins<ViewManager>().close(RebornPanel);
+			ViewManager.inst().close(RebornPanel);
 		})
 	}
 	public close():void{
@@ -52,4 +52,4 @@ class RebornPanel extends BaseEuiView{
 		this.list.removeEventListener(eui.ItemTapEvent.ITEM_TAP,this.onItemTap,this);
 	}
 }
-ViewManager.ins<ViewManager>().reg(RebornPanel,LayerManager.UI_Pop);
+ViewManager.inst().reg(RebornPanel,LayerManager.UI_Pop);

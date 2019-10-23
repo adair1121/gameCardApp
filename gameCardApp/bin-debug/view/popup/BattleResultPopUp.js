@@ -41,7 +41,7 @@ var BattleResultPopUp = (function (_super) {
         if (param[0].arg) {
             this._arg = param[0].arg;
         }
-        GameApp.ins().gold += this.goldNum;
+        GameApp.inst().gold += this.goldNum;
         this.addTouchEvent(this.nextBtn, this.onNextLevel, true);
         this.addTouchEvent(this.continueBtn, this.onContinue, true);
         this.addTouchEvent(this.exitBtn, this.onExit, true);
@@ -62,7 +62,7 @@ var BattleResultPopUp = (function (_super) {
         var _this = this;
         egret.Tween.get(this).to({ alpha: 0 }, 300, egret.Ease.circOut).call(function () {
             egret.Tween.removeTweens(_this);
-            ViewManager.ins().close(BattleResultPopUp);
+            ViewManager.inst().close(BattleResultPopUp);
             if (_this._cb && _this._arg) {
                 _this._cb.call(_this._arg, _this._param);
             }
@@ -79,5 +79,5 @@ var BattleResultPopUp = (function (_super) {
     return BattleResultPopUp;
 }(BaseEuiView));
 __reflect(BattleResultPopUp.prototype, "BattleResultPopUp");
-ViewManager.ins().reg(BattleResultPopUp, LayerManager.UI_Pop);
+ViewManager.inst().reg(BattleResultPopUp, LayerManager.UI_Pop);
 //# sourceMappingURL=BattleResultPopUp.js.map

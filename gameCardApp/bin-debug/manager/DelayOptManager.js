@@ -18,6 +18,10 @@ var DelayOptManager = (function (_super) {
         egret.startTick(_this.runCachedFun, _this);
         return _this;
     }
+    DelayOptManager.inst = function () {
+        var _inst = _super.single.call(this);
+        return _inst;
+    };
     DelayOptManager.prototype.addDelayOptFunction = function (thisObj, fun, funPara, callBack, para) {
         this._delayOpts.push({ "fun": fun, "funPara": funPara, "thisObj": thisObj, "callBack": callBack, "para": para });
     };

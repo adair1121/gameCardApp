@@ -6,10 +6,15 @@ class BaseEntity extends eui.Component{
 	//方向
 	protected _dic:number = 3;
 
-	protected _hp:number = 100;
+	protected _hp:number = 40;
+	protected _thp:number = 40;
 	protected _attack:number = 20;
 	protected _changeValue:number = 0.1;
 	protected _isDead:boolean = false;
+
+	protected buffAttack:number = 0;
+	protected buffHp:number = 0;
+	protected buffDef:number = 0;
 	public constructor() {
 		super();
 		this.initialize();
@@ -31,14 +36,30 @@ class BaseEntity extends eui.Component{
 	public get attack():number{
 		let index:number = (Math.random()*100)>>0;
 		let dic:number = index >= 50?1:-1;
-		return this._attack + dic*(this._attack*this._changeValue);
+		return (this._attack+this.buffAttack) + dic*((this._attack+this.buffAttack)*this._changeValue);
+	}
+	public set attack(value:number){
+		this._attack = value;
 	}
 	public reduceHp(dmg:number):void{
-		this._hp-=dmg;
-		if(this._hp<=0){
-			this._hp = 0;
-			this._isDead = true;
+		if(this.buffHp > 0){
+			this.buffHp -= dmg;
+		}else{
+			this._hp-=(dmg - this.buffDef);
+			if(this._hp<=0){
+				this._hp = 0;
+				this._isDead = true;
+			}
 		}
+	}
+	//计算方向
+	public calculEntityDic(angle:number):void{
+		if((angle >= -90 && angle < 0) || (angle >= 0 && angle <= 90)){
+			this._dic = 1
+		}else{
+			this._dic = -1;
+		}
+		this.scaleX = this._dic*this.scaleX;
 	}
 	protected dispose():void{
 		

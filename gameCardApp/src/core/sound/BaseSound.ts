@@ -13,7 +13,7 @@ class BaseSound {
 		this._cache = {};
 		this._loadingCache = new Array<string>();
 
-		TimerManager.ins<TimerManager>().doTimer(1 * 60 * 1000, 0, this.dealSoundTimer, this);
+		TimerManager.inst().doTimer(1 * 60 * 1000, 0, this.dealSoundTimer, this);
 	}
 
 	/**

@@ -10,7 +10,7 @@ class StartGameView extends BaseEuiView{
 		let firstStr:string = egret.localStorage.getItem(LocalStorageEnum.ENTER_FIRST);
 		if(!firstStr){
 			egret.localStorage.setItem(LocalStorageEnum.ENTER_FIRST,"1");
-			ViewManager.ins<ViewManager>().open(StoryPopUp);
+			ViewManager.inst().open(StoryPopUp);
 		}
 		this.addTouchEvent(this.storyBtn,this.onLookStory,true);
 		this.addTouchEvent(this.enterBtn,this.onEnter,true);
@@ -67,27 +67,27 @@ class StartGameView extends BaseEuiView{
             }
         );
 		this.filters = [this.customFilter4];
-		SoundManager.ins<SoundManager>().playBg(`${RES_AUDIO}game.mp3`);
+		SoundManager.inst().playBg(`${RES_AUDIO}game.mp3`);
 		
 	}
 	private onFrame(evt:egret.TouchEvent):void{
 		this.customFilter4.uniforms.offset -= 0.05;
 		if (this.customFilter4.uniforms.offset <= 0) {
 			this.customFilter4.uniforms.offset = 0.0;
-			ViewManager.ins<ViewManager>().close(StartGameView);
-			let view:GameMainView = ViewManager.ins<ViewManager>().getView(GameMainView) as GameMainView;
+			ViewManager.inst().close(StartGameView);
+			let view:GameMainView = ViewManager.inst().getView(GameMainView) as GameMainView;
 			view.initialize();
 		}
 	}
 	/**进入游戏 */
 	private onEnter(evt:egret.TouchEvent):void{
 		this.touchEnabled = false;
-		SoundManager.ins<SoundManager>().touchBg();
+		SoundManager.inst().touchBg();
 		this.addEventListener(egret.Event.ENTER_FRAME,this.onFrame,this);
 	}
 	/**查看故事 */
 	private onLookStory():void{
-		ViewManager.ins<ViewManager>().open(StoryPopUp);
+		ViewManager.inst().open(StoryPopUp);
 	}
 	public close():void{
 		this.removeTouchEvent(this.storyBtn,this.onLookStory);
@@ -95,4 +95,4 @@ class StartGameView extends BaseEuiView{
 		this.removeEventListener(egret.Event.ENTER_FRAME,this.onFrame,this);
 	}
 }
-ViewManager.ins<ViewManager>().reg(StartGameView,LayerManager.UI_Main);
+ViewManager.inst().reg(StartGameView,LayerManager.UI_Main);

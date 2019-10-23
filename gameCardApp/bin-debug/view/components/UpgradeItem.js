@@ -20,15 +20,15 @@ var UpgradeItem = (function (_super) {
         this.upgradeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onUpgrade, this);
     };
     UpgradeItem.prototype.onReborn = function () {
-        ViewManager.ins().open(RebornPanel);
+        ViewManager.inst().open(RebornPanel);
     };
     UpgradeItem.prototype.onUpgrade = function () {
-        var userGold = GameApp.ins().gold;
+        var userGold = GameApp.inst().gold;
         if (this._curCost > userGold) {
-            UserTips.ins().showTips("元宝不足");
+            UserTips.inst().showTips("元宝不足");
             return;
         }
-        GameApp.ins().gold -= this._curCost;
+        GameApp.inst().gold -= this._curCost;
         var levelstr = egret.localStorage.getItem(LocalStorageEnum.SKILL_LEVEL + this._skillId);
         var curLevel = parseInt(levelstr) + 1;
         egret.localStorage.setItem(LocalStorageEnum.SKILL_LEVEL + this._skillId, (curLevel).toString());

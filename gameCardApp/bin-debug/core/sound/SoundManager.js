@@ -29,6 +29,10 @@ var SoundManager = (function (_super) {
         _this.effect.setVolume(_this.effectVolume);
         return _this;
     }
+    SoundManager.inst = function () {
+        var _inst = _super.single.call(this);
+        return _inst;
+    };
     /**
      * 播放音效
      * @param effectName

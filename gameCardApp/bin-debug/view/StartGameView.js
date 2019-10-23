@@ -21,7 +21,7 @@ var StartGameView = (function (_super) {
         var firstStr = egret.localStorage.getItem(LocalStorageEnum.ENTER_FIRST);
         if (!firstStr) {
             egret.localStorage.setItem(LocalStorageEnum.ENTER_FIRST, "1");
-            ViewManager.ins().open(StoryPopUp);
+            ViewManager.inst().open(StoryPopUp);
         }
         this.addTouchEvent(this.storyBtn, this.onLookStory, true);
         this.addTouchEvent(this.enterBtn, this.onEnter, true);
@@ -62,26 +62,26 @@ var StartGameView = (function (_super) {
             offset: 1
         });
         this.filters = [this.customFilter4];
-        SoundManager.ins().playBg(RES_AUDIO + "game.mp3");
+        SoundManager.inst().playBg(RES_AUDIO + "game.mp3");
     };
     StartGameView.prototype.onFrame = function (evt) {
         this.customFilter4.uniforms.offset -= 0.05;
         if (this.customFilter4.uniforms.offset <= 0) {
             this.customFilter4.uniforms.offset = 0.0;
-            ViewManager.ins().close(StartGameView);
-            var view = ViewManager.ins().getView(GameMainView);
+            ViewManager.inst().close(StartGameView);
+            var view = ViewManager.inst().getView(GameMainView);
             view.initialize();
         }
     };
     /**进入游戏 */
     StartGameView.prototype.onEnter = function (evt) {
         this.touchEnabled = false;
-        SoundManager.ins().touchBg();
+        SoundManager.inst().touchBg();
         this.addEventListener(egret.Event.ENTER_FRAME, this.onFrame, this);
     };
     /**查看故事 */
     StartGameView.prototype.onLookStory = function () {
-        ViewManager.ins().open(StoryPopUp);
+        ViewManager.inst().open(StoryPopUp);
     };
     StartGameView.prototype.close = function () {
         this.removeTouchEvent(this.storyBtn, this.onLookStory);
@@ -91,5 +91,5 @@ var StartGameView = (function (_super) {
     return StartGameView;
 }(BaseEuiView));
 __reflect(StartGameView.prototype, "StartGameView");
-ViewManager.ins().reg(StartGameView, LayerManager.UI_Main);
+ViewManager.inst().reg(StartGameView, LayerManager.UI_Main);
 //# sourceMappingURL=StartGameView.js.map

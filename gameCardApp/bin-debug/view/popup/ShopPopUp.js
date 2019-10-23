@@ -41,7 +41,7 @@ var ShopPopUp = (function (_super) {
         var _this = this;
         egret.Tween.get(this.content).to({ verticalCenter: -600 }, 600, egret.Ease.circOut).call(function () {
             egret.Tween.removeTweens(_this.content);
-            ViewManager.ins().close(ShopPopUp);
+            ViewManager.inst().close(ShopPopUp);
         }, this);
     };
     /**点击金币商城 */
@@ -78,5 +78,5 @@ var ShopPopUp = (function (_super) {
     return ShopPopUp;
 }(BaseEuiView));
 __reflect(ShopPopUp.prototype, "ShopPopUp");
-ViewManager.ins().reg(ShopPopUp, LayerManager.UI_Pop);
+ViewManager.inst().reg(ShopPopUp, LayerManager.UI_Pop);
 //# sourceMappingURL=ShopPopUp.js.map

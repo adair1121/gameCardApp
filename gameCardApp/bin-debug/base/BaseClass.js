@@ -8,7 +8,7 @@ var BaseClass = (function () {
      * 获取一个单例
      * @returns {any}
      */
-    BaseClass.ins = function () {
+    BaseClass.single = function () {
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
@@ -40,11 +40,4 @@ var BaseClass = (function () {
     return BaseClass;
 }());
 __reflect(BaseClass.prototype, "BaseClass");
-var GameData = (function () {
-    function GameData() {
-    }
-    GameData.level = 1;
-    return GameData;
-}());
-__reflect(GameData.prototype, "GameData");
 //# sourceMappingURL=BaseClass.js.map

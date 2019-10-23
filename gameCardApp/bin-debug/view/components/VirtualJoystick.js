@@ -46,14 +46,14 @@ var VirtualJoystick = (function (_super) {
     //启动虚拟摇杆 
     VirtualJoystick.prototype.start = function () {
         this.ball.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
-        StageUtils.ins().getStage().addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
-        StageUtils.ins().getStage().addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
+        StageUtils.inst().getStage().addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
+        StageUtils.inst().getStage().addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
     };
     //停止虚拟摇杆
     VirtualJoystick.prototype.stop = function () {
         this.ball.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
-        StageUtils.ins().getStage().removeEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
-        StageUtils.ins().getStage().removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
+        StageUtils.inst().getStage().removeEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
+        StageUtils.inst().getStage().removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
     };
     //触摸开始，显示虚拟摇杆
     VirtualJoystick.prototype.onTouchBegin = function (e) {

@@ -177,14 +177,14 @@ var Main = (function (_super) {
         else {
             GameConfig.platform.setting = platform_param;
         }
-        GameApp.ins().refreshTimespan();
-        LayerManager.ins().iniaizlize(this);
+        GameApp.inst().refreshTimespan();
+        LayerManager.inst().iniaizlize(this);
         var data = RES.getRes("config_zip");
         JSZip.loadAsync(data).then(function (zipdata) {
             return zipdata.file('config.json').async('text');
         }).then(function (text) {
             GlobalConfig.setData(JSON.parse(text));
-            GameApp.ins().load();
+            GameApp.inst().load();
         });
     };
     /**

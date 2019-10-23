@@ -14,10 +14,14 @@ var BaseEntity = (function (_super) {
         var _this = _super.call(this) || this;
         //方向
         _this._dic = 3;
-        _this._hp = 100;
+        _this._hp = 40;
+        _this._thp = 40;
         _this._attack = 20;
         _this._changeValue = 0.1;
         _this._isDead = false;
+        _this.buffAttack = 0;
+        _this.buffHp = 0;
+        _this.buffDef = 0;
         _this.initialize();
         return _this;
     }
@@ -50,17 +54,35 @@ var BaseEntity = (function (_super) {
         get: function () {
             var index = (Math.random() * 100) >> 0;
             var dic = index >= 50 ? 1 : -1;
-            return this._attack + dic * (this._attack * this._changeValue);
+            return (this._attack + this.buffAttack) + dic * ((this._attack + this.buffAttack) * this._changeValue);
+        },
+        set: function (value) {
+            this._attack = value;
         },
         enumerable: true,
         configurable: true
     });
     BaseEntity.prototype.reduceHp = function (dmg) {
-        this._hp -= dmg;
-        if (this._hp <= 0) {
-            this._hp = 0;
-            this._isDead = true;
+        if (this.buffHp > 0) {
+            this.buffHp -= dmg;
         }
+        else {
+            this._hp -= (dmg - this.buffDef);
+            if (this._hp <= 0) {
+                this._hp = 0;
+                this._isDead = true;
+            }
+        }
+    };
+    //计算方向
+    BaseEntity.prototype.calculEntityDic = function (angle) {
+        if ((angle >= -90 && angle < 0) || (angle >= 0 && angle <= 90)) {
+            this._dic = 1;
+        }
+        else {
+            this._dic = -1;
+        }
+        this.scaleX = this._dic * this.scaleX;
     };
     BaseEntity.prototype.dispose = function () {
     };

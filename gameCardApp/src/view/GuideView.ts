@@ -28,10 +28,10 @@ class GuideView extends BaseEuiView{
 		let itemCfg:any = guideCfgs[guideId];
 
 		let event:StartGameEvent = new StartGameEvent(itemCfg.event,itemCfg.param);
-		StageUtils.ins<StageUtils>().getStage().dispatchEvent(event);
+		StageUtils.inst().getStage().dispatchEvent(event);
 
 		if(!itemCfg.next){
-			ViewManager.ins<ViewManager>().close(GuideView);
+			ViewManager.inst().close(GuideView);
 		}
 	}
 	//执行下一步
@@ -74,19 +74,19 @@ class GuideView extends BaseEuiView{
 		this.bg_left.width = _w;
 		this.bg_left.height = _h;
 
-		_w = StageUtils.ins<StageUtils>().getWidth() - worldX;
+		_w = StageUtils.inst().getWidth() - worldX;
 		_w = _w<0?0:_w;
 		this.bg_top.width = _w;
 		this.bg_top.height = worldY;
 
-		_w = StageUtils.ins<StageUtils>().getWidth() - worldX - this.rect.width;
+		_w = StageUtils.inst().getWidth() - worldX - this.rect.width;
 		_w = _w<0?0:_w;
-		_h = StageUtils.ins<StageUtils>().getHeight() - worldY;
+		_h = StageUtils.inst().getHeight() - worldY;
 		_h = _h<0?0:_h;
 		this.bg_right.width = _w;
 		this.bg_right.height = _h;
 
-		_h = StageUtils.ins<StageUtils>().getHeight() - worldY - this.rect.height;
+		_h = StageUtils.inst().getHeight() - worldY - this.rect.height;
 		_h = _h<0?0:_h;
 		this.bg_bottom.width = worldX + this.rect.width;
 		this.bg_bottom.height = _h;
@@ -103,4 +103,4 @@ class GuideView extends BaseEuiView{
 		this.rect.removeEventListener(egret.TouchEvent.TOUCH_TAP,this.onGuideTap,this);
 	}
 }
-ViewManager.ins<ViewManager>().reg(GuideView,LayerManager.UI_Pop);
+ViewManager.inst().reg(GuideView,LayerManager.UI_Pop);

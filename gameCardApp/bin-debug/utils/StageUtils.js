@@ -24,6 +24,10 @@ var StageUtils = (function (_super) {
         }
         return _this;
     }
+    StageUtils.inst = function () {
+        var _inst = _super.single.call(this);
+        return _inst;
+    };
     /**
      * 获取游戏的高度
      * @returns {number}
@@ -108,7 +112,7 @@ var StageUtils = (function (_super) {
             document.body.style.height = "100%";
             this.lastOrientation = window.orientation;
         }
-        StageUtils.ins().getStage().scaleMode = scaleMode;
+        StageUtils.inst().getStage().scaleMode = scaleMode;
     };
     return StageUtils;
 }(BaseClass));

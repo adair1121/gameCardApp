@@ -10,7 +10,10 @@ class DelayOptManager extends BaseClass {
 		this._delayOpts = [];
 		egret.startTick(this.runCachedFun, this);
 	}
-
+	public static inst():DelayOptManager{
+		let _inst:DelayOptManager = super.single<DelayOptManager>();
+		return _inst
+	}
 	
 
 	public addDelayOptFunction(thisObj: any, fun: Function, funPara?: any, callBack?: Function, para?: any): void {

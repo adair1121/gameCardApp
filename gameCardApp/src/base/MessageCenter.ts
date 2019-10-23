@@ -145,7 +145,10 @@ class MessageCenter extends BaseClass {
 		}
 		return false;
 	}
-
+	public static inst():MessageCenter{
+		let _inst:MessageCenter = super.single<MessageCenter>();
+		return _inst
+	}
 	/**
 	 * 处理一条消息
 	 * @param msgVo
@@ -189,7 +192,7 @@ class MessageCenter extends BaseClass {
 					data = func(...args);
 
 				if (typeof data != "boolean" || data) {
-					MessageCenter.ins<MessageCenter>().dispatch(msgname, data);
+					MessageCenter.inst().dispatch(msgname, data);
 				}
 				return data;
 			};
@@ -221,7 +224,7 @@ class MessageCenter extends BaseClass {
 
 	public static addListener(func: any, listener: Function, thisObj: any, callobj: any = undefined): boolean {
 		if (func.funcallname) {
-			MessageCenter.ins<MessageCenter>().addListener(func.funcallname, listener, thisObj);
+			MessageCenter.inst().addListener(func.funcallname, listener, thisObj);
 			if (callobj)
 				func.call(callobj);
 			return true;
@@ -253,7 +256,7 @@ function post(target, key: string, descriptor: PropertyDescriptor) {
 	let newfunc = function (...args) {
 		let data = method.call(this, ...args);
 		if (typeof data != "boolean" || data) {
-			MessageCenter.ins<MessageCenter>().dispatch(msgname, data);
+			MessageCenter.inst().dispatch(msgname, data);
 		}
 		return data;
 	};

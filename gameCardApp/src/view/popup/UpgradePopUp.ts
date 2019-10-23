@@ -23,7 +23,7 @@ class UpgradePopUp extends BaseEuiView{
 	private onReturn():void{
 		egret.Tween.get(this.upgradeGroup).to({right:-700},600,egret.Ease.circOut).call(()=>{
 			egret.Tween.removeTweens(this.upgradeGroup);
-			ViewManager.ins<ViewManager>().close(UpgradePopUp);
+			ViewManager.inst().close(UpgradePopUp);
 		},this)
 	}
 	public close():void{
@@ -37,4 +37,4 @@ class UpgradePopUp extends BaseEuiView{
 		}
 	}
 }
-ViewManager.ins<ViewManager>().reg(UpgradePopUp,LayerManager.UI_Pop);
+ViewManager.inst().reg(UpgradePopUp,LayerManager.UI_Pop);

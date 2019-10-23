@@ -32,7 +32,7 @@ class ShopPopUp extends BaseEuiView{
 	private onReturn():void{
 		egret.Tween.get(this.content).to({verticalCenter:-600},600,egret.Ease.circOut).call(()=>{
 			egret.Tween.removeTweens(this.content);
-			ViewManager.ins<ViewManager>().close(ShopPopUp);
+			ViewManager.inst().close(ShopPopUp);
 		},this)
 	}
 	/**点击金币商城 */
@@ -66,4 +66,4 @@ class ShopPopUp extends BaseEuiView{
 		this.removeTouchEvent(this.returnBtn,this.onReturn);
 	}
 }
-ViewManager.ins<ViewManager>().reg(ShopPopUp,LayerManager.UI_Pop);
+ViewManager.inst().reg(ShopPopUp,LayerManager.UI_Pop);

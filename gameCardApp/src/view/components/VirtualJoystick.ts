@@ -36,15 +36,15 @@ class VirtualJoystick extends eui.Component{
 	//启动虚拟摇杆 
 	public start(){
 		this.ball.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
-		StageUtils.ins<StageUtils>().getStage().addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
-		StageUtils.ins<StageUtils>().getStage().addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
+		StageUtils.inst().getStage().addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
+		StageUtils.inst().getStage().addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
 	}
 
 	//停止虚拟摇杆
 	public stop(){
 		this.ball.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
-		StageUtils.ins<StageUtils>().getStage().removeEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
-		StageUtils.ins<StageUtils>().getStage().removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
+		StageUtils.inst().getStage().removeEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
+		StageUtils.inst().getStage().removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
 	}
 
 	//触摸开始，显示虚拟摇杆

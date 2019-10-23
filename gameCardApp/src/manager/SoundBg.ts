@@ -1,4 +1,5 @@
 /**
+ * Created by yangsong on 15-1-14.
  * 背景音乐类
  */
 class SoundBg extends BaseSound {
@@ -37,12 +38,9 @@ class SoundBg extends BaseSound {
 		this.stop();
 		this._currBg = effectName;
 		this.getSound(effectName,(sound)=>{
-			if (sound) {
-				this.playSound(sound);
-			}
+			this.playSound(sound);
 		},this);
 	}
-
 	//主要是解决ios不播放的bug
 	public touchPlay() {
 		if (this._currSoundChannel && this._currSound) {

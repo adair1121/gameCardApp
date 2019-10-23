@@ -23,6 +23,10 @@ class TimerManager extends BaseClass {
 
 		egret.startTick(this.onEnterFrame, this);
 	}
+	public static inst():TimerManager{
+		let _inst:TimerManager = super.single<TimerManager>();
+		return _inst
+	}
 	public getFrameId(): number {
 		return this._currFrame;
 	}

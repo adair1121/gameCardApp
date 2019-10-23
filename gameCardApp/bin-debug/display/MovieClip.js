@@ -37,7 +37,7 @@ var MovieClip = (function (_super) {
         this._loadFun = _loadFun;
         this.playCount = playCount;
         this.remove = remove;
-        TimerManager.ins().remove(this.playComp, this);
+        TimerManager.inst().remove(this.playComp, this);
         if (this.texture && this.texture.bitmapData == null) {
             //资源已经被释放掉
         }
@@ -116,7 +116,7 @@ var MovieClip = (function (_super) {
             var tempTime = egret.getTimer() - this.time;
             tempTime = this.playTime * this.playCount - tempTime;
             if (tempTime > 0)
-                TimerManager.ins().doTimer(tempTime, 1, this.playComp, this);
+                TimerManager.inst().doTimer(tempTime, 1, this.playComp, this);
             else
                 this.playComp();
         }
@@ -154,7 +154,7 @@ var MovieClip = (function (_super) {
         this.stop();
         this.resetMovieClip();
         this.clearComFun();
-        TimerManager.ins().removeAll(this);
+        TimerManager.inst().removeAll(this);
     };
     //回收
     MovieClip.prototype.destroy = function () {

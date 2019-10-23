@@ -36,7 +36,7 @@ var TipsView = (function (_super) {
     TipsView.prototype.showTips = function (str) {
         var tips = ObjectPool.pop("TipsItem");
         tips.horizontalCenter = 0;
-        var bottomNum = (StageUtils.ins().getHeight() >> 1);
+        var bottomNum = (StageUtils.inst().getHeight() >> 1);
         tips.bottom = bottomNum;
         this.addChild(tips);
         tips.labelText = str;
@@ -60,5 +60,5 @@ var TipsView = (function (_super) {
     return TipsView;
 }(BaseEuiView));
 __reflect(TipsView.prototype, "TipsView");
-ViewManager.ins().reg(TipsView, LayerManager.TIPS_LAYER);
+ViewManager.inst().reg(TipsView, LayerManager.TIPS_LAYER);
 //# sourceMappingURL=TipsView.js.map

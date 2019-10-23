@@ -50,7 +50,7 @@ class MovieClip extends egret.MovieClip {
 		this.playCount = playCount;
 		this.remove = remove;
 
-		TimerManager.ins<TimerManager>().remove(this.playComp, this);
+		TimerManager.inst().remove(this.playComp, this);
 
 		if (this.texture && this.texture.bitmapData == null) {
 			//资源已经被释放掉
@@ -145,7 +145,7 @@ class MovieClip extends egret.MovieClip {
 			let tempTime = egret.getTimer() - this.time;
 			tempTime = this.playTime * this.playCount - tempTime;
 			if (tempTime > 0)
-				TimerManager.ins<TimerManager>().doTimer(tempTime, 1, this.playComp, this);
+				TimerManager.inst().doTimer(tempTime, 1, this.playComp, this);
 			else
 				this.playComp();
 		}
@@ -184,7 +184,7 @@ class MovieClip extends egret.MovieClip {
 		this.stop();
 		this.resetMovieClip();
 		this.clearComFun();
-		TimerManager.ins<TimerManager>().removeAll(this);
+		TimerManager.inst().removeAll(this);
 	}
 
 	//回收

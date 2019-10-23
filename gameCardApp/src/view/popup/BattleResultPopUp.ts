@@ -40,7 +40,7 @@ class BattleResultPopUp extends BaseEuiView{
 		if(param[0].arg){
 			this._arg = param[0].arg;
 		}
-		GameApp.ins<GameApp>().gold += this.goldNum;
+		GameApp.inst().gold += this.goldNum;
 		this.addTouchEvent(this.nextBtn,this.onNextLevel,true);
 		this.addTouchEvent(this.continueBtn,this.onContinue,true);
 		this.addTouchEvent(this.exitBtn,this.onExit,true);
@@ -60,7 +60,7 @@ class BattleResultPopUp extends BaseEuiView{
 	public onReturn():void{
 		egret.Tween.get(this).to({alpha:0},300,egret.Ease.circOut).call(()=>{
 			egret.Tween.removeTweens(this);
-			ViewManager.ins<ViewManager>().close(BattleResultPopUp);
+			ViewManager.inst().close(BattleResultPopUp);
 			if(this._cb && this._arg){
 				this._cb.call(this._arg,this._param);
 			}
@@ -72,4 +72,4 @@ class BattleResultPopUp extends BaseEuiView{
 		this.removeTouchEvent(this.exitBtn,this.onExit);
 	}
 }
-ViewManager.ins<ViewManager>().reg(BattleResultPopUp,LayerManager.UI_Pop);
+ViewManager.inst().reg(BattleResultPopUp,LayerManager.UI_Pop);

@@ -12,7 +12,7 @@ var BaseSound = (function () {
     function BaseSound() {
         this._cache = {};
         this._loadingCache = new Array();
-        TimerManager.ins().doTimer(1 * 60 * 1000, 0, this.dealSoundTimer, this);
+        TimerManager.inst().doTimer(1 * 60 * 1000, 0, this.dealSoundTimer, this);
     }
     /**
      * 处理音乐文件的清理

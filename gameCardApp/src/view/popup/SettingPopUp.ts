@@ -35,13 +35,13 @@ class SettingPopUp extends BaseEuiView{
 	
 		this.musicBarMask.width = this._barWidth*0.5;
 		this.m_sound_control.x = this.musicBarMask.x + this.musicBarMask.width;
-		SoundManager.ins<SoundManager>().setBgVolume(0.5);
+		SoundManager.inst().setBgVolume(0.5);
 
 		this.effectBarMask.width = this._barWidth*0.5;
 		this.e_sound_control.x = this.effectBarMask.x + this.effectBarMask.width
-		SoundManager.ins<SoundManager>().setEffectVolume(0.5);
+		SoundManager.inst().setEffectVolume(0.5);
 		this.m_sound_control.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.onMusicTouchBegin,this);
-		StageUtils.ins<StageUtils>().getStage().addEventListener(egret.TouchEvent.TOUCH_MOVE,this.onMusicTouchMove,this);
+		StageUtils.inst().getStage().addEventListener(egret.TouchEvent.TOUCH_MOVE,this.onMusicTouchMove,this);
 		this.addEventListener(egret.TouchEvent.TOUCH_CANCEL,this.onMusicTouchEnd,this);
 		this.addEventListener(egret.TouchEvent.TOUCH_END,this.onMusicTouchEnd,this);
 		this.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE,this.onMusicTouchEnd,this);
@@ -53,9 +53,9 @@ class SettingPopUp extends BaseEuiView{
 	private onReturn():void{
 		egret.Tween.get(this.content).to({verticalCenter:-500},600,egret.Ease.circOut).call(()=>{
 			egret.Tween.removeTweens(this.content);
-			ViewManager.ins<ViewManager>().close(SettingPopUp);
+			ViewManager.inst().close(SettingPopUp);
 			//只为了调刷新接口
-			ViewManager.ins<ViewManager>().open(GameMainView);
+			ViewManager.inst().open(GameMainView);
 		},this)
 	}
 	//背景音乐事件处理
@@ -71,12 +71,12 @@ class SettingPopUp extends BaseEuiView{
 		if(this.musicTouch){
 			this.m_sound_control.x = localP.x;
 			this.musicBarMask.width = this._barWidth*volum;
-			SoundManager.ins<SoundManager>().setBgVolume(volum);
+			SoundManager.inst().setBgVolume(volum);
 		}
 		if(this.effectTouch){
 			this.e_sound_control.x = localP.x;
 			this.effectBarMask.width = this._barWidth*volum;
-			SoundManager.ins<SoundManager>().setEffectVolume(volum);
+			SoundManager.inst().setEffectVolume(volum);
 		}
 	}
 	private onMusicTouchEnd():void{
@@ -96,7 +96,7 @@ class SettingPopUp extends BaseEuiView{
 	};
 	public close():void{
 		this.m_sound_control.removeEventListener(egret.TouchEvent.TOUCH_BEGIN,this.onMusicTouchBegin,this);
-		StageUtils.ins<StageUtils>().getStage().removeEventListener(egret.TouchEvent.TOUCH_MOVE,this.onMusicTouchMove,this);
+		StageUtils.inst().getStage().removeEventListener(egret.TouchEvent.TOUCH_MOVE,this.onMusicTouchMove,this);
 		this.removeEventListener(egret.TouchEvent.TOUCH_CANCEL,this.onMusicTouchEnd,this);
 		this.removeEventListener(egret.TouchEvent.TOUCH_END,this.onMusicTouchEnd,this);
 		this.removeEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE,this.onMusicTouchEnd,this);
@@ -105,4 +105,4 @@ class SettingPopUp extends BaseEuiView{
 		this.e_sound_control.removeEventListener(egret.TouchEvent.TOUCH_BEGIN,this.onEffectTouchBegin,this);
 	}
 }
-ViewManager.ins<ViewManager>().reg(SettingPopUp,LayerManager.UI_Pop);
+ViewManager.inst().reg(SettingPopUp,LayerManager.UI_Pop);

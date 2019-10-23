@@ -13,11 +13,15 @@ var UserTips = (function (_super) {
     function UserTips() {
         return _super.call(this) || this;
     }
+    UserTips.inst = function () {
+        var _inst = _super.single.call(this);
+        return _inst;
+    };
     Object.defineProperty(UserTips.prototype, "view", {
         get: function () {
             if (!this._view || !this._view.parent) {
-                ViewManager.ins().open(TipsView);
-                this._view = ViewManager.ins().getView(TipsView);
+                ViewManager.inst().open(TipsView);
+                this._view = ViewManager.inst().getView(TipsView);
             }
             return this._view;
         },
@@ -25,7 +29,7 @@ var UserTips = (function (_super) {
         configurable: true
     });
     UserTips.prototype.showTips = function (str, func) {
-        DelayOptManager.ins().addDelayOptFunction(this.view, this.view.showTips, str);
+        DelayOptManager.inst().addDelayOptFunction(this.view, this.view.showTips, str);
     };
     return UserTips;
 }(BaseClass));

@@ -12,6 +12,10 @@ class ViewManager extends BaseClass{
 		this._regesterInfo = {};
 		this._views = [];
 	}
+	public static inst():ViewManager{
+		let _inst:ViewManager = super.single<ViewManager>();
+		return _inst
+	}
 	/**获取当前界面是否注册 */
 	private getKey(nameOrClass: any): string {
 		let key: string = "";

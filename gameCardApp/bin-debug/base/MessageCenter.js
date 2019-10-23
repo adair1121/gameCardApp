@@ -147,6 +147,10 @@ var MessageCenter = (function (_super) {
         }
         return false;
     };
+    MessageCenter.inst = function () {
+        var _inst = _super.single.call(this);
+        return _inst;
+    };
     /**
      * 处理一条消息
      * @param msgVo
@@ -185,7 +189,7 @@ var MessageCenter = (function (_super) {
                 else
                     data = func_1.apply(void 0, args);
                 if (typeof data != "boolean" || data) {
-                    MessageCenter.ins().dispatch(msgname_1, data);
+                    MessageCenter.inst().dispatch(msgname_1, data);
                 }
                 return data;
             };
@@ -215,7 +219,7 @@ var MessageCenter = (function (_super) {
     MessageCenter.addListener = function (func, listener, thisObj, callobj) {
         if (callobj === void 0) { callobj = undefined; }
         if (func.funcallname) {
-            MessageCenter.ins().addListener(func.funcallname, listener, thisObj);
+            MessageCenter.inst().addListener(func.funcallname, listener, thisObj);
             if (callobj)
                 func.call(callobj);
             return true;
@@ -250,7 +254,7 @@ function post(target, key, descriptor) {
         }
         var data = method.call.apply(method, [this].concat(args));
         if (typeof data != "boolean" || data) {
-            MessageCenter.ins().dispatch(msgname, data);
+            MessageCenter.inst().dispatch(msgname, data);
         }
         return data;
     };

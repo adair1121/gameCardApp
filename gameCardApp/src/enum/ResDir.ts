@@ -2,6 +2,8 @@ let RES_RESOURCE = `resource/`;
 
 let EFFECT = `resource/res/animate/`;
 
+let MONSTER = `resource/res/animate/monster/`
+
 let MAP_DIR=`${RES_RESOURCE}map/`;
 
 let CFG_DIR = `${RES_RESOURCE}config/`;

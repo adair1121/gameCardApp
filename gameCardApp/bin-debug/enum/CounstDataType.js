@@ -20,10 +20,10 @@ var SoldierShapType;
     SoldierShapType[SoldierShapType["TYPE_RECT"] = 0] = "TYPE_RECT";
     SoldierShapType[SoldierShapType["TYPE_CIRCLE"] = 1] = "TYPE_CIRCLE";
     SoldierShapType[SoldierShapType["TYPE_HALFCIRCLE"] = 2] = "TYPE_HALFCIRCLE";
-    SoldierShapType[SoldierShapType["TYPE_LINGXING"] = 3] = "TYPE_LINGXING";
-    SoldierShapType[SoldierShapType["TYPE_TRIANGLE"] = 4] = "TYPE_TRIANGLE";
-    SoldierShapType[SoldierShapType["TYPE_TIXING"] = 5] = "TYPE_TIXING";
-    SoldierShapType[SoldierShapType["TYPE_ARROW"] = 6] = "TYPE_ARROW";
-    SoldierShapType[SoldierShapType["TYPE_CROSS"] = 7] = "TYPE_CROSS";
+    // TYPE_LINGXING,
+    SoldierShapType[SoldierShapType["TYPE_TRIANGLE"] = 3] = "TYPE_TRIANGLE";
+    SoldierShapType[SoldierShapType["TYPE_TIXING"] = 4] = "TYPE_TIXING";
+    SoldierShapType[SoldierShapType["TYPE_ARROW"] = 5] = "TYPE_ARROW";
+    SoldierShapType[SoldierShapType["TYPE_CROSS"] = 6] = "TYPE_CROSS";
 })(SoldierShapType || (SoldierShapType = {}));
 //# sourceMappingURL=CounstDataType.js.map

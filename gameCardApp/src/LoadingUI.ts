@@ -70,7 +70,7 @@ class LoadingUI extends eui.UILayer implements RES.PromiseTaskReporter {
 
         this.progressPanel = new eui.Group();
         this.addChild(this.progressPanel);
-        this._w = (StageUtils.ins<StageUtils>().getWidth() - 200);
+        this._w = (StageUtils.inst().getWidth() - 200);
         this.progressPanel.horizontalCenter = 0;
         this.progressPanel.verticalCenter = 0;
 

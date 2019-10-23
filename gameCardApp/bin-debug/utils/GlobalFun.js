@@ -87,6 +87,37 @@ var GlobalFun = (function () {
     GlobalFun.payCallBack = function (_cb) {
         GameApp.pay_cbDdata = _cb;
     };
+    /**获取所有boss配置 */
+    GlobalFun.getBossCfg = function () {
+        var cfgs = MonsterCfg.cfgs;
+        var arr = [];
+        for (var key in cfgs) {
+            if (cfgs[key].type == 1) {
+                arr.push(cfgs[key]);
+            }
+        }
+        return arr;
+    };
+    /**获取所有小怪配置 */
+    GlobalFun.getMonsterCfg = function () {
+        var cfgs = MonsterCfg.cfgs;
+        var arr = [];
+        for (var key in cfgs) {
+            if (cfgs[key].type == 2) {
+                arr.push(cfgs[key]);
+            }
+        }
+        return arr;
+    };
+    /**根据id获取配置 */
+    GlobalFun.getCardDataFromId = function (id) {
+        var cfgs = MonsterCfg.cfgs;
+        for (var key in cfgs) {
+            if (cfgs[key].id == id) {
+                return cfgs[key];
+            }
+        }
+    };
     /**获取宝箱刷新时间戳 */
     GlobalFun.getBoxRfreshTimeSpan = function () {
         var startTp = new Date(new Date(new Date().toLocaleDateString()).getTime() + 24 * 60 * 60 * 1000 - 1).getTime();

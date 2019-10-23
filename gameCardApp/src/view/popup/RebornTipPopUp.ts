@@ -43,15 +43,15 @@ class RebornTipPopUp extends BaseEuiView{
 		
 	}
 	private onSure():void{
-		let goldNum:number = GameApp.ins<GameApp>().gold;
+		let goldNum:number = GameApp.inst().gold;
 		if(this._cost){
 			this._param = 1;
 			if(this._cost > goldNum){
-				UserTips.ins<UserTips>().showTips("金币不足");
+				UserTips.inst().showTips("金币不足");
 				return;
 			}else{
-				GameApp.ins<GameApp>().gold -= this._cost;
-				UserTips.ins<UserTips>().showTips("转生成功");
+				GameApp.inst().gold -= this._cost;
+				UserTips.inst().showTips("转生成功");
 				GameApp.rebornIds.push(this._mid);
 				egret.localStorage.setItem(LocalStorageEnum.REBORNIDS,JSON.stringify(GameApp.rebornIds));
 			}
@@ -68,7 +68,7 @@ class RebornTipPopUp extends BaseEuiView{
 	private onReturn():void{
 		egret.Tween.get(this.content).to({verticalCenter:-500},600,egret.Ease.circOut).call(()=>{
 			egret.Tween.removeTweens(this.content);
-			ViewManager.ins<ViewManager>().close(RebornTipPopUp);
+			ViewManager.inst().close(RebornTipPopUp);
 			if(this._cb && this._arg){
 				this._cb.call(this._arg,this._param);
 			}
@@ -80,4 +80,4 @@ class RebornTipPopUp extends BaseEuiView{
 		this.removeTouchEvent(this.cancleBtn,this.onCancle);
 	}
 }
-ViewManager.ins<ViewManager>().reg(RebornTipPopUp,LayerManager.UI_Pop);
+ViewManager.inst().reg(RebornTipPopUp,LayerManager.UI_Pop);

@@ -9,6 +9,7 @@ for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
 r.prototype = e.prototype, t.prototype = new r();
 };
 /**
+ * Created by yangsong on 15-1-14.
  * 背景音乐类
  */
 var SoundBg = (function (_super) {
@@ -43,9 +44,7 @@ var SoundBg = (function (_super) {
         this.stop();
         this._currBg = effectName;
         this.getSound(effectName, function (sound) {
-            if (sound) {
-                _this.playSound(sound);
-            }
+            _this.playSound(sound);
         }, this);
     };
     //主要是解决ios不播放的bug

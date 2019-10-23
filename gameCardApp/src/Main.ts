@@ -108,15 +108,15 @@ class Main extends eui.UILayer {
         }else{
             GameConfig.platform.setting = platform_param;
         }
-        GameApp.ins<GameApp>().refreshTimespan();
+        GameApp.inst().refreshTimespan();
         
-        LayerManager.ins<LayerManager>().iniaizlize(this);
+        LayerManager.inst().iniaizlize(this);
         let data = RES.getRes("config_zip");
         JSZip.loadAsync(data).then((zipdata) => {
             return zipdata.file('config.json').async('text');
         }).then(text => {
             GlobalConfig.setData(JSON.parse(text));
-            GameApp.ins<GameApp>().load();
+            GameApp.inst().load();
         })
     }
     /**

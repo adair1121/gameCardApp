@@ -17,7 +17,10 @@ class StageUtils extends BaseClass {
 		}
 	}
 
-
+	public static inst():StageUtils{
+		let _inst:StageUtils = super.single<StageUtils>();
+		return _inst
+	}
 	
 	/**
 	 * 获取游戏的高度
@@ -108,7 +111,7 @@ class StageUtils extends BaseClass {
 			document.body.style.height = "100%";
 			this.lastOrientation = window.orientation;
 		}
-		StageUtils.ins<StageUtils>().getStage().scaleMode = scaleMode;
+		StageUtils.inst().getStage().scaleMode = scaleMode;
 	}
 	
 }

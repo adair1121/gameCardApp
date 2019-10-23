@@ -35,7 +35,10 @@ class SoundManager extends BaseClass {
 		this.effect = new SoundEffects();
 		this.effect.setVolume(this.effectVolume);
 	}
-
+	public static inst():SoundManager{
+		let _inst:SoundManager = super.single<SoundManager>();
+		return _inst
+	}
 	
 
 	/**

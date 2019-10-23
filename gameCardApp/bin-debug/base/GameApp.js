@@ -17,13 +17,17 @@ var GameApp = (function (_super) {
         return _super.call(this) || this;
     }
     /**总波数 */ ;
+    GameApp.inst = function () {
+        var _inst = _super.single.call(this);
+        return _inst;
+    };
     GameApp.prototype.load = function () {
         eui.Label.default_fontFamily = "Microsoft YaHei";
         GlobalConfig.parserData();
         GameMap.init(RES.getRes("map_json"));
         LoadingUI.inst().hide();
-        ViewManager.ins().open(GameMainView);
-        ViewManager.ins().open(StartGameView);
+        ViewManager.inst().open(GameMainView);
+        ViewManager.inst().open(StartGameView);
         var goldstr = egret.localStorage.getItem(LocalStorageEnum.ROLE_GOLD);
         if (!goldstr) {
             GameApp.roleGold = 100000;
@@ -61,7 +65,7 @@ var GameApp = (function (_super) {
         if (value) {
             GameApp.phurseState = false;
             GameApp.pay_cbDdata = "";
-            UserTips.ins().showTips("\u8D2D\u4E70\u6210\u529F,\u83B7\u5F97\u5143\u5B9Dx" + value);
+            UserTips.inst().showTips("\u8D2D\u4E70\u6210\u529F,\u83B7\u5F97\u5143\u5B9Dx" + value);
         }
     };
     GameApp.prototype.refreshTimespan = function () {

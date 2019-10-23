@@ -45,16 +45,16 @@ var RebornTipPopUp = (function (_super) {
         }
     };
     RebornTipPopUp.prototype.onSure = function () {
-        var goldNum = GameApp.ins().gold;
+        var goldNum = GameApp.inst().gold;
         if (this._cost) {
             this._param = 1;
             if (this._cost > goldNum) {
-                UserTips.ins().showTips("金币不足");
+                UserTips.inst().showTips("金币不足");
                 return;
             }
             else {
-                GameApp.ins().gold -= this._cost;
-                UserTips.ins().showTips("转生成功");
+                GameApp.inst().gold -= this._cost;
+                UserTips.inst().showTips("转生成功");
                 GameApp.rebornIds.push(this._mid);
                 egret.localStorage.setItem(LocalStorageEnum.REBORNIDS, JSON.stringify(GameApp.rebornIds));
             }
@@ -72,7 +72,7 @@ var RebornTipPopUp = (function (_super) {
         var _this = this;
         egret.Tween.get(this.content).to({ verticalCenter: -500 }, 600, egret.Ease.circOut).call(function () {
             egret.Tween.removeTweens(_this.content);
-            ViewManager.ins().close(RebornTipPopUp);
+            ViewManager.inst().close(RebornTipPopUp);
             if (_this._cb && _this._arg) {
                 _this._cb.call(_this._arg, _this._param);
             }
@@ -86,5 +86,5 @@ var RebornTipPopUp = (function (_super) {
     return RebornTipPopUp;
 }(BaseEuiView));
 __reflect(RebornTipPopUp.prototype, "RebornTipPopUp");
-ViewManager.ins().reg(RebornTipPopUp, LayerManager.UI_Pop);
+ViewManager.inst().reg(RebornTipPopUp, LayerManager.UI_Pop);
 //# sourceMappingURL=RebornTipPopUp.js.map

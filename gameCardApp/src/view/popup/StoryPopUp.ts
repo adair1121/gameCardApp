@@ -21,11 +21,11 @@ class StoryPopUp extends BaseEuiView{
 		egret.Tween.removeAllTweens();
 		egret.Tween.get(this.content).to({verticalCenter:-600},600,egret.Ease.circOut).call(()=>{
 			egret.Tween.removeTweens(this.content);
-			ViewManager.ins<ViewManager>().close(StoryPopUp);
+			ViewManager.inst().close(StoryPopUp);
 		},this)
 	}
 	public close():void{
 		this.removeTouchEvent(this.returnBtn,this.onReturn);
 	}
 }
-ViewManager.ins<ViewManager>().reg(StoryPopUp,LayerManager.UI_Pop);
+ViewManager.inst().reg(StoryPopUp,LayerManager.UI_Pop);

@@ -16,6 +16,10 @@ var ViewManager = (function (_super) {
         _this._views = [];
         return _this;
     }
+    ViewManager.inst = function () {
+        var _inst = _super.single.call(this);
+        return _inst;
+    };
     /**获取当前界面是否注册 */
     ViewManager.prototype.getKey = function (nameOrClass) {
         var key = "";

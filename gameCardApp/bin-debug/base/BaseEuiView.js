@@ -39,7 +39,7 @@ var BaseEuiView = (function (_super) {
             // if(this.removed){
             // 	removeCls = StartGameView;
             // }
-            ViewManager.ins().close(cls);
+            ViewManager.inst().close(cls);
             if (callBackFun && thisArg) {
                 callBackFun.call(thisArg);
             }
@@ -78,8 +78,8 @@ var BaseEuiView = (function (_super) {
         if (evt.target && evt.target.filters) {
             evt.target.filters = [];
         }
-        SoundManager.ins().stopEffect();
-        SoundManager.ins().playEffect(RES_AUDIO + "buttonClick.mp3");
+        SoundManager.inst().stopEffect();
+        SoundManager.inst().playEffect(RES_AUDIO + "buttonClick.mp3");
     };
     BaseEuiView.prototype.changeFilter = function (obj) {
         var colorMatrix = [

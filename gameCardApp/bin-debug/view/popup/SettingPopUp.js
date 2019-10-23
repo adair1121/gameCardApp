@@ -37,12 +37,12 @@ var SettingPopUp = (function (_super) {
         this._maxx = this.musicBar.x + this.musicBar.width;
         this.musicBarMask.width = this._barWidth * 0.5;
         this.m_sound_control.x = this.musicBarMask.x + this.musicBarMask.width;
-        SoundManager.ins().setBgVolume(0.5);
+        SoundManager.inst().setBgVolume(0.5);
         this.effectBarMask.width = this._barWidth * 0.5;
         this.e_sound_control.x = this.effectBarMask.x + this.effectBarMask.width;
-        SoundManager.ins().setEffectVolume(0.5);
+        SoundManager.inst().setEffectVolume(0.5);
         this.m_sound_control.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onMusicTouchBegin, this);
-        StageUtils.ins().getStage().addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onMusicTouchMove, this);
+        StageUtils.inst().getStage().addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onMusicTouchMove, this);
         this.addEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onMusicTouchEnd, this);
         this.addEventListener(egret.TouchEvent.TOUCH_END, this.onMusicTouchEnd, this);
         this.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.onMusicTouchEnd, this);
@@ -53,9 +53,9 @@ var SettingPopUp = (function (_super) {
         var _this = this;
         egret.Tween.get(this.content).to({ verticalCenter: -500 }, 600, egret.Ease.circOut).call(function () {
             egret.Tween.removeTweens(_this.content);
-            ViewManager.ins().close(SettingPopUp);
+            ViewManager.inst().close(SettingPopUp);
             //只为了调刷新接口
-            ViewManager.ins().open(GameMainView);
+            ViewManager.inst().open(GameMainView);
         }, this);
     };
     SettingPopUp.prototype.onMusicTouchBegin = function (evt) {
@@ -74,12 +74,12 @@ var SettingPopUp = (function (_super) {
         if (this.musicTouch) {
             this.m_sound_control.x = localP.x;
             this.musicBarMask.width = this._barWidth * volum;
-            SoundManager.ins().setBgVolume(volum);
+            SoundManager.inst().setBgVolume(volum);
         }
         if (this.effectTouch) {
             this.e_sound_control.x = localP.x;
             this.effectBarMask.width = this._barWidth * volum;
-            SoundManager.ins().setEffectVolume(volum);
+            SoundManager.inst().setEffectVolume(volum);
         }
     };
     SettingPopUp.prototype.onMusicTouchEnd = function () {
@@ -96,7 +96,7 @@ var SettingPopUp = (function (_super) {
     ;
     SettingPopUp.prototype.close = function () {
         this.m_sound_control.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onMusicTouchBegin, this);
-        StageUtils.ins().getStage().removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.onMusicTouchMove, this);
+        StageUtils.inst().getStage().removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.onMusicTouchMove, this);
         this.removeEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onMusicTouchEnd, this);
         this.removeEventListener(egret.TouchEvent.TOUCH_END, this.onMusicTouchEnd, this);
         this.removeEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.onMusicTouchEnd, this);
@@ -106,5 +106,5 @@ var SettingPopUp = (function (_super) {
     return SettingPopUp;
 }(BaseEuiView));
 __reflect(SettingPopUp.prototype, "SettingPopUp");
-ViewManager.ins().reg(SettingPopUp, LayerManager.UI_Pop);
+ViewManager.inst().reg(SettingPopUp, LayerManager.UI_Pop);
 //# sourceMappingURL=SettingPopUp.js.map

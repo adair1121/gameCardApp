@@ -33,6 +33,10 @@ var LayerManager = (function (_super) {
         p.addChild(LayerManager.TIPS_LAYER);
         LayerManager.TIPS_LAYER.touchThrough = true;
     };
+    LayerManager.inst = function () {
+        var _inst = _super.single.call(this);
+        return _inst;
+    };
     LayerManager.MAP_LAYER = new eui.UILayer();
     LayerManager.UNIT_LAYER = new eui.UILayer();
     LayerManager.EFFECT_LAYER = new eui.UILayer();

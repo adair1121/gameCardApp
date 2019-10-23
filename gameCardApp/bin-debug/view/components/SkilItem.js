@@ -16,6 +16,8 @@ var SkilItem = (function (_super) {
         return _this;
     }
     SkilItem.prototype.dataChanged = function () {
+        this.rect.visible = false;
+        this.numLab.visible = false;
         if (this.data.skillIcon) {
             this.skillIcon.source = this.data.skillIcon;
         }
@@ -26,9 +28,27 @@ var SkilItem = (function (_super) {
             this._skillId = this.data.skillId;
         }
     };
+    Object.defineProperty(SkilItem.prototype, "num", {
+        get: function () {
+            return parseInt(this.numLab.text);
+        },
+        set: function (value) {
+            this.numLab.visible = true;
+            this.numLab.text = value.toString();
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(SkilItem.prototype, "skillId", {
         get: function () {
             return this._skillId;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(SkilItem.prototype, "focus", {
+        set: function (value) {
+            this.rect.visible = value;
         },
         enumerable: true,
         configurable: true

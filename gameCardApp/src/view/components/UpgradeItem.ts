@@ -19,15 +19,15 @@ class UpgradeItem extends eui.ItemRenderer{
 		this.upgradeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onUpgrade,this);
 	}
 	private onReborn():void{
-		ViewManager.ins<ViewManager>().open(RebornPanel);
+		ViewManager.inst().open(RebornPanel);
 	}
 	private onUpgrade():void{
-		let userGold:number = GameApp.ins<GameApp>().gold;
+		let userGold:number = GameApp.inst().gold;
 		if(this._curCost > userGold){
-			UserTips.ins<UserTips>().showTips("元宝不足");
+			UserTips.inst().showTips("元宝不足");
 			return;
 		}
-		GameApp.ins<GameApp>().gold -= this._curCost;
+		GameApp.inst().gold -= this._curCost;
 		let levelstr:string = egret.localStorage.getItem(LocalStorageEnum.SKILL_LEVEL + this._skillId);
 		let curLevel:number = parseInt(levelstr)+1
 		egret.localStorage.setItem(LocalStorageEnum.SKILL_LEVEL + this._skillId,(curLevel).toString());

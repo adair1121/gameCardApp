@@ -27,6 +27,10 @@ var TimerManager = (function (_super) {
         egret.startTick(_this.onEnterFrame, _this);
         return _this;
     }
+    TimerManager.inst = function () {
+        var _inst = _super.single.call(this);
+        return _inst;
+    };
     TimerManager.prototype.getFrameId = function () {
         return this._currFrame;
     };

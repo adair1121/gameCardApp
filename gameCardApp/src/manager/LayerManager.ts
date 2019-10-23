@@ -39,4 +39,8 @@ class LayerManager extends BaseClass{
 		p.addChild(LayerManager.TIPS_LAYER);
 		LayerManager.TIPS_LAYER.touchThrough = true;
 	}
+	public static inst():LayerManager{
+		let _inst:LayerManager = super.single<LayerManager>();
+		return _inst
+	}
 }

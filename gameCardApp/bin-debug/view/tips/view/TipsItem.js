@@ -37,7 +37,7 @@ var TipsItem = (function (_super) {
             this.pic.width = this.lab.width + 20;
             if (!this.addToEvent) {
                 this.addToEvent = true;
-                TimerManager.ins().doTimer(1200, 1, this.removeFromParent, this);
+                TimerManager.inst().doTimer(1200, 1, this.removeFromParent, this);
             }
         },
         enumerable: true,

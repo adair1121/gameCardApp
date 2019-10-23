@@ -41,21 +41,21 @@ var GameLoadingUI = (function (_super) {
                         _this._param = param[0].param;
                     }
                     if (param[0].cls) {
-                        ViewManager.ins().open(param[0].cls, [_this._param]);
+                        ViewManager.inst().open(param[0].cls, [_this._param]);
                     }
                     if (param[0].closeCls) {
-                        ViewManager.ins().close(param[0].closeCls);
+                        ViewManager.inst().close(param[0].closeCls);
                     }
                 }
-                StageUtils.ins().getStage().dispatchEvent(new StartGameEvent(StartGameEvent.GAMELOADINGEND));
-                ViewManager.ins().close(GameLoadingUI);
+                StageUtils.inst().getStage().dispatchEvent(new StartGameEvent(StartGameEvent.GAMELOADINGEND));
+                ViewManager.inst().close(GameLoadingUI);
             }
             var percent = ((_this.cur / _this.total) * 100) >> 0;
             _this.progressLab.text = percent + "%请稍候...";
             _this.barMask.height = ((_this.cur / _this.total) * 206);
         }, 100);
         // this.leftImg.x = 0;
-        // this.rightImg.x = StageUtils.ins<StageUtils>().getWidth();
+        // this.rightImg.x = StageUtils.inst().getWidth();
         // let cls:BaseEuiView = (param && param.length)?param[0].cls:null;
         // if(param && param.length){
         //     if(param[0].cb){
@@ -84,23 +84,23 @@ var GameLoadingUI = (function (_super) {
     //         let rightTween =  egret.Tween.get(this.rightImg);
     //         // //地图网格初始化
     //         // GameMap.init(data);
-    //         leftTween.to({x:(StageUtils.ins<StageUtils>().getWidth()>>1)+2},500,egret.Ease.circIn).wait(1500).to({x:-20},1000,egret.Ease.circOut).call(()=>{
+    //         leftTween.to({x:(StageUtils.inst().getWidth()>>1)+2},500,egret.Ease.circIn).wait(1500).to({x:-20},1000,egret.Ease.circOut).call(()=>{
     //             egret.Tween.removeTweens(leftTween);
     //         },this);
-    //         rightTween.to({x:(StageUtils.ins<StageUtils>().getWidth()>>1)-2},500,egret.Ease.circIn).call(()=>{
+    //         rightTween.to({x:(StageUtils.inst().getWidth()>>1)-2},500,egret.Ease.circIn).call(()=>{
     //             GlobalFun.shakeObj(this,0.5,15,15);
     //             if(this._cb && this._arg){
     //                 this._cb.call(this._arg);
     //             }
     //             if(cls){
-    //                 ViewManager.ins<ViewManager>().open(cls,[this._param]);
+    //                 ViewManager.inst().open(cls,[this._param]);
     //             }
     //             if(this._closeCls){
-    //                 ViewManager.ins<ViewManager>().close(this._closeCls);
+    //                 ViewManager.inst().close(this._closeCls);
     //             }
-    //         },this).wait(1500).to({x:(StageUtils.ins<StageUtils>().getWidth()+20)},1000,egret.Ease.circOut).call(()=>{
+    //         },this).wait(1500).to({x:(StageUtils.inst().getWidth()+20)},1000,egret.Ease.circOut).call(()=>{
     //             egret.Tween.removeTweens(leftTween);
-    //             ViewManager.ins<ViewManager>().close(GameLoadingUI);
+    //             ViewManager.inst().close(GameLoadingUI);
     //         });
     //     // }, this);
     // }
@@ -117,5 +117,5 @@ var GameLoadingUI = (function (_super) {
     return GameLoadingUI;
 }(BaseEuiView));
 __reflect(GameLoadingUI.prototype, "GameLoadingUI");
-ViewManager.ins().reg(GameLoadingUI, LayerManager.UI_Pop);
+ViewManager.inst().reg(GameLoadingUI, LayerManager.UI_Pop);
 //# sourceMappingURL=GameLoadingUI.js.map

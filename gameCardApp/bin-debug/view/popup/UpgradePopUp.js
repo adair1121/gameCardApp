@@ -34,7 +34,7 @@ var UpgradePopUp = (function (_super) {
         var _this = this;
         egret.Tween.get(this.upgradeGroup).to({ right: -700 }, 600, egret.Ease.circOut).call(function () {
             egret.Tween.removeTweens(_this.upgradeGroup);
-            ViewManager.ins().close(UpgradePopUp);
+            ViewManager.inst().close(UpgradePopUp);
         }, this);
     };
     UpgradePopUp.prototype.close = function () {
@@ -50,5 +50,5 @@ var UpgradePopUp = (function (_super) {
     return UpgradePopUp;
 }(BaseEuiView));
 __reflect(UpgradePopUp.prototype, "UpgradePopUp");
-ViewManager.ins().reg(UpgradePopUp, LayerManager.UI_Pop);
+ViewManager.inst().reg(UpgradePopUp, LayerManager.UI_Pop);
 //# sourceMappingURL=UpgradePopUp.js.map

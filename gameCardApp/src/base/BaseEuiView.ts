@@ -26,7 +26,7 @@ abstract class BaseEuiView extends eui.Component implements IBaseEuiView{
 			// if(this.removed){
 			// 	removeCls = StartGameView;
 			// }
-			ViewManager.ins<ViewManager>().close(cls);
+			ViewManager.inst().close(cls);
 			if(callBackFun && thisArg){
 				callBackFun.call(thisArg);
 			}
@@ -71,8 +71,8 @@ abstract class BaseEuiView extends eui.Component implements IBaseEuiView{
 		if(evt.target && evt.target.filters){
 			evt.target.filters = [];
 		}
-		SoundManager.ins<SoundManager>().stopEffect();
-		SoundManager.ins<SoundManager>().playEffect(`${RES_AUDIO}buttonClick.mp3`);
+		SoundManager.inst().stopEffect();
+		SoundManager.inst().playEffect(`${RES_AUDIO}buttonClick.mp3`);
 	}
 	private changeFilter(obj:egret.DisplayObjectContainer):void{
 		var colorMatrix = [
