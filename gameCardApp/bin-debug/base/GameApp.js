@@ -16,7 +16,7 @@ var GameApp = (function (_super) {
     function GameApp() {
         return _super.call(this) || this;
     }
-    /**总波数 */ ;
+    /**总波数 增加 比例 5关加一波 */ ;
     GameApp.inst = function () {
         var _inst = _super.single.call(this);
         return _inst;

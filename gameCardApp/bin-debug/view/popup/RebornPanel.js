@@ -32,14 +32,16 @@ var RebornPanel = (function (_super) {
         var dataArr = [];
         var cfgs = RebornCfg.cfg;
         for (var key in cfgs) {
-            var obj = cfgs[key];
-            if (!!~GameApp.rebornIds.indexOf(cfgs[key].id)) {
-                obj["rebornBoo"] = true;
+            if (cfgs[key].cost != 0) {
+                var obj = cfgs[key];
+                if (!!~GameApp.rebornIds.indexOf(cfgs[key].id)) {
+                    obj["rebornBoo"] = true;
+                }
+                else {
+                    obj["rebornBoo"] = false;
+                }
+                dataArr.push(obj);
             }
-            else {
-                obj["rebornBoo"] = false;
-            }
-            dataArr.push(obj);
         }
         this.arrayCollect.source = dataArr;
         this.list.addEventListener(eui.ItemTapEvent.ITEM_TAP, this.onItemTap, this);
@@ -50,7 +52,9 @@ var RebornPanel = (function (_super) {
             UserTips.inst().showTips("已转生过此职业");
             return;
         }
-        ViewManager.inst().open(RebornTipPopUp, [{ cost: item.cost, mid: item.mid }]);
+        ViewManager.inst().open(RebornTipPopUp, [{ cost: item.cost, mid: item.mid, cb: function () {
+                    item.reborn();
+                }, arg: this }]);
     };
     RebornPanel.prototype.onReturn = function () {
         var _this = this;

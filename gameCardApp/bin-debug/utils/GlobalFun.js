@@ -109,11 +109,21 @@ var GlobalFun = (function () {
         }
         return arr;
     };
-    /**根据id获取配置 */
+    /**根据id获取怪物配置 */
     GlobalFun.getCardDataFromId = function (id) {
         var cfgs = MonsterCfg.cfgs;
         for (var key in cfgs) {
             if (cfgs[key].id == id) {
+                return cfgs[key];
+            }
+        }
+    };
+    /**根据id获取技能神将配置 */
+    GlobalFun.getSkillGeneralCfg = function (id) {
+        var cfgs = RebornCfg.cfg;
+        for (var key in cfgs) {
+            if (cfgs[key].mid == id) {
+                cfgs[key].id = id;
                 return cfgs[key];
             }
         }
@@ -130,6 +140,78 @@ var GlobalFun = (function () {
             if (skillcfgs[key].skillId == id) {
                 return skillcfgs[key];
             }
+        }
+    };
+    /**
+     * 创建技能特效显示
+     * @param id 技能id
+     * @param parent 父级容器
+     * @param loopCount 循环次数
+     * @param pos 位置
+     * */
+    GlobalFun.createSkillEff = function (camp, id, parent, loopCount, pos) {
+        // let skillCfg:any = SkillCfg.skillCfg[camp];
+        // let skillCfg:any
+        // let curUseSkill:any;
+        var loop = true;
+        var skillNames = ["旋转雷球", "龙腾", "地爆", "狂怒斩", "凤凰展翅", "双龙戏珠", "践踏", "霸刀斩", "炎爆", "裂地", "雷霆万钧"];
+        var skillName = skillNames[id - 1];
+        var res = "skilleff" + id;
+        // if(id == 100001 || id == 100002 || id == 100003 || id == 100004){
+        //     loop = true;
+        // }
+        // for(let key in skillCfg){
+        //     if(skillCfg[key].skillId == id){
+        //         curUseSkill = skillCfg[key];
+        //         break;
+        //     }
+        // }
+        var textInfo = new eui.Label();
+        textInfo.size = 20;
+        textInfo.scaleX = textInfo.scaleY = 3;
+        textInfo.textColor = 0xffffff;
+        if (camp == -1) {
+            textInfo.textColor = 0xfc3434;
+        }
+        else {
+            res = "skill_" + id;
+        }
+        parent.addChild(textInfo);
+        textInfo.x = pos.x - 70;
+        textInfo.y = pos.y - 150;
+        textInfo.text = skillName;
+        egret.Tween.get(textInfo).to({ scaleX: 1, scaleY: 1 }, 600, egret.Ease.circOut).wait(500).call(function () {
+            egret.Tween.removeTweens(textInfo);
+            if (textInfo && textInfo.parent) {
+                textInfo.parent.removeChild(textInfo);
+            }
+            textInfo = null;
+        }, this);
+        if (loop) {
+            var count_1 = 1;
+            var minx_1 = 100;
+            var maxx_1 = StageUtils.inst().getWidth() - 100;
+            var miny_1 = 100;
+            var maxy_1 = StageUtils.inst().getHeight() - 100;
+            ;
+            var mc = new MovieClip();
+            mc.scaleX = mc.scaleY = 1;
+            parent.addChild(mc);
+            mc.playFile("" + SKILL_EFF + res, loopCount, null, true);
+            mc.x = (Math.random() * (maxx_1 - minx_1) + minx_1) >> 0;
+            mc.y = (Math.random() * (maxy_1 - miny_1) + miny_1) >> 0;
+            var interVal_1 = setInterval(function () {
+                count_1 += 1;
+                var mc = new MovieClip();
+                mc.scaleX = mc.scaleY = 0.7;
+                parent.addChild(mc);
+                mc.playFile("" + SKILL_EFF + res, loopCount, null, true);
+                mc.x = (Math.random() * (maxx_1 - minx_1) + minx_1) >> 0;
+                mc.y = (Math.random() * (maxy_1 - miny_1) + miny_1) >> 0;
+                if (count_1 >= 15) {
+                    clearInterval(interVal_1);
+                }
+            }, 100);
         }
     };
     GlobalFun.count = 0; //计时器次数

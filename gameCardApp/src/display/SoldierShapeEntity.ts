@@ -196,7 +196,8 @@ class SoldierShapeEntity extends BaseClass{
 	//测试 。创建shape
 	private createShape():SoldierEntity{
 		let sp:SoldierEntity = new SoldierEntity();
-		sp.setSoldierData(-1,this._res,this._id);
+		let cardVo:CardVo = GlobalFun.getCardDataFromId(this._id)
+		sp.setSoldierData(-1,this._res,cardVo);
 		// sp.setSoldierData(1,)
 		// sp.graphics.beginFill(0xff0000);
 		// sp.graphics.drawRect(0,0,15,15);

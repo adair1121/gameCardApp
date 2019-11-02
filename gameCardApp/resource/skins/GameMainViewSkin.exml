@@ -38,5 +38,5 @@
 		<e:Label id="boxLab" text="Label" size="20" fontFamily="yt" textColor="0x00ff00" left="71" verticalCenter="0" touchEnabled="false"/>
 	</e:Group>
 	<e:Label id="descLab" text="点击战场召唤" horizontalCenter="0" top="81"/>
-	<e:Rect id="clickRect" width="448.5" height="408.5" x="590" y="174" anchorOffsetX="0" anchorOffsetY="0" alpha="0"/>
+	<e:Rect id="clickRect" width="1032.5" height="408.5" x="6" y="174" anchorOffsetX="0" anchorOffsetY="0" alpha="0"/>
 </e:Skin>

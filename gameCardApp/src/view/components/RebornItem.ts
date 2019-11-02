@@ -25,6 +25,10 @@ class RebornItem extends eui.ItemRenderer{
 		this._rebornBoo = this.data.rebornBoo;
 		this._id = this.data.mid
 	}
+	public reborn():void{
+		this._rebornBoo = true;
+		this.rebornCostLab.text = "已转生";
+	}
 	public get cost():number{
 		return this._cost;
 	}

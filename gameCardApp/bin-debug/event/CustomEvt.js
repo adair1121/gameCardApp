@@ -28,6 +28,8 @@ var CustomEvt = (function (_super) {
     /**游戏loading完成 */
     CustomEvt.GAMELOADINGEND = 'gameLoadingEnd';
     CustomEvt.REDUCE_HP = 'reducehp';
+    /**boss释放技能 */
+    CustomEvt.BOSS_RELEASESKILL = "boos_releaseskill";
     return CustomEvt;
 }(egret.Event));
 __reflect(CustomEvt.prototype, "CustomEvt");

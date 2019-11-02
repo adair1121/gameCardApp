@@ -11,7 +11,7 @@ class GameApp extends BaseClass {
 	public static rebornIds:number[]= [];
 	public static level:number = 1;
 
-	/**总波数 */;
+	/**总波数 增加 比例 5关加一波 */;
 	public static totalCount:number = 5;
 	public constructor() {
 		super();

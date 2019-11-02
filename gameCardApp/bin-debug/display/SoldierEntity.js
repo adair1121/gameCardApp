@@ -19,25 +19,29 @@ var SoldierEntity = (function (_super) {
         _this.camp = 1;
         //克制攻击力
         _this.restriceAtk = 0;
+        _this.isReleaseSkill = false;
+        /**当前boss 的技能播放状态 */
+        _this.playState = false;
         _this.isInAtk = false;
         return _this;
     }
     ;
     SoldierEntity.prototype.initialize = function () {
     };
-    SoldierEntity.prototype.setSoldierData = function (camp, res, id) {
+    SoldierEntity.prototype.setSoldierData = function (camp, res, attr) {
         this._camp = camp;
         this.camp = camp;
-        this.soldierAttr = GlobalFun.getCardDataFromId(id);
+        this.soldierAttr = attr;
         this.scaleX = this.scaleY = 0.7;
+        this.scale = 0.7;
         // if(res == "shanzei"){
         // 	this.scaleX = this.scaleY = 0.8;
         // }
-        if (this.general) {
-            //当前是将领 基础属性增加
-            this.soldierAttr.hp = this.soldierAttr.hp;
-            this.soldierAttr.atk = this.soldierAttr.atk;
-        }
+        // if(this.general){
+        // 	//当前是将领 基础属性增加
+        // 	this.soldierAttr.hp = this.soldierAttr.hp;
+        // 	this.soldierAttr.atk = this.soldierAttr.atk;
+        // }
         // if(this._typeId == SoldierType.QI && !this.general){
         // 	this.scaleX = this.scaleY = 0.5;
         // }
@@ -46,10 +50,17 @@ var SoldierEntity = (function (_super) {
         // 	this.scaleX = this.scaleY = 1;
         // }
         this.hp = this.thp = this.soldierAttr.hp;
+        var index = ((Math.random() * 100) >> 0) > 50 ? 1 : -1;
+        this.soldierAttr.atkDis += ((Math.random() * 20) >> 0) * index;
         // this.w = this.soldierAttr.w;
         // this.h = this.soldierAttr.h;
         this._direc = this._camp == 1 ? 1 : -1;
-        this._res = "" + MONSTER + res;
+        if (camp == 1) {
+            this._res = "" + SKILL + res;
+        }
+        else {
+            this._res = "" + MONSTER + res;
+        }
         // if(_state == 2){
         // 	//打boss
         // 	this._res = `${EFFECT}${res}`
@@ -163,14 +174,16 @@ var SoldierEntity = (function (_super) {
                         self_1._atkTar.reduceHp(atk);
                     }
                     else {
-                        //直接攻击国王塔
-                        MessageManager.inst().dispatch(CustomEvt.REDUCE_HP, { hp: self_1.soldierAttr.atk, camp: self_1.camp });
-                        if (self_1.soldierAttr.atktype == 2) {
-                            var effectmc = new MovieClip();
-                            self_1.parent.addChild(effectmc);
-                            effectmc.playFile(EFFECT + "skill/boom", 1, null, true);
-                            effectmc.x = self_1.x;
-                            effectmc.y = self_1.y - self_1.soldierAttr.atkDis;
+                        if (this._camp == -1) {
+                            //直接攻击国王塔
+                            MessageManager.inst().dispatch(CustomEvt.REDUCE_HP, { hp: self_1.soldierAttr.atk, camp: self_1.camp });
+                            if (self_1.soldierAttr.atktype == 2) {
+                                var effectmc = new MovieClip();
+                                self_1.parent.addChild(effectmc);
+                                effectmc.playFile(EFFECT + "skill/boom", 1, null, true);
+                                effectmc.x = self_1.x;
+                                effectmc.y = self_1.y - self_1.soldierAttr.atkDis;
+                            }
                         }
                     }
                 }, 700);
@@ -218,8 +231,10 @@ var SoldierEntity = (function (_super) {
         if (xy) {
             var angle = Math.atan2(xy.y - this.y, xy.x - this.x) * 180 / Math.PI;
             this.calculEntityDic(angle);
-            this.curState = ActionState.RUN;
-            this._mc.playFile(this._res, -1, null, false, this.curState);
+            if (this.curState != ActionState.RUN) {
+                this.curState = ActionState.RUN;
+                this._mc.playFile(this._res, -1, null, false, this.curState);
+            }
             var startP = new egret.Point(this.x, this.y);
             var endP = new egret.Point(xy.x, xy.y);
             var distance = Math.sqrt(Math.pow(startP.x - endP.x, 2) + Math.pow(startP.y - endP.y, 2));
@@ -228,7 +243,10 @@ var SoldierEntity = (function (_super) {
             // if(!this.general && isquick){
             // 	useTime = time*500;
             // }
-            egret.Tween.get(this).to({ x: xy.x, y: xy.y }, time * 1000).call(function () {
+            egret.Tween.removeTweens(this);
+            egret.Tween.get(this, { loop: false, onChange: function () {
+                    _this.judgeIfInView();
+                }, onChangeObj: this }).to({ x: xy.x, y: xy.y }, time * 1000).call(function () {
                 egret.Tween.removeTweens(_this);
                 _this.curState = ActionState.STAND;
                 _this._mc.playFile(_this._res, -1, null, false, _this.curState);
@@ -251,6 +269,7 @@ var SoldierEntity = (function (_super) {
                 egret.Tween.removeTweens(this);
                 var time = distance / this.soldierAttr.spd;
                 egret.Tween.get(this, { loop: false, onChange: function () {
+                        _this.judgeIfInView();
                         if (_this.isInAtkDis()) {
                             egret.Tween.removeTweens(_this);
                         }
@@ -260,21 +279,49 @@ var SoldierEntity = (function (_super) {
             }
         }
     };
+    /**判断是否进入了页面中固定的位置 */
+    SoldierEntity.prototype.judgeIfInView = function () {
+        if (this._camp == 1 || this.isReleaseSkill || (!this.general)) {
+            return;
+        }
+        var posx = 100 + ((Math.random() * 100) >> 0);
+        if (this.x >= posx) {
+            this.isReleaseSkill = true;
+            this.playAtkAction(4);
+            MessageManager.inst().dispatch(CustomEvt.BOSS_RELEASESKILL);
+            return true;
+        }
+        return false;
+    };
     /**执行站立状态 */
     SoldierEntity.prototype.execStandAction = function () {
         this.curState = ActionState.STAND;
         this._mc.playFile(this._res, -1, null, false, this.curState);
     };
+    /**执行站立状态 */
+    SoldierEntity.prototype.playAtkAction = function (framnum) {
+        egret.Tween.removeTweens(this);
+        this.curState = ActionState.ATTACK;
+        this._mc.playFile(this._res, -1, null, false, this.curState, null, framnum);
+        var releaseMc = new MovieClip();
+        this.parent.addChild(releaseMc);
+        releaseMc.playFile(EFFECT + "release", 3);
+        releaseMc.x = this.x;
+        releaseMc.y = this.y - 50;
+        this.playState = true;
+        var self = this;
+        var timeout = setTimeout(function () {
+            clearTimeout(timeout);
+            self.playState = false;
+        }, 1500);
+    };
     /**获取到目标位置的距离 是否达到攻击距离 */
     SoldierEntity.prototype.isInAtkDis = function () {
-        if (!this._atkTar) {
-            return this.isInAtk;
-        }
         if (this && this._atkTar && !this._atkTar.isDead) {
             var startP = new egret.Point(this.x, this.y);
             var endP = new egret.Point(this._atkTar.x, this._atkTar.y);
             var distance = Math.sqrt(Math.pow(endP.x - startP.x, 2) + Math.pow(endP.y - startP.y, 2));
-            this.isInAtk = Math.abs(distance) <= this.soldierAttr.atkDis;
+            return Math.abs(distance) <= this.soldierAttr.atkDis;
         }
         return this.isInAtk;
     };

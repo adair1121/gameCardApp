@@ -100,7 +100,7 @@ class Main extends eui.UILayer {
      * Create scene interface
      */
     protected createGameScene(): void {
-
+        egret.localStorage.clear();
         //获取平台参数;
         let platform_param:string = GlobalFun.getOption("pf");
         if(!platform){

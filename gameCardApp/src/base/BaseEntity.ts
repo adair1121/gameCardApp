@@ -15,6 +15,7 @@ class BaseEntity extends eui.Component{
 	protected buffAttack:number = 0;
 	protected buffHp:number = 0;
 	protected buffDef:number = 0;
+	protected scale:number = 1;
 	public constructor() {
 		super();
 		this.initialize();
@@ -59,7 +60,7 @@ class BaseEntity extends eui.Component{
 		}else{
 			this._dic = -1;
 		}
-		this.scaleX = this._dic*this.scaleX;
+		this.scaleX = this._dic*this.scale*(-this.camp);
 	}
 	protected dispose():void{
 		

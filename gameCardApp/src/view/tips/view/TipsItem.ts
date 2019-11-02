@@ -8,7 +8,7 @@ class TipsItem extends BaseView {
 	private _type: number;
 	private index: number = 0;
 	protected addToEvent:boolean;
-	private pic:eui.Image;
+	// private pic:eui.Image;
 	constructor() {	
 		super();
 		this.skinName = "TipsSkin";
@@ -35,7 +35,7 @@ class TipsItem extends BaseView {
 
 		this.lab.verticalCenter = -1;
 		
-		this.pic.width = this.lab.width + 20;
+		// this.pic.width = this.lab.width + 20;
 
 		if(!this.addToEvent) {
 			this.addToEvent = true;

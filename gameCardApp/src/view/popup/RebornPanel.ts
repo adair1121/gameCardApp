@@ -22,13 +22,15 @@ class RebornPanel extends BaseEuiView{
 		let dataArr:any[] = [];
 		let cfgs:any[] = RebornCfg.cfg;
 		for(let key in cfgs){
-			let obj:any = cfgs[key];
-			if(!!~GameApp.rebornIds.indexOf(cfgs[key].id)){
-				obj["rebornBoo"] = true;
-			}else{
-				obj["rebornBoo"] = false;
+			if(cfgs[key].cost != 0){
+				let obj:any = cfgs[key];
+				if(!!~GameApp.rebornIds.indexOf(cfgs[key].id)){
+					obj["rebornBoo"] = true;
+				}else{
+					obj["rebornBoo"] = false;
+				}
+				dataArr.push(obj)
 			}
-			dataArr.push(obj)
 		}
 		this.arrayCollect.source = dataArr;
 		this.list.addEventListener(eui.ItemTapEvent.ITEM_TAP,this.onItemTap,this);
@@ -39,7 +41,10 @@ class RebornPanel extends BaseEuiView{
 			UserTips.inst().showTips("已转生过此职业");
 			return;
 		}
-		ViewManager.inst().open(RebornTipPopUp,[{cost:item.cost,mid:item.mid}])
+		
+		ViewManager.inst().open(RebornTipPopUp,[{cost:item.cost,mid:item.mid,cb:()=>{
+			item.reborn();
+		},arg:this}])
 	}
 	private onReturn():void{
 		egret.Tween.get(this.rebornGroup).to({left:-500},600,egret.Ease.circOut).call(()=>{

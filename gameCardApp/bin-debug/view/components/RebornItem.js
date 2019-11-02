@@ -30,6 +30,10 @@ var RebornItem = (function (_super) {
         this._rebornBoo = this.data.rebornBoo;
         this._id = this.data.mid;
     };
+    RebornItem.prototype.reborn = function () {
+        this._rebornBoo = true;
+        this.rebornCostLab.text = "已转生";
+    };
     Object.defineProperty(RebornItem.prototype, "cost", {
         get: function () {
             return this._cost;

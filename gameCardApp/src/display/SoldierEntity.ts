@@ -27,19 +27,21 @@ class SoldierEntity extends BaseEntity{
 	protected initialize():void{
 
 	}
-	public setSoldierData(camp:number,res:string,id:number):void{
+	public setSoldierData(camp:number,res:string,attr:CardVo):void{
 		this._camp = camp;
 		this.camp = camp;
-		this.soldierAttr = GlobalFun.getCardDataFromId(id);
+		this.soldierAttr = attr;
 		this.scaleX = this.scaleY = 0.7;
+		this.scale = 0.7;
 		// if(res == "shanzei"){
 		// 	this.scaleX = this.scaleY = 0.8;
 		// }
-		if(this.general){
-			//当前是将领 基础属性增加
-			this.soldierAttr.hp = this.soldierAttr.hp;
-			this.soldierAttr.atk = this.soldierAttr.atk;
-		}
+		
+		// if(this.general){
+		// 	//当前是将领 基础属性增加
+		// 	this.soldierAttr.hp = this.soldierAttr.hp;
+		// 	this.soldierAttr.atk = this.soldierAttr.atk;
+		// }
 		// if(this._typeId == SoldierType.QI && !this.general){
 		// 	this.scaleX = this.scaleY = 0.5;
 		// }
@@ -48,10 +50,17 @@ class SoldierEntity extends BaseEntity{
 		// 	this.scaleX = this.scaleY = 1;
 		// }
 		this.hp = this.thp = this.soldierAttr.hp;
+		let index:number = ((Math.random()*100)>>0) >50?1:-1;
+		this.soldierAttr.atkDis += ((Math.random()*20)>>0)*index
 		// this.w = this.soldierAttr.w;
 		// this.h = this.soldierAttr.h;
 		this._direc = this._camp == 1?1:-1;
-		this._res = `${MONSTER}${res}`;
+		if(camp == 1){
+			this._res = `${SKILL}${res}`;
+		}else{
+			this._res = `${MONSTER}${res}`;
+		}
+		
 		// if(_state == 2){
 		// 	//打boss
 		// 	this._res = `${EFFECT}${res}`
@@ -174,16 +183,17 @@ class SoldierEntity extends BaseEntity{
 						// }
 						self._atkTar.reduceHp(atk);
 					}else{
-						//直接攻击国王塔
-						MessageManager.inst().dispatch(CustomEvt.REDUCE_HP,{hp:self.soldierAttr.atk,camp:self.camp});
-						if(self.soldierAttr.atktype == 2){
-							let effectmc:MovieClip = new MovieClip();
-							self.parent.addChild(effectmc);
-							effectmc.playFile(`${EFFECT}skill/boom`,1,null,true);
-							effectmc.x = self.x;
-							effectmc.y = self.y - self.soldierAttr.atkDis;
+						if(this._camp == -1){
+							//直接攻击国王塔
+							MessageManager.inst().dispatch(CustomEvt.REDUCE_HP,{hp:self.soldierAttr.atk,camp:self.camp});
+							if(self.soldierAttr.atktype == 2){
+								let effectmc:MovieClip = new MovieClip();
+								self.parent.addChild(effectmc);
+								effectmc.playFile(`${EFFECT}skill/boom`,1,null,true);
+								effectmc.x = self.x;
+								effectmc.y = self.y - self.soldierAttr.atkDis;
+							}
 						}
-						
 					}	
 				}, 700);
 			}
@@ -231,8 +241,10 @@ class SoldierEntity extends BaseEntity{
 		if(xy){
 			let angle:number = Math.atan2(xy.y - this.y,xy.x-this.x)*180/Math.PI;
 			this.calculEntityDic(angle)
-			this.curState = ActionState.RUN;
-			this._mc.playFile(this._res,-1,null,false,this.curState);
+			if(this.curState != ActionState.RUN){
+				this.curState = ActionState.RUN;
+				this._mc.playFile(this._res,-1,null,false,this.curState);
+			}
 			let startP:egret.Point = new egret.Point(this.x,this.y);
 			let endP:egret.Point = new egret.Point(xy.x,xy.y);
 			let distance:number = Math.sqrt(Math.pow(startP.x-endP.x,2) + Math.pow(startP.y-endP.y,2));
@@ -241,7 +253,10 @@ class SoldierEntity extends BaseEntity{
 			// if(!this.general && isquick){
 			// 	useTime = time*500;
 			// }
-			egret.Tween.get(this).to({x:xy.x,y:xy.y},time*1000).call(()=>{
+			egret.Tween.removeTweens(this);
+			egret.Tween.get(this,{loop:false,onChange:()=>{
+				this.judgeIfInView();
+			},onChangeObj:this}).to({x:xy.x,y:xy.y},time*1000).call(()=>{
 				egret.Tween.removeTweens(this);
 				this.curState = ActionState.STAND;
 				this._mc.playFile(this._res,-1,null,false,this.curState);
@@ -261,6 +276,7 @@ class SoldierEntity extends BaseEntity{
 				egret.Tween.removeTweens(this);
 				let time:number = distance/this.soldierAttr.spd;
 				egret.Tween.get(this,{loop:false,onChange:()=>{
+					this.judgeIfInView();
 					if(this.isInAtkDis()){
 						egret.Tween.removeTweens(this)
 					}
@@ -271,22 +287,52 @@ class SoldierEntity extends BaseEntity{
 		}
 		
 	}
+	public isReleaseSkill:boolean = false;
+	/**判断是否进入了页面中固定的位置 */
+	public judgeIfInView():boolean{
+		if(this._camp == 1 || this.isReleaseSkill || (!this.general)){return}
+		let posx:number = 100 + ((Math.random()*100)>>0);
+		if(this.x >= posx){
+			this.isReleaseSkill = true;
+			this.playAtkAction(4);
+			MessageManager.inst().dispatch(CustomEvt.BOSS_RELEASESKILL)
+			return true;
+		}
+		return false;
+	}
 	/**执行站立状态 */
 	public execStandAction():void{
 		this.curState = ActionState.STAND;
 		this._mc.playFile(this._res,-1,null,false,this.curState);
 	}
+	/**当前boss 的技能播放状态 */
+	public playState:boolean = false;
+	/**执行站立状态 */
+	public playAtkAction(framnum:number):void{
+		egret.Tween.removeTweens(this);
+		this.curState = ActionState.ATTACK;
+		this._mc.playFile(this._res,-1,null,false,this.curState,null,framnum);
+		let releaseMc:MovieClip = new MovieClip();
+		this.parent.addChild(releaseMc);
+		releaseMc.playFile(`${EFFECT}release`,3);
+		releaseMc.x = this.x;
+		releaseMc.y = this.y - 50;
+		this.playState = true;
+		let self = this;
+		let timeout = setTimeout(function() {
+			clearTimeout(timeout);
+			self.playState = false;
+		}, 1500);
+	}
 	public isInAtk:boolean = false;
 	/**获取到目标位置的距离 是否达到攻击距离 */
 	public isInAtkDis():boolean{
-		if(!this._atkTar){
-			return this.isInAtk;
-		}
+
 		if(this && this._atkTar && !this._atkTar.isDead){
 			let startP:egret.Point = new egret.Point(this.x,this.y);
 			let endP:egret.Point = new egret.Point(this._atkTar.x,this._atkTar.y);
 			let distance:number = Math.sqrt(Math.pow(endP.x - startP.x,2) + Math.pow(endP.y - startP.y,2));
-			this.isInAtk =  Math.abs(distance) <= this.soldierAttr.atkDis;
+			return  Math.abs(distance) <= this.soldierAttr.atkDis;
 		}
 		return this.isInAtk;
 		

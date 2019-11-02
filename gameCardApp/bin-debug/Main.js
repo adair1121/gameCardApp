@@ -169,6 +169,7 @@ var Main = (function (_super) {
      * Create scene interface
      */
     Main.prototype.createGameScene = function () {
+        egret.localStorage.clear();
         //获取平台参数;
         var platform_param = GlobalFun.getOption("pf");
         if (!platform) {

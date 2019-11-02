@@ -22,6 +22,7 @@ var BaseEntity = (function (_super) {
         _this.buffAttack = 0;
         _this.buffHp = 0;
         _this.buffDef = 0;
+        _this.scale = 1;
         _this.initialize();
         return _this;
     }
@@ -82,7 +83,7 @@ var BaseEntity = (function (_super) {
         else {
             this._dic = -1;
         }
-        this.scaleX = this._dic * this.scaleX;
+        this.scaleX = this._dic * this.scale * (-this.camp);
     };
     BaseEntity.prototype.dispose = function () {
     };

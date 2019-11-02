@@ -56,6 +56,9 @@ var RebornTipPopUp = (function (_super) {
                 GameApp.inst().gold -= this._cost;
                 UserTips.inst().showTips("转生成功");
                 GameApp.rebornIds.push(this._mid);
+                if (this._cb && this._arg) {
+                    this._cb.call(this._arg);
+                }
                 egret.localStorage.setItem(LocalStorageEnum.REBORNIDS, JSON.stringify(GameApp.rebornIds));
             }
         }
