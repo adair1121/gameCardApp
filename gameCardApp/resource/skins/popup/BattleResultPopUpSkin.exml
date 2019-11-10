@@ -3,12 +3,12 @@
 	<e:Image source="result_bg_png" anchorOffsetX="0" left="0" top="0" right="0" bottom="0"/>
 	<e:Image source="win_icon_png" left="63" top="96" source.fail="fail_icon_png" left.fail="15" top.fail="96"/>
 	<e:Image source="win_font_png" top="96" left="638" source.fail="fail_font_png"/>
-	<e:Label text="时间:" top="302" left="638"/>
-	<e:Label id="timeLab" text="8.55" anchorOffsetX="0" width="189" textAlign="left" verticalAlign="middle" top="302" left="736"/>
-	<e:Label id="goldNumLab" text="1000" anchorOffsetX="0" width="189" textAlign="left" verticalAlign="middle" top="394" left="785"/>
-	<e:Label text="奖励:" left="638" top="394"/>
+	<e:Label text="时间:" top="302" left="638" visible.fail="false" visible.win="false"/>
+	<e:Label id="timeLab" text="8.55" anchorOffsetX="0" width="189" textAlign="left" verticalAlign="middle" top="302" left="736" visible.fail="false" visible.win="false"/>
+	<e:Label id="goldNumLab" text="1000" anchorOffsetX="0" width="189" textAlign="left" verticalAlign="middle" top="394" left="785" left.fail="785" top.fail="330" left.win="785" top.win="322"/>
+	<e:Label text="奖励:" left="638" top="394" left.fail="638" top.fail="330" left.win="638" top.win="322"/>
 	<e:Image id="nextBtn" source="nextLevelBtn_png" left="673" top="482" includeIn="win"/>
-	<e:Image source="prompt_gold_png" top="399" left="736"/>
+	<e:Image source="prompt_gold_png" top="399" left="736" left.fail="736" top.fail="335" left.win="736" top.win="327"/>
 	<e:Image id="continueBtn" source="continueBtn_png" includeIn="fail" left="530" top="491"/>
 	<e:Image id="exitBtn" source="exitBtn_png" includeIn="fail" left="831" top="491"/>
 </e:Skin>

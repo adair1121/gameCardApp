@@ -1,6 +1,6 @@
 class BattleResultPopUp extends BaseEuiView{
 
-	private timeLab:eui.Label;
+	// private timeLab:eui.Label;
 	private goldNumLab:eui.Label;
 	private continueBtn:eui.Image;
 	private nextBtn:eui.Image;
@@ -32,7 +32,7 @@ class BattleResultPopUp extends BaseEuiView{
 			this.goldNum = 0;
 		}
 		if(param[0].time){
-			this.timeLab.text = param[0].time.toString();
+			// this.timeLab.text = param[0].time.toString();
 		}
 		if(param[0].cb){
 			this._cb = param[0].cb;

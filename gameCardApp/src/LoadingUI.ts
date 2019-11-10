@@ -114,13 +114,20 @@ class LoadingUI extends eui.UILayer implements RES.PromiseTaskReporter {
         this.percentTxt.size = 20;
         this.percentTxt.verticalCenter = 0;
         this.percentTxt.horizontalCenter = 0;
+
+        let circle:MovieClip = new MovieClip();
+        this.addChild(circle);
+        circle.playFile(`${EFFECT}circle`,-1);
+        circle.x = StageUtils.inst().getWidth()>>1;
+        circle.y = StageUtils.inst().getHeight()>>1;
+        circle.scaleX = circle.scaleY = 4;
     }
 
     public onProgress(current: number, total: number): void {
         let h:number =  (current/total)*110;
         if(h <=0 ){h = 0};
         this.percentTxt.text = ((current/total*100)>>0) +"%";
-        this.textField.text = `正在加载游戏资源...请稍候(${current}/${total})`;
+        // this.textField.text = `加载中...`;
         this.progressMask.height = h;
     }
 }

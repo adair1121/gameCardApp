@@ -121,12 +121,24 @@ var GlobalFun = (function () {
     /**根据id获取技能神将配置 */
     GlobalFun.getSkillGeneralCfg = function (id) {
         var cfgs = RebornCfg.cfg;
+        var curCfg = null;
         for (var key in cfgs) {
             if (cfgs[key].mid == id) {
                 cfgs[key].id = id;
-                return cfgs[key];
+                curCfg = cfgs[key];
+                curCfg.atkDis = curCfg.atkDis + ((Math.random() * 15));
+                break;
             }
         }
+        for (var key in GameApp.skillCfg) {
+            if (GameApp.skillCfg[key] && GameApp.skillCfg[key].rebornId && GameApp.skillCfg[key].rebornId == id) {
+                curCfg.level = GameApp.skillCfg[key].level;
+                curCfg.atk = GameApp.skillCfg[key].atk;
+                curCfg.hp = GameApp.skillCfg[key].hp;
+                break;
+            }
+        }
+        return curCfg;
     };
     /**获取宝箱刷新时间戳 */
     GlobalFun.getBoxRfreshTimeSpan = function () {

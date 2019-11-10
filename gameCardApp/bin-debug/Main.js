@@ -169,6 +169,14 @@ var Main = (function (_super) {
      * Create scene interface
      */
     Main.prototype.createGameScene = function () {
+        eui.Button.prototype["autoSize"] = eui.Image.prototype["autoSize"] = eui.Rect.prototype["autoSize"] = function () {
+            var precentw = StageUtils.inst().getWidth() / 1136;
+            var precenth = StageUtils.inst().getHeight() / 640;
+            this.width *= precentw;
+            this.height *= precenth;
+            this.x *= precentw;
+            this.y *= precenth;
+        };
         egret.localStorage.clear();
         //获取平台参数;
         var platform_param = GlobalFun.getOption("pf");
@@ -180,13 +188,14 @@ var Main = (function (_super) {
         }
         GameApp.inst().refreshTimespan();
         LayerManager.inst().iniaizlize(this);
-        var data = RES.getRes("config_zip");
-        JSZip.loadAsync(data).then(function (zipdata) {
-            return zipdata.file('config.json').async('text');
-        }).then(function (text) {
-            GlobalConfig.setData(JSON.parse(text));
-            GameApp.inst().load();
-        });
+        GameApp.inst().load();
+        // let data = RES.getRes("config_zip");
+        // JSZip.loadAsync(data).then((zipdata) => {
+        //     return zipdata.file('config.json').async('text');
+        // }).then(text => {
+        //     GlobalConfig.setData(JSON.parse(text));
+        //     GameApp.inst().load();
+        // })
     };
     /**
      * 描述文件加载成功，开始播放动画

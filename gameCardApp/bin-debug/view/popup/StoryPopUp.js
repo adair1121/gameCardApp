@@ -21,9 +21,13 @@ var StoryPopUp = (function (_super) {
         }
         this.font.mask = this.fontMask;
         this.fontMask.width = 0;
+        if (param[0]) {
+            this._cb = param[0].cb;
+            this._arg = param[0].arg;
+        }
         egret.Tween.get(this.content).to({ verticalCenter: 0 }, 600, egret.Ease.circOut).call(function () {
             egret.Tween.removeTweens(_this.content);
-            egret.Tween.get(_this.fontMask).to({ width: 734 }, 4000).call(function () {
+            egret.Tween.get(_this.fontMask).to({ width: 734 }, 30000).call(function () {
                 egret.Tween.removeTweens(_this.fontMask);
             }, _this);
         }, this);
@@ -31,10 +35,13 @@ var StoryPopUp = (function (_super) {
     };
     StoryPopUp.prototype.onReturn = function () {
         var _this = this;
-        egret.Tween.removeAllTweens();
+        // egret.Tween.removeAllTweens();
         egret.Tween.get(this.content).to({ verticalCenter: -600 }, 600, egret.Ease.circOut).call(function () {
             egret.Tween.removeTweens(_this.content);
             ViewManager.inst().close(StoryPopUp);
+            if (_this._cb && _this._arg) {
+                _this._cb.call(_this._arg);
+            }
         }, this);
     };
     StoryPopUp.prototype.close = function () {

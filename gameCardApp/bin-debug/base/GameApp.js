@@ -23,8 +23,8 @@ var GameApp = (function (_super) {
     };
     GameApp.prototype.load = function () {
         eui.Label.default_fontFamily = "Microsoft YaHei";
-        GlobalConfig.parserData();
-        GameMap.init(RES.getRes("map_json"));
+        // GlobalConfig.parserData();
+        // GameMap.init(RES.getRes("map_json"));
         LoadingUI.inst().hide();
         ViewManager.inst().open(GameMainView);
         ViewManager.inst().open(StartGameView);
@@ -44,10 +44,14 @@ var GameApp = (function (_super) {
         }
         var rebonidstr = egret.localStorage.getItem(LocalStorageEnum.REBORNIDS);
         if (!rebonidstr) {
-            GameApp.rebornIds = [];
+            GameApp.reborns = {};
         }
         else {
-            GameApp.rebornIds = JSON.parse(rebonidstr);
+            GameApp.reborns = JSON.parse(rebonidstr);
+        }
+        var rebornCfg = egret.localStorage.getItem(LocalStorageEnum.REBORNCFG);
+        if (rebornCfg) {
+            GameApp.skillCfg = JSON.parse(rebornCfg);
         }
         var levelstr = egret.localStorage.getItem(LocalStorageEnum.LEVEL);
         if (!levelstr) {
@@ -111,9 +115,13 @@ var GameApp = (function (_super) {
     GameApp.phurseState = false;
     GameApp.roleGold = 0;
     GameApp.roleGem = 0;
-    GameApp.rebornIds = [];
+    GameApp.reborns = {};
     GameApp.level = 1;
     GameApp.totalCount = 5;
+    /**背景音乐volume */
+    GameApp.bgMusic = 0.5;
+    /**特效音乐 */
+    GameApp.effectMusic = 0.5;
     return GameApp;
 }(BaseClass));
 __reflect(GameApp.prototype, "GameApp");

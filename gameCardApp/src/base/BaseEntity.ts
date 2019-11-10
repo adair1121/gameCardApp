@@ -51,6 +51,21 @@ class BaseEntity extends eui.Component{
 				this._hp = 0;
 				this._isDead = true;
 			}
+			let dmgfont:eui.BitmapLabel = new eui.BitmapLabel();
+			dmgfont.scaleX = dmgfont.scaleY = 0.7;
+			dmgfont.font = "dmg_fnt";
+			if(this.parent){
+				this.parent.addChildAt(dmgfont,this.parent.numChildren - 1);
+			}
+			dmgfont.text = "-"+dmg;
+			dmgfont.x = this.x;
+			dmgfont.y = this.y + -100 + ((Math.random()*50)>>0);
+			egret.Tween.get(dmgfont).to({y:this.y-150},600+((Math.random()*400)>>0),egret.Ease.circIn).call(()=>{
+				egret.Tween.removeTweens(dmgfont);
+				if(dmgfont && dmgfont.parent){
+					dmgfont.parent.removeChild(dmgfont);
+				}
+			},this)
 		}
 	}
 	//计算方向

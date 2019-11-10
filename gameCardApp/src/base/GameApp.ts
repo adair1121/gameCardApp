@@ -8,11 +8,17 @@ class GameApp extends BaseClass {
 	
 	public static roleGold:number = 0;
 	public static roleGem:number = 0;
-	public static rebornIds:number[]= [];
+	public static reborns:any= {};
 	public static level:number = 1;
 
 	/**总波数 增加 比例 5关加一波 */;
 	public static totalCount:number = 5;
+	/**背景音乐volume */
+	public static bgMusic:number = 0.5;
+	/**特效音乐 */
+	public static effectMusic:number = 0.5;
+	/**技能转生配置 */
+	public static skillCfg:any;
 	public constructor() {
 		super();
 	}
@@ -22,8 +28,8 @@ class GameApp extends BaseClass {
 	}
 	public load() {
 		eui.Label.default_fontFamily = "Microsoft YaHei";
-		GlobalConfig.parserData();
-		GameMap.init(RES.getRes("map_json"));
+		// GlobalConfig.parserData();
+		// GameMap.init(RES.getRes("map_json"));
 		LoadingUI.inst().hide();
 		ViewManager.inst().open(GameMainView);
 		ViewManager.inst().open(StartGameView);
@@ -43,12 +49,15 @@ class GameApp extends BaseClass {
 
 		let rebonidstr:string = egret.localStorage.getItem(LocalStorageEnum.REBORNIDS);
 		if(!rebonidstr){
-			GameApp.rebornIds = [];
+			GameApp.reborns = {};
 		}else{
-			GameApp.rebornIds = JSON.parse(rebonidstr);
+			GameApp.reborns = JSON.parse(rebonidstr);
 		}
 
-		
+		let rebornCfg:any = egret.localStorage.getItem(LocalStorageEnum.REBORNCFG);
+		if(rebornCfg){
+			GameApp.skillCfg = JSON.parse(rebornCfg);
+		}
 		let levelstr:string = egret.localStorage.getItem(LocalStorageEnum.LEVEL);
 		if(!levelstr){
 			GameApp.level = 1;

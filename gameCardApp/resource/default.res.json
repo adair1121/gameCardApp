@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "description_json,config_zip,map_json,egret_icon_png,button_down_png,button_up_png,checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,thumb_pb_png,track_pb_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,track_sb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,bg_jpg,progress_bg_png,progress_bar_png,enter_down_png,enter_up_png,storyBtn_png,common_close_png,story_bg_png,story_font_png,main_bg_jpg,main_font_bg_png,main_gold_png,main_gem_png,main_add_btn_png,main_setting_btn_png,main_font_level_png,main_font_count_png,main_icon_award_png,main_bg_2_jpg,main_upgrade_btn_png,main_skill_bg_png,main_item_bg_png,main_progressBg_png,main_progressBar_png,main_area_line_png,main_top_bg_png,skill_101_png,skill_101_title_png,skill_102_png,skill_102_title_png,skill_103_png,skill_103_title_png,skill_104_png,skill_104_title_png,skill_105_png,skill_105_title_png,common_xuanzhong_png,common_close_2_png,audio_bar_bg_png,audio_bar_png,audio_icon_png,autio_title_png,effect_title_png,setting_panel_png,prompt_bg_png,prompt_cancleBtn_png,prompt_gold_png,prompt_sureBtn_png,continueBtn_png,exitBtn_png,fail_font_png,fail_icon_png,nextLevelBtn_png,result_bg_png,win_font_png,win_icon_png,gem_font_1_png,gem_font_2_png,gem_font_3_png,gem_font_4_png,gemBtn_down_png,gemBtn_up_png,gemIcon_1_png,gemIcon_2_png,gemIcon_3_png,gemIcon_4_png,gold_font_1_png,gold_font_2_png,gold_font_3_png,gold_font_4_png,goldBtn_down_png,goldBtn_up_png,goldIcon_1_png,goldIcon_2_png,goldIcon_3_png,goldIcon_4_png,shopBg_png,shopBtn_png,shopItemBg_png,upgrade_panel_png,upgrade_item_png,atkFont_png,general_bottom_png,goldBtn_png,reborn_head_1_png,reborn_head_2_png,reborn_head_3_png,reborn_head_4_png,reborn_item_png,reborn_panel_png,reborn_title_1_png,reborn_title_2_png,reborn_title_3_png,reborn_title_4_png,rebornBtn_png,skill_bottom_png,upgarde_close_png,upgrade_font_bg_png",
+			"keys": "description_json,config_zip,map_json,egret_icon_png,button_down_png,button_up_png,checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,thumb_pb_png,track_pb_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,track_sb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,bg_jpg,progress_bg_png,progress_bar_png,enter_down_png,enter_up_png,storyBtn_png,common_close_png,story_bg_png,story_font_png,main_font_bg_png,main_gold_png,main_gem_png,main_add_btn_png,main_setting_btn_png,main_font_level_png,main_font_count_png,main_icon_award_png,main_bg_2_jpg,main_upgrade_btn_png,main_skill_bg_png,main_item_bg_png,main_progressBg_png,main_progressBar_png,main_area_line_png,main_top_bg_png,skill_101_png,skill_101_title_png,skill_102_png,skill_102_title_png,skill_103_png,skill_103_title_png,skill_104_png,skill_104_title_png,skill_105_png,skill_105_title_png,common_xuanzhong_png,common_close_2_png,audio_bar_bg_png,audio_bar_png,audio_icon_png,autio_title_png,effect_title_png,setting_panel_png,prompt_bg_png,prompt_cancleBtn_png,prompt_gold_png,prompt_sureBtn_png,continueBtn_png,exitBtn_png,fail_font_png,fail_icon_png,nextLevelBtn_png,result_bg_png,win_font_png,win_icon_png,gem_font_1_png,gem_font_2_png,gem_font_3_png,gem_font_4_png,gemBtn_down_png,gemBtn_up_png,gemIcon_1_png,gemIcon_2_png,gemIcon_3_png,gemIcon_4_png,gold_font_1_png,gold_font_2_png,gold_font_3_png,gold_font_4_png,goldBtn_down_png,goldBtn_up_png,goldIcon_1_png,goldIcon_2_png,goldIcon_3_png,goldIcon_4_png,shopBg_png,shopBtn_png,shopItemBg_png,upgrade_panel_png,upgrade_item_png,atkFont_png,general_bottom_png,goldBtn_png,reborn_head_1_png,reborn_head_2_png,reborn_head_3_png,reborn_head_4_png,reborn_item_png,reborn_panel_png,reborn_title_1_png,reborn_title_2_png,reborn_title_3_png,reborn_title_4_png,rebornBtn_png,skill_bottom_png,upgarde_close_png,upgrade_font_bg_png,item_fire_7_png,item_fire_2_png,item_fire_3_png,item_fire_4_png,item_fire_5_png,item_fire_6_png,item_fire_1_png,dmg_fnt,dmg_png,blood_png,title_1_png,title_2_png,title_3_png,title_4_png,title_5_png,title_6_png,title_7_png,title_8_png,title_9_png,title_10_png,main_bg1_jpg",
 			"name": "preload"
 		}
 	],
@@ -185,11 +185,6 @@
 			"url": "res/view/story/story_font.png",
 			"type": "image",
 			"name": "story_font_png"
-		},
-		{
-			"url": "res/view/main/main_bg.jpg",
-			"type": "image",
-			"name": "main_bg_jpg"
 		},
 		{
 			"url": "res/view/main/main_font_bg.png",
@@ -630,6 +625,111 @@
 			"name": "upgrade_font_bg_png",
 			"type": "image",
 			"url": "res/view/upgrade/upgrade_font_bg.png"
+		},
+		{
+			"name": "item_fire_7_png",
+			"type": "image",
+			"url": "res/common/item_fire_7.png"
+		},
+		{
+			"name": "item_fire_2_png",
+			"type": "image",
+			"url": "res/common/item_fire_2.png"
+		},
+		{
+			"name": "item_fire_3_png",
+			"type": "image",
+			"url": "res/common/item_fire_3.png"
+		},
+		{
+			"name": "item_fire_4_png",
+			"type": "image",
+			"url": "res/common/item_fire_4.png"
+		},
+		{
+			"name": "item_fire_5_png",
+			"type": "image",
+			"url": "res/common/item_fire_5.png"
+		},
+		{
+			"name": "item_fire_6_png",
+			"type": "image",
+			"url": "res/common/item_fire_6.png"
+		},
+		{
+			"name": "item_fire_1_png",
+			"type": "image",
+			"url": "res/common/item_fire_1.png"
+		},
+		{
+			"name": "dmg_fnt",
+			"type": "font",
+			"url": "res/font/dmg.fnt"
+		},
+		{
+			"name": "dmg_png",
+			"type": "image",
+			"url": "res/font/dmg.png"
+		},
+		{
+			"name": "blood_png",
+			"type": "image",
+			"url": "res/view/main/blood.png"
+		},
+		{
+			"name": "title_1_png",
+			"type": "image",
+			"url": "res/title/title_1.png"
+		},
+		{
+			"name": "title_2_png",
+			"type": "image",
+			"url": "res/title/title_2.png"
+		},
+		{
+			"name": "title_3_png",
+			"type": "image",
+			"url": "res/title/title_3.png"
+		},
+		{
+			"name": "title_4_png",
+			"type": "image",
+			"url": "res/title/title_4.png"
+		},
+		{
+			"name": "title_5_png",
+			"type": "image",
+			"url": "res/title/title_5.png"
+		},
+		{
+			"name": "title_6_png",
+			"type": "image",
+			"url": "res/title/title_6.png"
+		},
+		{
+			"name": "title_7_png",
+			"type": "image",
+			"url": "res/title/title_7.png"
+		},
+		{
+			"name": "title_8_png",
+			"type": "image",
+			"url": "res/title/title_8.png"
+		},
+		{
+			"name": "title_9_png",
+			"type": "image",
+			"url": "res/title/title_9.png"
+		},
+		{
+			"name": "title_10_png",
+			"type": "image",
+			"url": "res/title/title_10.png"
+		},
+		{
+			"name": "main_bg1_jpg",
+			"type": "image",
+			"url": "res/view/main/main_bg1.jpg"
 		}
 	]
 }

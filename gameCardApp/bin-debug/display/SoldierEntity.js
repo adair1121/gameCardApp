@@ -34,6 +34,14 @@ var SoldierEntity = (function (_super) {
         this.soldierAttr = attr;
         this.scaleX = this.scaleY = 0.7;
         this.scale = 0.7;
+        if (this._camp == -1 && (!this.general)) {
+            this.scaleX = this.scaleY = 0.4;
+            this.scale = 0.4;
+        }
+        if (this.camp == 1) {
+            this.scaleX = this.scaleY = 0.5;
+            this.scale = 0.5;
+        }
         // if(res == "shanzei"){
         // 	this.scaleX = this.scaleY = 0.8;
         // }
@@ -79,11 +87,16 @@ var SoldierEntity = (function (_super) {
         this.addChild(this._mc);
         this._mc.playFile(this._res, -1, null, false, this.curState);
         this.progressGroup = new eui.Group();
+        this.progressGroup.anchorOffsetX = 40;
         this.progressGroup.width = 80;
         // this.progressGroup.scaleX = this.progressGroup.scaleY = 0.6;
         this.addChild(this.progressGroup);
-        this.progressGroup.x = -40;
-        this.progressGroup.y = -110;
+        // this.progressGroup.x = -40;
+        this.progressGroup.horizontalCenter = 0;
+        this.progressGroup.y = -130;
+        if (this.camp == 1) {
+            // this.progressGroup.x = 0;
+        }
         // let hpBg:eui.Image = new eui.Image();
         // hpBg.source = "hp_progress_bg_png";
         // this.progressGroup.addChild(hpBg);
@@ -112,11 +125,24 @@ var SoldierEntity = (function (_super) {
         // }
         var barRes = camp == 1 ? 0x00ff00 : 0xfc3434;
         var barimg = new egret.Shape();
+        barimg.anchorOffsetX = 40;
         barimg.graphics.beginFill(barRes, 1);
         barimg.graphics.drawRect(0, 0, 80, 10);
         barimg.graphics.endFill();
         this._barimg = barimg;
         this.progressGroup.addChild(barimg);
+        if (this.general) {
+            this.progressGroup.y = -200;
+        }
+        if (this._camp == -1 && this.general) {
+            var title = new eui.Image();
+            title.source = "title_1_png";
+            title.scaleX = title.scaleY = 1;
+            this.progressGroup.addChild(title);
+            title.anchorOffsetX = title.width >> 1;
+            title.anchorOffsetY = title.height;
+            title.y = -20;
+        }
         // this.soldierCampImg = new eui.Image();
         // this.progressGroup.addChild(this.soldierCampImg);
         // this.soldierCampImg.source = `type_${this._typeId}_png`;
@@ -174,19 +200,19 @@ var SoldierEntity = (function (_super) {
                         self_1._atkTar.reduceHp(atk);
                     }
                     else {
-                        if (this._camp == -1) {
+                        if (self_1._camp == -1) {
                             //直接攻击国王塔
                             MessageManager.inst().dispatch(CustomEvt.REDUCE_HP, { hp: self_1.soldierAttr.atk, camp: self_1.camp });
-                            if (self_1.soldierAttr.atktype == 2) {
-                                var effectmc = new MovieClip();
-                                self_1.parent.addChild(effectmc);
-                                effectmc.playFile(EFFECT + "skill/boom", 1, null, true);
-                                effectmc.x = self_1.x;
-                                effectmc.y = self_1.y - self_1.soldierAttr.atkDis;
-                            }
+                            // if(self.soldierAttr.atktype == 2){
+                            // 	let effectmc:MovieClip = new MovieClip();
+                            // 	self.parent.addChild(effectmc);
+                            // 	effectmc.playFile(`${EFFECT}skill/boom`,1,null,true);
+                            // 	effectmc.x = self.x;
+                            // 	effectmc.y = self.y - self.soldierAttr.atkDis;
+                            // }
                         }
                     }
-                }, 700);
+                }, 900);
             }
         }
     };
@@ -249,7 +275,9 @@ var SoldierEntity = (function (_super) {
                 }, onChangeObj: this }).to({ x: xy.x, y: xy.y }, time * 1000).call(function () {
                 egret.Tween.removeTweens(_this);
                 _this.curState = ActionState.STAND;
-                _this._mc.playFile(_this._res, -1, null, false, _this.curState);
+                if (_this._mc) {
+                    _this._mc.playFile(_this._res, -1, null, false, _this.curState);
+                }
                 if (cb && thisarg) {
                     cb.call(thisarg);
                 }
@@ -261,7 +289,9 @@ var SoldierEntity = (function (_super) {
                 this.calculEntityDic(angle);
                 if (this.curState != ActionState.RUN) {
                     this.curState = ActionState.RUN;
-                    this._mc.playFile(this._res, -1, null, false, this.curState);
+                    if (this._mc) {
+                        this._mc.playFile(this._res, -1, null, false, this.curState);
+                    }
                 }
                 var startP = new egret.Point(this.x, this.y);
                 var endP = new egret.Point(this._atkTar.x, this._atkTar.y);
@@ -350,23 +380,31 @@ var SoldierEntity = (function (_super) {
     });
     SoldierEntity.prototype.dispose = function () {
         // ObjectPool.push(this);
-        this.curState = ActionState.DEAD;
-        this._mc.playFile(this._res, 1, null, true, this.curState);
-        if (this._watcher) {
-            this._watcher.unwatch();
-        }
+        // this.curState = ActionState.DEAD;
+        // this._mc.playFile(this._res,1,null,true,this.curState);
+        // if(this._watcher){
+        // 	this._watcher.unwatch();
+        // }
         var self = this;
-        var timeout = setTimeout(function () {
-            clearTimeout(timeout);
-            self._atkTar = null;
-            if (self && self._mc) {
-                self.removeChild(self._mc);
-                self._mc = null;
-            }
-            if (self && self.parent) {
-                self.parent.removeChild(self);
-            }
-        }, 600);
+        // let timeout = setTimeout(function() {
+        // 	clearTimeout(timeout)
+        // 	self._atkTar = null;
+        // 	if(self && self._mc){
+        // 		self.removeChild(self._mc);
+        // 		self._mc = null;
+        // 	}
+        // 	if(self && self.parent){
+        // 		self.parent.removeChild(self);
+        // 	}
+        // }, 600);
+        self._atkTar = null;
+        if (self && self._mc) {
+            self.removeChild(self._mc);
+            self._mc = null;
+        }
+        if (self && self.parent) {
+            self.parent.removeChild(self);
+        }
     };
     Object.defineProperty(SoldierEntity.prototype, "hp", {
         // private addAttrRestrict():void{

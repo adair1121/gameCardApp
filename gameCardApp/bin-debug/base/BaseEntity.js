@@ -73,6 +73,21 @@ var BaseEntity = (function (_super) {
                 this._hp = 0;
                 this._isDead = true;
             }
+            var dmgfont_1 = new eui.BitmapLabel();
+            dmgfont_1.scaleX = dmgfont_1.scaleY = 0.7;
+            dmgfont_1.font = "dmg_fnt";
+            if (this.parent) {
+                this.parent.addChildAt(dmgfont_1, this.parent.numChildren - 1);
+            }
+            dmgfont_1.text = "-" + dmg;
+            dmgfont_1.x = this.x;
+            dmgfont_1.y = this.y + -100 + ((Math.random() * 50) >> 0);
+            egret.Tween.get(dmgfont_1).to({ y: this.y - 150 }, 600 + ((Math.random() * 400) >> 0), egret.Ease.circIn).call(function () {
+                egret.Tween.removeTweens(dmgfont_1);
+                if (dmgfont_1 && dmgfont_1.parent) {
+                    dmgfont_1.parent.removeChild(dmgfont_1);
+                }
+            }, this);
         }
     };
     //计算方向

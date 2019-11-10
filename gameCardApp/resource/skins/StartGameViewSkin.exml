@@ -10,4 +10,5 @@
 		</e:skinName>
 	</e:Button>
 	<e:Image id="storyBtn" source="storyBtn_png" right="39" top="28"/>
+	<e:Label text="v0.0.1" size="20" left="12" top="14" textColor="0xeddada"/>
 </e:Skin>

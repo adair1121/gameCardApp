@@ -36,6 +36,9 @@ var RebornTipPopUp = (function (_super) {
             if (param[0].mid) {
                 this._mid = param[0].mid;
             }
+            if (param[0].skillId) {
+                this._skillid = param[0].skillId;
+            }
             if (param[0].cb) {
                 this._cb = param[0].cb;
             }
@@ -55,11 +58,14 @@ var RebornTipPopUp = (function (_super) {
             else {
                 GameApp.inst().gold -= this._cost;
                 UserTips.inst().showTips("转生成功");
-                GameApp.rebornIds.push(this._mid);
+                // if(!GameApp.reborns[this._skillid]){
+                // 	GameApp.reborns
+                // }
+                // GameApp.rebornIds.push(this._mid);
                 if (this._cb && this._arg) {
                     this._cb.call(this._arg);
                 }
-                egret.localStorage.setItem(LocalStorageEnum.REBORNIDS, JSON.stringify(GameApp.rebornIds));
+                // egret.localStorage.setItem(LocalStorageEnum.REBORNIDS,JSON.stringify(GameApp.rebornIds));
             }
         }
         else {

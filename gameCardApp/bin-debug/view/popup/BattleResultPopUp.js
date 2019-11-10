@@ -33,7 +33,7 @@ var BattleResultPopUp = (function (_super) {
             this.goldNum = 0;
         }
         if (param[0].time) {
-            this.timeLab.text = param[0].time.toString();
+            // this.timeLab.text = param[0].time.toString();
         }
         if (param[0].cb) {
             this._cb = param[0].cb;

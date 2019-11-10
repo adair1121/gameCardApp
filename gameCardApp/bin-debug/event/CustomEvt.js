@@ -30,6 +30,8 @@ var CustomEvt = (function (_super) {
     CustomEvt.REDUCE_HP = 'reducehp';
     /**boss释放技能 */
     CustomEvt.BOSS_RELEASESKILL = "boos_releaseskill";
+    /**转生成功 */
+    CustomEvt.REBORNSUCCESS = "rebornsuccess";
     return CustomEvt;
 }(egret.Event));
 __reflect(CustomEvt.prototype, "CustomEvt");

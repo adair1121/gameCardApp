@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="RebornPanelSkin" width="1136" height="640" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Rect left="0" top="0" right="0" bottom="0" alpha="0.3"/>
+	<e:Rect id="rect" left="0" top="0" right="0" bottom="0" alpha="0.3"/>
 	<e:Group id="rebornGroup" touchChildren="true" touchEnabled="false" touchThrough="true" left="-500" verticalCenter="0">
 		<e:Image source="reborn_panel_png" x="0" y="0"/>
 		<e:Scroller id="scroller" width="393.94" height="390.91" x="19.04" y="50.6" anchorOffsetX="0" anchorOffsetY="0" scrollPolicyH="off">

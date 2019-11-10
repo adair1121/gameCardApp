@@ -20,7 +20,7 @@ var UpgradeItem = (function (_super) {
         this.upgradeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onUpgrade, this);
     };
     UpgradeItem.prototype.onReborn = function () {
-        ViewManager.inst().open(RebornPanel);
+        ViewManager.inst().open(RebornPanel, [{ skillId: this._skillId }]);
     };
     UpgradeItem.prototype.onUpgrade = function () {
         var userGold = GameApp.inst().gold;
@@ -29,28 +29,44 @@ var UpgradeItem = (function (_super) {
             return;
         }
         GameApp.inst().gold -= this._curCost;
-        var levelstr = egret.localStorage.getItem(LocalStorageEnum.SKILL_LEVEL + this._skillId);
-        var curLevel = parseInt(levelstr) + 1;
-        egret.localStorage.setItem(LocalStorageEnum.SKILL_LEVEL + this._skillId, (curLevel).toString());
-        this._curCost = (curLevel * 1000);
+        GameApp.skillCfg[this._skillId].level += 1;
+        GameApp.skillCfg[this._skillId].atk = GameApp.skillCfg[this._skillId].level * GameApp.skillCfg[this._skillId].atk;
+        GameApp.skillCfg[this._skillId].cost = GameApp.skillCfg[this._skillId].level * GameApp.skillCfg[this._skillId].cost;
+        egret.localStorage.setItem(LocalStorageEnum.REBORNCFG, JSON.stringify(GameApp.skillCfg));
+        // let levelstr:string = egret.localStorage.getItem(LocalStorageEnum.SKILL_LEVEL + this._skillId);
+        // let curLevel:number = parseInt(levelstr)+1
+        // egret.localStorage.setItem(LocalStorageEnum.SKILL_LEVEL + this._skillId,(curLevel).toString());
+        this._curCost = GameApp.skillCfg[this._skillId].cost;
+        this.levelLab.text = "Lv." + GameApp.skillCfg[this._skillId].level;
         this.costLab.text = this._curCost.toString();
-        this.atkLab.text = (curLevel * 1530).toString();
+        this.atkLab.text = (GameApp.skillCfg[this._skillId].level * this.data.atk).toString();
+        UserTips.inst().showTips("升级成功");
     };
     UpgradeItem.prototype.dataChanged = function () {
-        this.skillIcon.source = this.data.skillIcon;
-        this.skillTitle.source = this.data.skillTitle;
-        this.skillDesc.text = this.data.desc;
-        this._skillId = this.data.skillId;
-        var levelstr = egret.localStorage.getItem(LocalStorageEnum.SKILL_LEVEL + this._skillId);
-        this.atkLab.text = (parseInt(levelstr) * 1530).toString();
-        this._curCost = (parseInt(levelstr) * 1000);
+        this.refresh(this.data);
+    };
+    UpgradeItem.prototype.refresh = function (data) {
+        this.skillIcon.source = data.skillIcon;
+        this.skillTitle.source = data.skillTitle;
+        this.skillDesc.text = data.desc;
+        this._skillId = data.skillId;
+        var levelstr = data.level;
+        this.atkLab.text = data.atk.toString();
+        this._curCost = data.cost;
         this.costLab.text = this._curCost.toString();
         this.levelLab.text = "Lv." + levelstr;
         this.rebornBtn.visible = false;
-        if (this.data.skillId == 103) {
+        if (this.data.skillType == 1) {
             this.rebornBtn.visible = true;
         }
     };
+    Object.defineProperty(UpgradeItem.prototype, "skillId", {
+        get: function () {
+            return this._skillId;
+        },
+        enumerable: true,
+        configurable: true
+    });
     UpgradeItem.prototype.dispose = function () {
         this.rebornBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onReborn, this);
         this.upgradeBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onUpgrade, this);

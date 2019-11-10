@@ -128,12 +128,24 @@ class GlobalFun {
     /**根据id获取技能神将配置 */
     public static getSkillGeneralCfg(id:number):CardVo{
         let cfgs:any[] = RebornCfg.cfg;
+        let curCfg:CardVo = null;
          for(let key in cfgs){
             if(cfgs[key].mid == id){
                 cfgs[key].id = id;
-                return cfgs[key];
+                curCfg = cfgs[key];
+                curCfg.atkDis  = curCfg.atkDis + ((Math.random()*15))
+                break;
             }
         }
+        for(let key in GameApp.skillCfg){
+            if(GameApp.skillCfg[key] && GameApp.skillCfg[key].rebornId && GameApp.skillCfg[key].rebornId == id){
+                curCfg.level = GameApp.skillCfg[key].level;
+                curCfg.atk = GameApp.skillCfg[key].atk;
+                curCfg.hp = GameApp.skillCfg[key].hp;
+                break;
+            }
+        }
+        return curCfg;
     }
     /**获取宝箱刷新时间戳 */
     public static getBoxRfreshTimeSpan():number{

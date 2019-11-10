@@ -22,6 +22,7 @@ var RebornPanel = (function (_super) {
         egret.Tween.get(this.rebornGroup).to({ left: 10 }, 600, egret.Ease.circOut).call(function () {
             egret.Tween.removeTweens(_this.rebornGroup);
         });
+        this.rect.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onReturn, this);
         this.addTouchEvent(this.btnReturn, this.onReturn, true);
         this.arrayCollect = new eui.ArrayCollection();
         this.list.itemRenderer = RebornItem;
@@ -30,16 +31,17 @@ var RebornPanel = (function (_super) {
         this.scroller.verticalScrollBar.autoVisibility = false;
         this.scroller.verticalScrollBar.visible = false;
         var dataArr = [];
+        this._skillId = param[0].skillId;
         var cfgs = RebornCfg.cfg;
         for (var key in cfgs) {
             if (cfgs[key].cost != 0) {
                 var obj = cfgs[key];
-                if (!!~GameApp.rebornIds.indexOf(cfgs[key].id)) {
-                    obj["rebornBoo"] = true;
-                }
-                else {
-                    obj["rebornBoo"] = false;
-                }
+                obj.skillId = this._skillId;
+                // if(!!~GameApp.rebornIds.indexOf(cfgs[key].id)){
+                // 	obj["rebornBoo"] = true;
+                // }else{
+                // 	obj["rebornBoo"] = false;
+                // }
                 dataArr.push(obj);
             }
         }
@@ -49,11 +51,25 @@ var RebornPanel = (function (_super) {
     RebornPanel.prototype.onItemTap = function (evt) {
         var item = this.list.getChildAt(evt.itemIndex);
         if (item.ifReborn) {
-            UserTips.inst().showTips("已转生过此职业");
+            UserTips.inst().showTips("已切换转生职业");
+            var skillCfg = GameApp.skillCfg[this._skillId];
+            var rebornCfg = RebornCfg.cfg;
+            var curRebornCfg = null;
+            for (var i = 0; i < rebornCfg.length; i++) {
+                if (rebornCfg[i].mid == item.mid) {
+                    curRebornCfg = rebornCfg[i];
+                    break;
+                }
+            }
+            var obj = { skillId: this._skillId, rebornId: item.mid, skillIcon: item.icon, skillTitle: "skill_103_title_png", level: skillCfg.level, desc: curRebornCfg.desc, atk: curRebornCfg.atk * skillCfg.level, hp: curRebornCfg.hp * skillCfg.level, atkDis: 100, cost: curRebornCfg.cost * skillCfg.level, skillType: 1 };
+            GameApp.skillCfg[this._skillId] = obj;
+            egret.localStorage.setItem(LocalStorageEnum.REBORNCFG, JSON.stringify(GameApp.skillCfg));
             return;
         }
-        ViewManager.inst().open(RebornTipPopUp, [{ cost: item.cost, mid: item.mid, cb: function () {
-                    item.reborn();
+        ViewManager.inst().open(RebornTipPopUp, [{ cost: item.cost, mid: item.mid, skillId: this._skillId, cb: function (param) {
+                    if (param) {
+                        item.reborn();
+                    }
                 }, arg: this }]);
     };
     RebornPanel.prototype.onReturn = function () {
@@ -65,6 +81,7 @@ var RebornPanel = (function (_super) {
     };
     RebornPanel.prototype.close = function () {
         this.removeTouchEvent(this.btnReturn, this.onReturn);
+        this.rect.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onReturn, this);
         this.list.removeEventListener(eui.ItemTapEvent.ITEM_TAP, this.onItemTap, this);
     };
     return RebornPanel;

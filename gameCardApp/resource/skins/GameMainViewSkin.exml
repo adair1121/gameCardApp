@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="GameMainViewSkin" width="1136" height="640" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Image source="main_bg_jpg" left="0" top="0" right="0" bottom="0"/>
+	<e:Image left="0" top="-227" right="0" bottom="-140" anchorOffsetY="0" source="main_bg1_jpg"/>
 	<e:Image source="main_top_bg_png" left="0" right="0" top="0" anchorOffsetY="0" height="53"/>
+	<e:Image source="main_area_line_png" right="32" verticalCenter="17.5"/>
 	<e:Group id="itemGroup" x="8" y="4" touchChildren="true" touchEnabled="false" touchThrough="true">
 		<e:Image source="main_font_bg_png" x="0" y="0"/>
 		<e:Image source="main_font_bg_png" x="245" y="0"/>
@@ -38,5 +39,6 @@
 		<e:Label id="boxLab" text="Label" size="20" fontFamily="yt" textColor="0x00ff00" left="71" verticalCenter="0" touchEnabled="false"/>
 	</e:Group>
 	<e:Label id="descLab" text="点击战场召唤" horizontalCenter="0" top="81"/>
-	<e:Rect id="clickRect" width="1032.5" height="408.5" x="6" y="174" anchorOffsetX="0" anchorOffsetY="0" alpha="0"/>
+	<e:Rect id="clickRect" anchorOffsetX="0" anchorOffsetY="0" alpha="0" height="409" width="1033" x="6" y="174"/>
+	<e:Image id="blood" source="blood_png" rotation="0.07" top="38" bottom="33" right="67" touchEnabled="false" anchorOffsetX="0" width="143.01" anchorOffsetY="0"/>
 </e:Skin>

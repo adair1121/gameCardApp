@@ -14,6 +14,7 @@ class RebornCfg {
 			id:4,
 			skillId:0,
 			model:"skill_103_1",
+			skillType:1
 		},
 		{
 			cost:10000,
@@ -28,10 +29,11 @@ class RebornCfg {
 			hp:400,
 			id:4,
 			skillId:0,
-			model:"skill_103_2"
+			model:"skill_103_2",
+			skillType:1
 		},
 		{
-			cost:20000,
+			cost:10000,
 			mid:3,
 			name:"神将",
 			level:1,
@@ -43,10 +45,11 @@ class RebornCfg {
 			hp:500,
 			id:4,
 			skillId:0,
-			model:"skill_103_3"
+			model:"skill_103_3",
+			skillType:1
 		},
 		{
-			cost:30000,
+			cost:10000,
 			mid:4,
 			name:"神将",
 			level:1,
@@ -58,37 +61,8 @@ class RebornCfg {
 			hp:600,
 			id:4,
 			skillId:0,
-			model:"skill_103_4"
-		},
-		{
-			cost:40000,
-			mid:5,
-			name:"神将",
-			level:1,
-			atktype:1,
-			atkDis:100,
-			type:1,
-			spd:30,
-			atk:300,
-			hp:700,
-			id:4,
-			skillId:0,
-			model:"skill_103_5"
-		},
-		{
-			cost:50000,
-			mid:6,
-			name:"神将",
-			level:1,
-			atktype:1,
-			atkDis:100,
-			type:1,
-			spd:30,
-			atk:350,
-			hp:800,
-			id:4,
-			skillId:0,
-			model:"skill_103_6"
+			model:"skill_103_4",
+			skillType:1
 		}
 		
 	]

@@ -35,12 +35,12 @@ var SettingPopUp = (function (_super) {
         this.effectBar.mask = this.effectBarMask;
         this._minx = this.musicBar.x;
         this._maxx = this.musicBar.x + this.musicBar.width;
-        this.musicBarMask.width = this._barWidth * 0.5;
+        this.musicBarMask.width = this._barWidth * GameApp.bgMusic;
         this.m_sound_control.x = this.musicBarMask.x + this.musicBarMask.width;
-        SoundManager.inst().setBgVolume(0.5);
-        this.effectBarMask.width = this._barWidth * 0.5;
+        SoundManager.inst().setBgVolume(GameApp.bgMusic);
+        this.effectBarMask.width = this._barWidth * GameApp.effectMusic;
         this.e_sound_control.x = this.effectBarMask.x + this.effectBarMask.width;
-        SoundManager.inst().setEffectVolume(0.5);
+        SoundManager.inst().setEffectVolume(GameApp.effectMusic);
         this.m_sound_control.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onMusicTouchBegin, this);
         StageUtils.inst().getStage().addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onMusicTouchMove, this);
         this.addEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onMusicTouchEnd, this);
@@ -74,11 +74,13 @@ var SettingPopUp = (function (_super) {
         if (this.musicTouch) {
             this.m_sound_control.x = localP.x;
             this.musicBarMask.width = this._barWidth * volum;
+            GameApp.bgMusic = volum;
             SoundManager.inst().setBgVolume(volum);
         }
         if (this.effectTouch) {
             this.e_sound_control.x = localP.x;
             this.effectBarMask.width = this._barWidth * volum;
+            GameApp.effectMusic = volum;
             SoundManager.inst().setEffectVolume(volum);
         }
     };

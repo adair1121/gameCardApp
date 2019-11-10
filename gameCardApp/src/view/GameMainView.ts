@@ -47,6 +47,9 @@ class GameMainView extends BaseEuiView{
 
 	private progressMark:eui.Rect;
 	private progressBar:eui.Image;
+	private blood:eui.Image;
+	private showBlood:boolean = false;
+	
 	public constructor() {
 		super();
 	}
@@ -60,6 +63,7 @@ class GameMainView extends BaseEuiView{
 				egret.localStorage.setItem(LocalStorageEnum.SKILL_LEVEL+(100+i),"1");
 			}
 		}
+		this.clickRect["autoSize"]();
 		this.progressBar.mask = this.progressMark;
 		this.totalHp = this.curHp = 200000;
 		this.touchEnabled = false;
@@ -93,7 +97,7 @@ class GameMainView extends BaseEuiView{
 		this.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onTouchTap,this);
 		MessageManager.inst().addListener(CustomEvt.REDUCE_HP,this.onTowerHpReduce,this);
 		MessageManager.inst().addListener(CustomEvt.BOSS_RELEASESKILL,this.onBossReleaseSkill,this);
-
+		this.blood.visible = false;
 		eui.Binding.bindHandler(GameApp,["level"],this.onLevelChange,this);
 		this.descLab.visible = false;
 		this.descLab.alpha = 0;
@@ -109,20 +113,104 @@ class GameMainView extends BaseEuiView{
 			let dmg:number = (GameApp.level + this.curCount)*((Math.random()*100)>>0);
 			this._ownEntitys[i].reduceHp(dmg);
 		}
-		this.curHp -= (GameApp.level + this.curCount)*((Math.random()*100)>>0);
+		let dmg:number = (GameApp.level + this.curCount)*((Math.random()*100)>>0);
+		this.curHp -= dmg
+		this.onTowerHpReduce({data:{hp:dmg}})
 	}
-	private onTowerHpReduce(evt:CustomEvt):void{
+	private onTowerHpReduce(evt:any):void{
 		this.curHp -= evt.data.hp;
 		if(this.curHp <= 0){
 			this.curHp = 0;
 			this.gameFail();
 		}
+		if(!this.showBlood){
+			this.showBlood = true;
+			this.blood.visible = true;
+			this.blood.alpha = 0;
+			egret.Tween.get(this.blood).to({alpha:1},600).to({alpha:0},600).to({alpha:1},600).to({alpha:0},600).call(()=>{
+				egret.Tween.removeTweens(this.blood);
+				this.blood.visible = false;
+				this.showBlood = false;
+			},this)
+		}
+		this.showDmg(evt.data.hp);
 		this.progressMark.width = this.curHp/this.totalHp*277;
+	}
+	private showDmg(dmg:number):void{
+		let dmgfont:eui.BitmapLabel = new eui.BitmapLabel();
+		dmgfont.scaleX = dmgfont.scaleY = 0.7;
+		dmgfont.font = "dmg_fnt";
+		this.addChild(dmgfont);
+		dmgfont.text = "-"+dmg;
+		dmgfont.bottom = 80;
+		dmgfont.right = 150 + ((Math.random()*50)>>0);
+		egret.Tween.get(dmgfont).to({bottom:dmgfont.bottom+100},600+((Math.random()*400)>>0),egret.Ease.circIn).call(()=>{
+			egret.Tween.removeTweens(dmgfont);
+			if(dmgfont && dmgfont.parent){
+				dmgfont.parent.removeChild(dmgfont);
+			}
+		},this)
 	}
 	private gameFail():void{
 		egret.stopTick(this.execAction,this);
 		this.timer.stop();
+		ViewManager.inst().open(BattleResultPopUp,[{state:0,cb:this.gameEnd,arg:this}])
 		console.log("游戏结束")
+	}
+	private gameWin():void{
+		egret.stopTick(this.execAction,this);
+		this.timer.stop();
+	}
+	private gameEnd(param):void{
+		if(param == BattleResultPopUp.OPER_EXIT){
+			ViewManager.inst().close(GameMainView);
+			ViewManager.inst().open(StartGameView);
+		}else if(param == BattleResultPopUp.OPER_CONTINUE){
+			this.reset();
+		}else if(param == BattleResultPopUp.OPER_NEXT){
+			let self = this;
+			GameApp.level += 1;
+			for(let i:number = 0;i<this._ownEntitys.length;i++){
+				if(this._ownEntitys[i]&& this._ownEntitys[i].parent){
+					this._ownEntitys[i].dispose();
+				}
+			}
+			this._entitys = [];
+			this._ownEntitys = [];
+			this._levelEntitys = [];
+			let skillItem:SkilItem = this.list.getChildAt(2) as SkilItem;
+			skillItem.num = 10;
+			let timeout = setTimeout(function() {
+				clearTimeout(timeout);
+				self.showLevelTxt(()=>{
+					self.createLevelMonster();
+					egret.startTick(self.execAction,self);
+				})
+			}, 1200);
+		}
+	}
+	private reset():void{
+		for(let i:number = 0;i<this._entitys.length;i++){
+			if(this._entitys[i] && this._entitys[i].parent){
+				this._entitys[i].parent.removeChild(this._entitys[i]);
+			}
+		}
+		this._entitys = [];
+		this._ownEntitys = [];
+		this._levelEntitys = [];
+		this.totalHp = this.curHp = 200000;
+		this.touchEnabled = false;
+		this.touchChildren = false;
+		this.refreshRewardBoxState();
+		let boo:boolean = this.changeTime();
+		if(boo){
+			this.timer.start();
+		}
+		this.blood.visible = false;
+		this.descLab.visible = false;
+		this.descLab.alpha = 0;
+		this.createLevelMonster();
+		this.initialize();
 	}
 	/**创建关卡怪物 */
 	private createLevelMonster():void{
@@ -168,11 +256,11 @@ class GameMainView extends BaseEuiView{
 	/**创建我方神将 */
 	private createOwnGenral(xy:XY):void{
 		let soldierEntity:SoldierEntity = new SoldierEntity();
-		let rebrons:number[] = GameApp.rebornIds;
+		let rebornSkillId:number = 1000 + ((Math.random()*10)>>0);
+		let rebrons:number[] = GameApp.reborns[rebornSkillId];
 		let rebornsId:number = 1;
 		if(rebrons && rebrons.length){
-			rebrons.push(1);
-			rebornsId = GameApp.rebornIds[(Math.random()*rebrons.length)>>0];
+			rebornsId =rebrons[(Math.random()*rebrons.length)>>0];
 		}
 		let skillres:string = `skill_103_${rebornsId}`;
 		let cardVo:CardVo =GlobalFun.getSkillGeneralCfg(rebornsId);
@@ -234,7 +322,7 @@ class GameMainView extends BaseEuiView{
 							item.execMoveAction()
 						}else{
 							if(camp == -1){
-								let xy:XY = {x:StageUtils.inst().getWidth() - 150,y:item.y}
+								let xy:XY = {x:StageUtils.inst().getWidth() - 200,y:item.y}
 								item.execMoveAction({x:xy.x,y:xy.y},()=>{
 									//当前移动到了塔的附近 到达了攻击距离 //执行攻击
 									item.isInAtk = true;
@@ -244,8 +332,6 @@ class GameMainView extends BaseEuiView{
 							}
 						}
 					}
-					
-					
 					// if(this.checkXBlock(camp,item,ownEntitys)){
 					// 	item.waitMoveAction();
 					// }
@@ -263,26 +349,8 @@ class GameMainView extends BaseEuiView{
 	private execNextCount():void{
 		if(this.curCount >= this.totalCount){
 			//当前波数也已经打完 进行下一关;
-			let self = this;
-			GameApp.level += 1;
-			for(let i:number = 0;i<this._ownEntitys.length;i++){
-				if(this._ownEntitys[i]&& this._ownEntitys[i].parent){
-					this._ownEntitys[i].dispose();
-				}
-			}
-			this._entitys = [];
-			this._ownEntitys = [];
-			this._levelEntitys = [];
-			let skillItem:SkilItem = this.list.getChildAt(2) as SkilItem;
-			skillItem.num = 10;
-			let timeout = setTimeout(function() {
-				clearTimeout(timeout);
-				self.showLevelTxt(()=>{
-					self.createLevelMonster();
-					egret.startTick(self.execAction,self);
-				})
-			}, 1200);
-			
+			egret.stopTick(this.execAction,this);
+			ViewManager.inst().open(BattleResultPopUp,[{state:1,cb:this.gameEnd,arg:this}])
 		}else{
 			//打下一波；
 			this.curCount += 1;
@@ -450,6 +518,7 @@ class GameMainView extends BaseEuiView{
 			//第一次进入 。第二天重置 。现在的时间-创建时间 〉 10分钟 。可以领取
 			//增加金币数量
 			GameApp.inst().gold += this.goldGetNum;
+			UserTips.inst().showTips("获得金币+"+this.goldGetNum);
 			//刷新新的宝箱倒计时时间戳
 			let countStr:string = egret.localStorage.getItem(LocalStorageEnum.BOX_REWARD_GET);
 			egret.localStorage.setItem(LocalStorageEnum.BOX_REWARD_GET,(parseInt(countStr)+1).toString())

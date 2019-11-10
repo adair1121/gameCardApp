@@ -7,6 +7,8 @@ class CustomEvt extends egret.Event{
 
 	/**boss释放技能 */
 	public static readonly BOSS_RELEASESKILL:string = "boos_releaseskill";
+	/**转生成功 */
+	public static readonly REBORNSUCCESS:string = "rebornsuccess";
 	private _data:any;
 	public constructor(type: string,data:any = null, bubbles: boolean = false, cancelable: boolean = false) {
 		super(type, bubbles, cancelable);

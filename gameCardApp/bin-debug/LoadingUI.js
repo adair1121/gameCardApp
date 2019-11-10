@@ -105,6 +105,12 @@ var LoadingUI = (function (_super) {
         this.percentTxt.size = 20;
         this.percentTxt.verticalCenter = 0;
         this.percentTxt.horizontalCenter = 0;
+        var circle = new MovieClip();
+        this.addChild(circle);
+        circle.playFile(EFFECT + "circle", -1);
+        circle.x = StageUtils.inst().getWidth() >> 1;
+        circle.y = StageUtils.inst().getHeight() >> 1;
+        circle.scaleX = circle.scaleY = 4;
     };
     LoadingUI.prototype.onProgress = function (current, total) {
         var h = (current / total) * 110;
@@ -113,7 +119,7 @@ var LoadingUI = (function (_super) {
         }
         ;
         this.percentTxt.text = ((current / total * 100) >> 0) + "%";
-        this.textField.text = "\u6B63\u5728\u52A0\u8F7D\u6E38\u620F\u8D44\u6E90...\u8BF7\u7A0D\u5019(" + current + "/" + total + ")";
+        // this.textField.text = `加载中...`;
         this.progressMask.height = h;
     };
     return LoadingUI;

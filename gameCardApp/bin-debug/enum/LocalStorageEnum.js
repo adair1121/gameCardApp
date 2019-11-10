@@ -24,6 +24,8 @@ var LocalStorageEnum = (function () {
     LocalStorageEnum.SKILL_LEVEL = "skill_level";
     /**当前技能召唤 转生id */
     LocalStorageEnum.REBORNIDS = "rebornIds";
+    /**转生人物配置 */
+    LocalStorageEnum.REBORNCFG = "rebornCfg";
     return LocalStorageEnum;
 }());
 __reflect(LocalStorageEnum.prototype, "LocalStorageEnum");

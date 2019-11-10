@@ -28,4 +28,6 @@ class LocalStorageEnum {
 
 	/**当前技能召唤 转生id */
 	public static readonly REBORNIDS:string = "rebornIds";
+	/**转生人物配置 */
+	public static readonly REBORNCFG:string = "rebornCfg";
 }

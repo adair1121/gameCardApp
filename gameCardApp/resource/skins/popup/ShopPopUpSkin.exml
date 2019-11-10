@@ -26,6 +26,6 @@
 			</e:layout>
 			</e:List>
 		</e:Scroller>
-		<e:Image id="returnBtn" source="common_close_2_png" x="1179.37" y="31"/>
+		<e:Image id="returnBtn" source="common_close_2_png" x="1158.54" y="31" anchorOffsetX="0" width="48.83" anchorOffsetY="0" height="48.83"/>
 	</e:Group>
 </e:Skin>
