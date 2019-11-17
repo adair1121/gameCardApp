@@ -28,6 +28,9 @@ var GameMainView = (function (_super) {
         _this._curTime = 0;
         _this.actionExecStandTime = 1000;
         _this.showBlood = false;
+        _this.rebornids = ["1000", "1001", "1002", "1003", "1004", "1005", "1006", "1007", "1008", "1009"];
+        _this.releaseSkill101 = false;
+        _this.releaseSkill102 = false;
         _this.releaseSkill103 = false;
         _this.releaseSkill104 = false;
         return _this;
@@ -40,15 +43,30 @@ var GameMainView = (function (_super) {
         this._entitys = [];
         this._ownEntitys = [];
         this._levelEntitys = [];
+        this.pos1["autoSize"]();
+        this.pos2["autoSize"]();
         for (var i = 1; i <= 5; i++) {
             var skill1Level = egret.localStorage.getItem(LocalStorageEnum.SKILL_LEVEL + (100 + i));
             if (!skill1Level) {
                 egret.localStorage.setItem(LocalStorageEnum.SKILL_LEVEL + (100 + i), "1");
             }
         }
+        var skillCfg = egret.localStorage.getItem(LocalStorageEnum.REBORNCFG);
+        if (!!skillCfg) {
+            GameApp.skillCfg = JSON.parse(skillCfg);
+        }
+        var arr = [];
+        arr = arr.concat(SkillCfg.skillCfg);
+        var boo2 = GameApp.skillCfg ? true : false;
+        if (!boo2) {
+            GameApp.skillCfg = {};
+            for (var i = 0; i < arr.length; i++) {
+                GameApp.skillCfg[arr[i].skillId] = arr[i];
+            }
+        }
         this.clickRect["autoSize"]();
         this.progressBar.mask = this.progressMark;
-        this.totalHp = this.curHp = 200000;
+        this.totalHp = this.curHp = 50 * GameApp.level + 500;
         this.touchEnabled = false;
         this.touchChildren = false;
         this.addTouchEvent(this.settingBtn, this.onSetHandler, true);
@@ -75,6 +93,11 @@ var GameMainView = (function (_super) {
         this.addTouchEvent(this.addGoldBtn, this.onaddGold, true);
         this.addTouchEvent(this.upgradeBtn, this.onUpgrade, true);
         this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTouchTap, this);
+        this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onBegin, this);
+        this.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onMove, this);
+        this.addEventListener(egret.TouchEvent.TOUCH_END, this.onEnd, this);
+        this.addEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onEnd, this);
+        this.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.onEnd, this);
         MessageManager.inst().addListener(CustomEvt.REDUCE_HP, this.onTowerHpReduce, this);
         MessageManager.inst().addListener(CustomEvt.BOSS_RELEASESKILL, this.onBossReleaseSkill, this);
         this.blood.visible = false;
@@ -84,15 +107,82 @@ var GameMainView = (function (_super) {
         this.createLevelMonster();
         // 
     };
+    GameMainView.prototype.onBegin = function (evt) {
+        var _this = this;
+        if (this.releaseSkill102 && evt.target == this.clickRect) {
+            var self_1 = this;
+            this.beginPoint = new egret.Point(evt.stageX, evt.stageY);
+            this.skill102 = new eui.Image("skill_102_pic_png");
+            this.addChild(this.skill102);
+            this.skill102.scaleX = this.skill102.scaleY = 0.5;
+            this.skill102.anchorOffsetX = this.skill102.width >> 1;
+            this.skill102.anchorOffsetY = this.skill102.height >> 1;
+            this.skill102.x = evt.stageX;
+            this.skill102.y = evt.stageY;
+            GlobalFun.lighting(this.skill102, 0xF41AE3);
+            this.interval = setInterval(function () {
+                for (var i = 0; i < _this._levelEntitys.length; i++) {
+                    var dis = egret.Point.distance(new egret.Point(_this._levelEntitys[i].x, _this._levelEntitys[i].y), new egret.Point(_this.skill102.x, _this.skill102.y));
+                    if (dis <= 100) {
+                        _this._levelEntitys[i].reduceHp(GameApp.skillCfg[102].atk);
+                    }
+                }
+            }, 150);
+        }
+    };
+    GameMainView.prototype.onEnd = function (evt) {
+        if (this.skill102) {
+            if (this.interval) {
+                clearInterval(this.interval);
+            }
+            this.skill102.parent.removeChild(this.skill102);
+            this.skill102 = null;
+        }
+    };
+    GameMainView.prototype.onMove = function (evt) {
+        if (this.skill102) {
+            this.skill102.x = evt.stageX;
+            this.skill102.y = evt.stageY;
+            var angle = Math.atan2(evt.stageY - this.beginPoint.y, evt.stageX - this.beginPoint.x) * 180 / Math.PI;
+            var rotation = 0;
+            if ((angle >= -30 && angle <= 0) || (angle > 0 && angle <= 30)) {
+                rotation = 0;
+            }
+            else if (angle > 30 && angle <= 70) {
+                rotation = 45;
+            }
+            else if ((angle > 70 && angle <= 120)) {
+                rotation = 90;
+            }
+            else if (angle > 120 && angle <= 150) {
+                rotation = 135;
+            }
+            else if ((angle > 150 && angle <= 180) || (angle > -180 && angle <= -150)) {
+                rotation = 180;
+            }
+            else if (angle > -150 && angle <= -120) {
+                rotation = 225;
+            }
+            else if (angle > -120 && angle <= -70) {
+                rotation = -90;
+            }
+            else {
+                rotation = -45;
+            }
+            this.skill102.rotation = rotation;
+            this.beginPoint.x = evt.stageX;
+            this.beginPoint.y = evt.stageY;
+        }
+    };
     GameMainView.prototype.onBossReleaseSkill = function () {
         var index = ((Math.random() * 9 + 1) >> 0);
         var xy = { x: this._levelEntitys[0].x, y: this._levelEntitys[0].y };
         GlobalFun.createSkillEff(-1, index, this, 2, xy);
         for (var i = 0; i < this._ownEntitys.length; i++) {
-            var dmg_1 = (GameApp.level + this.curCount) * ((Math.random() * 100) >> 0);
+            var dmg_1 = (GameApp.level) * ((Math.random() * 50) >> 0);
             this._ownEntitys[i].reduceHp(dmg_1);
         }
-        var dmg = (GameApp.level + this.curCount) * ((Math.random() * 100) >> 0);
+        var dmg = (GameApp.level) * ((Math.random() * 50) >> 0);
         this.curHp -= dmg;
         this.onTowerHpReduce({ data: { hp: dmg } });
     };
@@ -134,6 +224,7 @@ var GameMainView = (function (_super) {
     GameMainView.prototype.gameFail = function () {
         egret.stopTick(this.execAction, this);
         this.timer.stop();
+        this.curReborns = null;
         ViewManager.inst().open(BattleResultPopUp, [{ state: 0, cb: this.gameEnd, arg: this }]);
         console.log("游戏结束");
     };
@@ -142,15 +233,17 @@ var GameMainView = (function (_super) {
         this.timer.stop();
     };
     GameMainView.prototype.gameEnd = function (param) {
+        this.curReborns = null;
+        this.rebornids = ["1000", "1001", "1002", "1003", "1004", "1005", "1006", "1007", "1008", "1009"];
         if (param == BattleResultPopUp.OPER_EXIT) {
             ViewManager.inst().close(GameMainView);
             ViewManager.inst().open(StartGameView);
         }
-        else if (param = BattleResultPopUp.OPER_CONTINUE) {
+        else if (param == BattleResultPopUp.OPER_CONTINUE) {
             this.reset();
         }
         else if (param == BattleResultPopUp.OPER_NEXT) {
-            var self_1 = this;
+            var self_2 = this;
             GameApp.level += 1;
             for (var i = 0; i < this._ownEntitys.length; i++) {
                 if (this._ownEntitys[i] && this._ownEntitys[i].parent) {
@@ -164,9 +257,9 @@ var GameMainView = (function (_super) {
             skillItem.num = 10;
             var timeout_1 = setTimeout(function () {
                 clearTimeout(timeout_1);
-                self_1.showLevelTxt(function () {
-                    self_1.createLevelMonster();
-                    egret.startTick(self_1.execAction, self_1);
+                self_2.showLevelTxt(function () {
+                    self_2.createLevelMonster();
+                    egret.startTick(self_2.execAction, self_2);
                 });
             }, 1200);
         }
@@ -177,10 +270,12 @@ var GameMainView = (function (_super) {
                 this._entitys[i].parent.removeChild(this._entitys[i]);
             }
         }
+        this.rebornids = ["1000", "1001", "1002", "1003", "1004", "1005", "1006", "1007", "1008", "1009"];
+        this.curReborns = null;
         this._entitys = [];
         this._ownEntitys = [];
         this._levelEntitys = [];
-        this.totalHp = this.curHp = 200000;
+        this.totalHp = this.curHp = 50 * GameApp.level + 500;
         this.touchEnabled = false;
         this.touchChildren = false;
         this.refreshRewardBoxState();
@@ -208,8 +303,8 @@ var GameMainView = (function (_super) {
                 index = GameApp.level;
             }
             var monsterVo = monsterCfg[index];
-            monsterVo.atk = monsterVo.atk * 0.5 + (GameApp.level + this.curCount) * ((Math.random() * 50) >> 0);
-            monsterVo.hp = monsterVo.hp * 0.5 + (GameApp.level + this.curCount) * ((Math.random() * 100) >> 0);
+            monsterVo.atk = 2 * GameApp.level + 18 + (2 * GameApp.level + 18) * 0.2 * this.direct();
+            monsterVo.hp = 10 * GameApp.level + 90 + (10 * GameApp.level + 90) * 0.2 * this.direct();
             SoldierShapeEntity.inst().initData(shapIndex, monsterVo.model, monsterVo.id, this, { x: centerx, y: centery }, function (arr) {
                 _this._levelEntitys = _this._levelEntitys.concat(arr);
                 _this._entitys = _this._entitys.concat(arr);
@@ -224,8 +319,8 @@ var GameMainView = (function (_super) {
             }
             centerx -= 230;
             var bossVo = bossCfgs[bossIndex];
-            bossVo.atk += (GameApp.level + this.curCount) * ((Math.random() * 50) >> 0);
-            bossVo.hp += (GameApp.level + this.curCount) * ((Math.random() * 100) >> 0);
+            bossVo.atk = 5 * GameApp.level + 45 + (5 * GameApp.level + 45) * 0.2 * this.direct();
+            bossVo.hp = 30 * GameApp.level + 270 + this.direct() * (30 * GameApp.level + 270) * 0.2;
             boss.setSoldierData(-1, bossVo.model, bossVo);
             this._levelEntitys.push(boss);
             this._entitys.push(boss);
@@ -235,18 +330,42 @@ var GameMainView = (function (_super) {
         }
         this.dealLayerRelation();
     };
+    GameMainView.prototype.direct = function () {
+        var index = (Math.random() * 100) >> 0;
+        return index > 50 ? 1 : -1;
+    };
     /**创建我方神将 */
     GameMainView.prototype.createOwnGenral = function (xy) {
         var _this = this;
         var soldierEntity = new SoldierEntity();
-        var rebornSkillId = 1000 + ((Math.random() * 10) >> 0);
-        var rebrons = GameApp.reborns[rebornSkillId];
+        // let rebornSkillId:number = 1000 + ((Math.random()*10)>>0);
+        if (!this.curReborns || (this.curReborns && !this.curReborns.length)) {
+            this.curReborns = [];
+            for (var key in GameApp.reborns) {
+                var index = this.rebornids.indexOf(key);
+                if (index != -1) {
+                    this.rebornids.splice(index, 1);
+                    this.curReborns.push(GameApp.reborns[key]);
+                }
+            }
+        }
         var rebornsId = 1;
-        if (rebrons && rebrons.length) {
-            rebornsId = rebrons[(Math.random() * rebrons.length) >> 0];
+        if (this.curReborns && this.curReborns.length) {
+            var rebornItem = this.curReborns.shift();
+            rebornsId = rebornItem[0];
         }
         var skillres = "skill_103_" + rebornsId;
         var cardVo = GlobalFun.getSkillGeneralCfg(rebornsId);
+        if (rebornsId == 2) {
+            cardVo.atkspd *= 2;
+        }
+        else if (rebornsId == 3) {
+            cardVo.atk *= 2;
+            cardVo.hp *= 2;
+        }
+        else if (rebornsId == 4) {
+            cardVo.atk *= 4;
+        }
         soldierEntity.setSoldierData(1, skillres, cardVo);
         this.addChild(soldierEntity);
         soldierEntity.alpha = 0;
@@ -254,7 +373,8 @@ var GameMainView = (function (_super) {
         soldierEntity.y = xy.y;
         var birthEff = new MovieClip();
         this.addChild(birthEff);
-        birthEff.playFile(EFFECT + "birth", 2, null, true);
+        birthEff.scaleX = birthEff.scaleY = 0.8;
+        birthEff.playFile(EFFECT + "birth", 1, null, true);
         birthEff.x = xy.x;
         birthEff.y = xy.y;
         egret.Tween.get(soldierEntity).to({ alpha: 1 }, 600, egret.Ease.circIn).call(function () {
@@ -283,6 +403,11 @@ var GameMainView = (function (_super) {
                         break;
                     }
                 }
+                var deathMc = new MovieClip();
+                this_1.addChild(deathMc);
+                deathMc.x = item.x;
+                deathMc.y = item.y;
+                deathMc.playFile(EFFECT + "death", 1);
                 item.dispose();
                 ownEntitys.splice(i, 1);
                 i -= 1;
@@ -339,14 +464,17 @@ var GameMainView = (function (_super) {
         if (this.curCount >= this.totalCount) {
             //当前波数也已经打完 进行下一关;
             egret.stopTick(this.execAction, this);
+            this.curReborns = null;
             ViewManager.inst().open(BattleResultPopUp, [{ state: 1, cb: this.gameEnd, arg: this }]);
         }
         else {
             //打下一波；
             this.curCount += 1;
-            var self_2 = this;
+            var self_3 = this;
+            this.curReborns = null;
+            this.rebornids = ["1000", "1001", "1002", "1003", "1004", "1005", "1006", "1007", "1008", "1009"];
             this.showLevelTxt(function () {
-                self_2.createLevelMonster();
+                self_3.createLevelMonster();
                 egret.startTick(_this.execAction, _this);
             }, this.curCount);
         }
@@ -428,13 +556,40 @@ var GameMainView = (function (_super) {
                 this.curItem.num -= 1;
             }
         }
-        else if (this.releaseSkill104 && evt.target == this.clickRect) {
-            GlobalFun.createSkillEff(1, 104, this, 2, { x: StageUtils.inst().getWidth() - 200, y: 200 });
+        else if (this.releaseSkill101 && evt.target == this.clickRect) {
+            var skillCfg = GameApp.skillCfg[101];
+            var skillMc = new MovieClip();
+            this.addChild(skillMc);
+            skillMc.playFile(SKILL_EFF + "skill_101", 1, null, true);
+            skillMc.scaleX = skillMc.scaleY = 0.4;
+            skillMc.x = evt.stageX;
+            skillMc.y = evt.stageY;
             for (var i = 0; i < this._levelEntitys.length; i++) {
-                if (this._levelEntitys[i]) {
-                    this._levelEntitys[i].reduceHp((Math.random() * 100) >> 0);
+                var dis = egret.Point.distance(new egret.Point(this._levelEntitys[i].x, this._levelEntitys[i].y), new egret.Point(evt.stageX, evt.stageY));
+                if (dis <= 100) {
+                    this._levelEntitys[i].reduceHp(skillCfg.atk);
                 }
             }
+        }
+        else if (this.releaseSkill102 && evt.target == this.clickRect) {
+        }
+        else if (this.releaseSkill104 && evt.target == this.clickRect) {
+            var skillCfg_1 = GameApp.skillCfg[104];
+            var mc = new MovieClip();
+            this.addChild(mc);
+            mc.x = this.pos1.x;
+            mc.y = this.pos1.y;
+            var mc2 = new MovieClip();
+            this.addChild(mc2);
+            mc2.x = this.pos2.x;
+            mc2.y = this.pos2.y;
+            mc.playFile(SKILL_EFF + "skill_104_c", 1, null, true);
+            mc2.playFile(SKILL_EFF + "skill_104_c", 1, null, true);
+            var self_4 = this;
+            var timeout_2 = setTimeout(function () {
+                clearTimeout(timeout_2);
+                GlobalFun.createSkillEff(1, 104, self_4, 2, { x: StageUtils.inst().getWidth() - 200, y: 200 }, self_4._levelEntitys, skillCfg_1.atk);
+            }, 800);
         }
     };
     GameMainView.prototype.onLevelChange = function () {
@@ -444,6 +599,7 @@ var GameMainView = (function (_super) {
         if (this.totalCount >= GameApp.totalCount) {
             this.totalCount = GameApp.totalCount;
         }
+        this.totalHp = this.curHp = 50 * GameApp.level + 500;
         // this.totalHp = this.curHp = GameApp.level*2000;
         this.countNumLab.text = this.curCount + "/" + this.totalCount;
         this.progressMark.width = this.curHp / this.totalHp * 277;
@@ -585,10 +741,10 @@ var GameMainView = (function (_super) {
                 clearTimeout(this.timeout);
             }
             egret.Tween.get(this.descLab, { loop: true }).to({ alpha: 1 }, 500).to({ alpha: 0 }, 500);
-            var self_3 = this;
+            var self_5 = this;
             this.timeout = setTimeout(function () {
-                clearTimeout(self_3.timeout);
-                egret.Tween.removeTweens(self_3.descLab);
+                clearTimeout(self_5.timeout);
+                egret.Tween.removeTweens(self_5.descLab);
             }, 2000);
             for (var i = 0; i < this.list.numChildren; i++) {
                 var item = this.list.$children[i];
@@ -600,13 +756,19 @@ var GameMainView = (function (_super) {
             if (curItem.skillId == 103) {
                 //当前是神将召唤
                 this.releaseSkill103 = true;
+                this.releaseSkill101 = this.releaseSkill102 = this.releaseSkill104 = false;
             }
-            else {
-                this.releaseSkill103 = false;
-                // 释放其他技能
-                if (curItem.skillId == 104) {
-                    this.releaseSkill104 = true;
-                }
+            else if (curItem.skillId == 104) {
+                this.releaseSkill104 = true;
+                this.releaseSkill101 = this.releaseSkill102 = this.releaseSkill103 = false;
+            }
+            else if (curItem.skillId == 101) {
+                this.releaseSkill101 = true;
+                this.releaseSkill102 = this.releaseSkill103 = this.releaseSkill104 = false;
+            }
+            else if (curItem.skillId == 102) {
+                this.releaseSkill101 = this.releaseSkill103 = this.releaseSkill104 = false;
+                this.releaseSkill102 = true;
             }
         }
         console.log("触发了技能----" + skillId);
@@ -633,6 +795,11 @@ var GameMainView = (function (_super) {
     GameMainView.prototype.close = function () {
         this.removeTouchEvent(this.settingBtn, this.onSetHandler);
         this.removeTouchEvent(this.upgradeBtn, this.onUpgrade);
+        this.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onBegin, this);
+        this.removeEventListener(egret.TouchEvent.TOUCH_END, this.onEnd, this);
+        this.removeEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onEnd, this);
+        this.removeEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.onEnd, this);
+        this.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.onMove, this);
         this.list.removeEventListener(eui.ItemTapEvent.ITEM_TAP, this.onItemTap, this);
         StageUtils.inst().getStage().removeEventListener(StartGameEvent.CLICK_GUIDE_SKILL, this.onClickGuideSkill, this);
         StageUtils.inst().getStage().removeEventListener(StartGameEvent.USE_GUIDE_SKILL, this.onUseGuideSkill, this);

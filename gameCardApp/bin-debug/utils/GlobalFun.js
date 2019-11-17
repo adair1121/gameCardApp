@@ -26,6 +26,22 @@ var GlobalFun = (function () {
         }
         return "";
     };
+    /**外法光 */
+    GlobalFun.lighting = function (obj, color, boo) {
+        if (color === void 0) { color = 0x33CCFF; }
+        if (boo === void 0) { boo = false; }
+        var color = color; /// 光晕的颜色，十六进制，不包含透明度
+        var alpha = 0.8; /// 光晕的颜色透明度，是对 color 参数的透明度设定。有效值为 0.0 到 1.0。例如，0.8 设置透明度值为 80%。
+        var blurX = 35; /// 水平模糊量。有效值为 0 到 255.0（浮点）
+        var blurY = 35; /// 垂直模糊量。有效值为 0 到 255.0（浮点）
+        var strength = 2; /// 压印的强度，值越大，压印的颜色越深，而且发光与背景之间的对比度也越强。有效值为 0 到 255。暂未实现
+        var quality = 3 /* HIGH */; /// 应用滤镜的次数，建议用 BitmapFilterQuality 类的常量来体现
+        var inner = boo; /// 指定发光是否为内侧发光，暂未实现
+        var knockout = false; /// 指定对象是否具有挖空效果，暂未实现
+        var glowFilter = new egret.GlowFilter(color, alpha, blurX, blurY, strength, quality, inner, knockout);
+        obj.filters = [glowFilter];
+        egret.Tween.get(glowFilter, { loop: true }).to({ alpha: 0.2 }, 1000).to({ alpha: 0.8 }, 1000);
+    };
     /**
      * 震动显示对象
      * @param        target    震动目标对象
@@ -161,7 +177,7 @@ var GlobalFun = (function () {
      * @param loopCount 循环次数
      * @param pos 位置
      * */
-    GlobalFun.createSkillEff = function (camp, id, parent, loopCount, pos) {
+    GlobalFun.createSkillEff = function (camp, id, parent, loopCount, pos, entitys, atk) {
         // let skillCfg:any = SkillCfg.skillCfg[camp];
         // let skillCfg:any
         // let curUseSkill:any;
@@ -201,17 +217,26 @@ var GlobalFun = (function () {
         }, this);
         if (loop) {
             var count_1 = 1;
-            var minx_1 = 100;
-            var maxx_1 = StageUtils.inst().getWidth() - 100;
-            var miny_1 = 100;
+            var minx_1 = 150;
+            var maxx_1 = StageUtils.inst().getWidth() - 240;
+            var miny_1 = 150;
             var maxy_1 = StageUtils.inst().getHeight() - 100;
-            ;
             var mc = new MovieClip();
             mc.scaleX = mc.scaleY = 1;
             parent.addChild(mc);
             mc.playFile("" + SKILL_EFF + res, loopCount, null, true);
             mc.x = (Math.random() * (maxx_1 - minx_1) + minx_1) >> 0;
             mc.y = (Math.random() * (maxy_1 - miny_1) + miny_1) >> 0;
+            if (entitys && atk) {
+                for (var i = 0; i < entitys.length; i++) {
+                    if (entitys[i] && !entitys[i].isDead) {
+                        var dis = egret.Point.distance(new egret.Point(entitys[i].x, entitys[i].y), new egret.Point(mc.x, mc.y));
+                        if (dis <= 100) {
+                            entitys[i].reduceHp(atk);
+                        }
+                    }
+                }
+            }
             var interVal_1 = setInterval(function () {
                 count_1 += 1;
                 var mc = new MovieClip();
@@ -220,10 +245,20 @@ var GlobalFun = (function () {
                 mc.playFile("" + SKILL_EFF + res, loopCount, null, true);
                 mc.x = (Math.random() * (maxx_1 - minx_1) + minx_1) >> 0;
                 mc.y = (Math.random() * (maxy_1 - miny_1) + miny_1) >> 0;
-                if (count_1 >= 15) {
+                if (entitys && atk) {
+                    for (var i = 0; i < entitys.length; i++) {
+                        if (entitys[i] && !entitys[i].isDead) {
+                            var dis = egret.Point.distance(new egret.Point(entitys[i].x, entitys[i].y), new egret.Point(mc.x, mc.y));
+                            if (dis <= 100) {
+                                entitys[i].reduceHp(atk);
+                            }
+                        }
+                    }
+                }
+                if (count_1 >= 10) {
                     clearInterval(interVal_1);
                 }
-            }, 100);
+            }, 200);
         }
     };
     GlobalFun.count = 0; //计时器次数

@@ -32,7 +32,7 @@ class UpgradePopUp extends BaseEuiView{
 			}
 		}
 		for(let i:number = 0;i<10;i++){
-			let item:any = {skillId:1000+i,rebornId:1,skillIcon:"skill_103_png",skillTitle:"skill_103_title_png",level:1,desc:"神将",atk:150,hp:400,atkDis:100,cost:10000,skillType:1};
+			let item:any = {skillId:1000+i,rebornId:1,skillIcon:"skill_103_png",skillTitle:"skill_103_title_png",level:1,desc:"神将",atk:50,hp:500,atkDis:100,cost:100,skillType:1};
 			if(GameApp.skillCfg[item.skillId]){
 				item = GameApp.skillCfg[item.skillId];
 			}else{

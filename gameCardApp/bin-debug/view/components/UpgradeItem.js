@@ -30,8 +30,21 @@ var UpgradeItem = (function (_super) {
         }
         GameApp.inst().gold -= this._curCost;
         GameApp.skillCfg[this._skillId].level += 1;
-        GameApp.skillCfg[this._skillId].atk = GameApp.skillCfg[this._skillId].level * GameApp.skillCfg[this._skillId].atk;
-        GameApp.skillCfg[this._skillId].cost = GameApp.skillCfg[this._skillId].level * GameApp.skillCfg[this._skillId].cost;
+        if (this._skillId >= 1000) {
+            GameApp.skillCfg[this._skillId].atk = 5 * GameApp.skillCfg[this._skillId].level + 45;
+            GameApp.skillCfg[this._skillId].hp = 50 * GameApp.skillCfg[this._skillId].level + 450;
+            GameApp.skillCfg[this._skillId].cost = 10 * GameApp.skillCfg[this._skillId].level + 90;
+        }
+        else {
+            if (this._skillId == 101 || this._skillId == 102) {
+                GameApp.skillCfg[this._skillId].atk = 0.5 * GameApp.skillCfg[this._skillId].level + 4.5;
+                GameApp.skillCfg[this._skillId].cost = 5 * GameApp.skillCfg[this._skillId].level + 45;
+            }
+            else {
+                GameApp.skillCfg[this._skillId].atk = 2 * GameApp.skillCfg[this._skillId].level + 18;
+                GameApp.skillCfg[this._skillId].cost = 10 * GameApp.skillCfg[this._skillId].level + 90;
+            }
+        }
         egret.localStorage.setItem(LocalStorageEnum.REBORNCFG, JSON.stringify(GameApp.skillCfg));
         // let levelstr:string = egret.localStorage.getItem(LocalStorageEnum.SKILL_LEVEL + this._skillId);
         // let curLevel:number = parseInt(levelstr)+1

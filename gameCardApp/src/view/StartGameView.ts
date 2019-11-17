@@ -6,10 +6,19 @@ class StartGameView extends BaseEuiView{
 	private customFilter1;
 	private clickBegin:boolean = false;
 	private _interval;
+	private roleimg2:eui.Image;
 	public constructor() {
 		super();
 	}
 	public open(...param):void{
+		this.roleimg2.width = StageUtils.inst().getWidth();
+		this.roleimg2.height = StageUtils.inst().getHeight() - 10;
+		this.roleimg2.anchorOffsetX = this.roleimg2.width>>1;
+		this.roleimg2.anchorOffsetY = this.roleimg2.height>>1;
+		this.roleimg2.x = this.roleimg2.width>>1;
+		this.roleimg2.y = this.roleimg2.height>>1;
+		this.roleimg2.alpha = 0;
+		egret.Tween.get(this.roleimg2,{loop:true}).to({alpha:1,scaleX:1.01,scaleY:1.01},500).to({alpha:0,scaleX:1,scaleY:1},500).wait(1500);
 		let firstStr:string = egret.localStorage.getItem(LocalStorageEnum.ENTER_FIRST);
 		this.enterBtn.alpha = 0;
 		if(!firstStr){
@@ -187,6 +196,7 @@ class StartGameView extends BaseEuiView{
 		if(this._interval){
 			clearInterval(this._interval);
 		}
+		egret.Tween.removeTweens(this.roleimg2);
 		this.removeTouchEvent(this.storyBtn,this.onLookStory);
 		this.removeTouchEvent(this.enterBtn,this.onEnter);
 		this.removeEventListener(egret.Event.ENTER_FRAME,this.onFrame,this);

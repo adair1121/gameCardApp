@@ -20,8 +20,8 @@ class RebornPanel extends BaseEuiView{
 		this.list.itemRenderer = RebornItem;
 		this.list.dataProvider = this.arrayCollect;
 		this.scroller.viewport = this.list;
-		this.scroller.verticalScrollBar.autoVisibility = false;
-		this.scroller.verticalScrollBar.visible = false;
+		this.scroller.horizontalScrollBar.autoVisibility = false;
+		this.scroller.horizontalScrollBar.visible = false;
 		let dataArr:any[] = [];
 		this._skillId = param[0].skillId;
 		let cfgs:any[] = RebornCfg.cfg;
@@ -53,7 +53,7 @@ class RebornPanel extends BaseEuiView{
 					break;
 				}
 			}
-			let obj:any = {skillId:this._skillId,rebornId:item.mid,skillIcon:item.icon,skillTitle:"skill_103_title_png",level:skillCfg.level,desc:curRebornCfg.desc,atk:curRebornCfg.atk*skillCfg.level,hp:curRebornCfg.hp*skillCfg.level,atkDis:100,cost:curRebornCfg.cost*skillCfg.level,skillType:1};
+			let obj:any = {skillId:this._skillId,rebornId:item.mid,skillIcon:item.icon,skillTitle:"skill_103_title_png",level:skillCfg.level,desc:curRebornCfg.desc,atk:5*skillCfg.level+45,hp:50*skillCfg.level+450,atkDis:100,cost:10*skillCfg.level+90,skillType:1};
 			GameApp.skillCfg[this._skillId] = obj;
 			egret.localStorage.setItem(LocalStorageEnum.REBORNCFG,JSON.stringify(GameApp.skillCfg));
 			return;

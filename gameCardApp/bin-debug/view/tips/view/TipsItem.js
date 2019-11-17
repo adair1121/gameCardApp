@@ -13,7 +13,6 @@ r.prototype = e.prototype, t.prototype = new r();
  */
 var TipsItem = (function (_super) {
     __extends(TipsItem, _super);
-    // private pic:eui.Image;
     function TipsItem() {
         var _this = _super.call(this) || this;
         _this.index = 0;
@@ -35,7 +34,7 @@ var TipsItem = (function (_super) {
             this.lab.textFlow = TextFlowMaker.generateTextFlow(this._labelText);
             this.lab.alpha = 1;
             this.lab.verticalCenter = -1;
-            // this.pic.width = this.lab.width + 20;
+            this.pic.width = this.lab.width + 20;
             if (!this.addToEvent) {
                 this.addToEvent = true;
                 TimerManager.inst().doTimer(1200, 1, this.removeFromParent, this);

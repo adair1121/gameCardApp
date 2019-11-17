@@ -1,8 +1,8 @@
 class ShopPopUp extends BaseEuiView{
 	
 	private content:eui.Group;
-	private goldBtn:eui.Button;
-	private gemBtn:eui.Button;
+	// private goldBtn:eui.Button;
+	// private gemBtn:eui.Button;
 	private scroller:eui.Scroller;
 	private list:eui.List;
 
@@ -25,8 +25,8 @@ class ShopPopUp extends BaseEuiView{
 			this.selectIndex = param[0].selectIndex;
 		}
 		this.refreshDataANDview();
-		this.addTouchEvent(this.goldBtn,this.onClickGold)
-		this.addTouchEvent(this.gemBtn,this.onClickGem)
+		// this.addTouchEvent(this.goldBtn,this.onClickGold)
+		// this.addTouchEvent(this.gemBtn,this.onClickGem)
 		this.addTouchEvent(this.returnBtn,this.onReturn,true);
 	}
 	private onReturn():void{
@@ -48,21 +48,21 @@ class ShopPopUp extends BaseEuiView{
 	/**刷新商城数据以及页面 */
 	private refreshDataANDview():void{
 		this.dataArr = [];
-		if(this.selectIndex ==0){
-			this.goldBtn.currentState = "down";
-			this.gemBtn.currentState = "up";
-		}else{
-			this.goldBtn.currentState = "up";
-			this.gemBtn.currentState = "down";
-		}
+		// if(this.selectIndex ==0){
+		// 	this.goldBtn.currentState = "down";
+		// 	this.gemBtn.currentState = "up";
+		// }else{
+		// 	this.goldBtn.currentState = "up";
+		// 	this.gemBtn.currentState = "down";
+		// }
 		let shopCfg:any[] = ShopCfg.shopCfg[this.selectIndex];
 		this.dataArr = shopCfg;
 		this.arrayCollect.source = this.dataArr;
 		this.list.dataProviderRefreshed();
 	}
 	public close():void{
-		this.removeTouchEvent(this.goldBtn,this.onClickGold)
-		this.removeTouchEvent(this.gemBtn,this.onClickGem)
+		// this.removeTouchEvent(this.goldBtn,this.onClickGold)
+		// this.removeTouchEvent(this.gemBtn,this.onClickGem)
 		this.removeTouchEvent(this.returnBtn,this.onReturn);
 	}
 }

@@ -21,4 +21,6 @@ class CardVo {
 	public skillId:number;
 	/**模型 */
 	public model:string;
+	/**攻击速度 */
+	public atkspd?:number;
 }

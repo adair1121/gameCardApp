@@ -48,13 +48,13 @@ class LoadingUI extends eui.UILayer implements RES.PromiseTaskReporter {
     }
     public hide():void{
         if(this.parent){
+            this.visible = false;
             this.parent.removeChild(this);
         }
     }
     private textField: eui.Label;
 
     private createView(): void {
-        this.visible = false;
         let self = this;
         let timeout = setTimeout(function() {
             clearTimeout(timeout);
@@ -92,8 +92,8 @@ class LoadingUI extends eui.UILayer implements RES.PromiseTaskReporter {
         this.progressMask.height = 110;
         this.progressMask.width = 104;
         this.progressPanel.addChild(this.progressMask);
-        this.progressMask.x = (399 >>1) - (this.progressMask.width>>1);
-        this.progressMask.bottom = (399 >>1) - (110>>1);
+        this.progressMask.x = (276 >>1) - (this.progressMask.width>>1);
+        this.progressMask.bottom = (276 >>1) - (110>>1);
         // this.progressMask.height = 0
         // this.progressMask.horizontalCenter = 0;
         // this.progressMask.verticalCenter = 0;

@@ -117,7 +117,6 @@ class Main extends eui.UILayer {
             GameConfig.platform.setting = platform_param;
         }
         GameApp.inst().refreshTimespan();
-        
         LayerManager.inst().iniaizlize(this);
         GameApp.inst().load();
         // let data = RES.getRes("config_zip");

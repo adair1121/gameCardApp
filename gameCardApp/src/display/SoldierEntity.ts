@@ -141,7 +141,8 @@ class SoldierEntity extends BaseEntity{
 		}
 		if(this._camp == -1 && this.general){
 			let title:eui.Image = new eui.Image();
-			title.source = "title_1_png";
+			let index:number = (Math.random()*21+1)>>0;
+			title.source = `title_${index}_png`;
 			title.scaleX = title.scaleY = 1;
 			this.progressGroup.addChild(title);
 			title.anchorOffsetX = title.width>>1;
@@ -178,6 +179,8 @@ class SoldierEntity extends BaseEntity{
 	}
 	//克制攻击力
 	private restriceAtk:number = 0;
+	private atkFrame:number = 6;
+	// private playCount:number = 1;
 	/**执行攻击动作 */
 	public execAtkAction():void{
 		// if(GameApp.battleState == false){return}
@@ -185,16 +188,26 @@ class SoldierEntity extends BaseEntity{
 			if(this.curState != ActionState.ATTACK){
 				this.curState = ActionState.ATTACK;
 				egret.Tween.removeTweens(this);
+				let time:number = 900;
+				if(this.camp == 1){
+					if(this.soldierAttr.atkspd && this.soldierAttr.atkspd > 6){
+						time = time>>1;
+						this.atkFrame = 24;
+						// this.playCount = 2;
+					}
+				}
 				if(this._atkTar && !this._atkTar.isDead){
 					let angle:number = Math.atan2(this._atkTar.y - this.y,this._atkTar.x-this.x)*180/Math.PI;
 					this.calculEntityDic(angle);
 				}
-				this._mc.playFile(this._res,1,null,false,this.curState);
+				this._mc.playFile(this._res,1,null,false,this.curState,null,this.atkFrame);
+				
 				// if(this._typeId == SoldierType.ARROW){
 				// 	this.createArrow();
 				// }
 				//当前实体执行攻击动作 目标实体血量值减少
 				let self = this;
+				
 				let timeout = setTimeout(function() {
 					clearTimeout(timeout);
 					if(self && self._mc){
@@ -210,7 +223,7 @@ class SoldierEntity extends BaseEntity{
 						// }
 						self._atkTar.reduceHp(atk);
 					}else{
-						if(self._camp == -1){
+						if(self._camp == -1 && self.x >= StageUtils.inst().getWidth() - 200){
 							//直接攻击国王塔
 							MessageManager.inst().dispatch(CustomEvt.REDUCE_HP,{hp:self.soldierAttr.atk,camp:self.camp});
 							// if(self.soldierAttr.atktype == 2){
@@ -222,7 +235,7 @@ class SoldierEntity extends BaseEntity{
 							// }
 						}
 					}	
-				}, 900);
+				}, time);
 			}
 			
 		}

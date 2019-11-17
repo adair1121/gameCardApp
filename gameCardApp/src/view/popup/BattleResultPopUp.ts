@@ -25,11 +25,12 @@ class BattleResultPopUp extends BaseEuiView{
 
 		if(param[0].state == 1){
 			this.skin.currentState = "win";
-			let levelstr:string = egret.localStorage.getItem(LocalStorageEnum.LEVEL);
-			this.goldNum = parseInt(levelstr);
+			// let levelstr:string = egret.localStorage.getItem(LocalStorageEnum.LEVEL);
+			this.goldNum = (10*GameApp.level+90) + ((Math.random()*20)>>0)
+			// this.goldNum = parseInt(levelstr);
 		}else{
 			this.skin.currentState = "fail";
-			this.goldNum = 0;
+			this.goldNum = (5*GameApp.level+20) + ((Math.random()*10)>>0);
 		}
 		if(param[0].time){
 			// this.timeLab.text = param[0].time.toString();
@@ -40,6 +41,7 @@ class BattleResultPopUp extends BaseEuiView{
 		if(param[0].arg){
 			this._arg = param[0].arg;
 		}
+		this.goldNumLab.text = this.goldNum.toString();
 		GameApp.inst().gold += this.goldNum;
 		this.addTouchEvent(this.nextBtn,this.onNextLevel,true);
 		this.addTouchEvent(this.continueBtn,this.onContinue,true);

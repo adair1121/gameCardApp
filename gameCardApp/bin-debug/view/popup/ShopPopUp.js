@@ -33,8 +33,8 @@ var ShopPopUp = (function (_super) {
             this.selectIndex = param[0].selectIndex;
         }
         this.refreshDataANDview();
-        this.addTouchEvent(this.goldBtn, this.onClickGold);
-        this.addTouchEvent(this.gemBtn, this.onClickGem);
+        // this.addTouchEvent(this.goldBtn,this.onClickGold)
+        // this.addTouchEvent(this.gemBtn,this.onClickGem)
         this.addTouchEvent(this.returnBtn, this.onReturn, true);
     };
     ShopPopUp.prototype.onReturn = function () {
@@ -57,22 +57,21 @@ var ShopPopUp = (function (_super) {
     /**刷新商城数据以及页面 */
     ShopPopUp.prototype.refreshDataANDview = function () {
         this.dataArr = [];
-        if (this.selectIndex == 0) {
-            this.goldBtn.currentState = "down";
-            this.gemBtn.currentState = "up";
-        }
-        else {
-            this.goldBtn.currentState = "up";
-            this.gemBtn.currentState = "down";
-        }
+        // if(this.selectIndex ==0){
+        // 	this.goldBtn.currentState = "down";
+        // 	this.gemBtn.currentState = "up";
+        // }else{
+        // 	this.goldBtn.currentState = "up";
+        // 	this.gemBtn.currentState = "down";
+        // }
         var shopCfg = ShopCfg.shopCfg[this.selectIndex];
         this.dataArr = shopCfg;
         this.arrayCollect.source = this.dataArr;
         this.list.dataProviderRefreshed();
     };
     ShopPopUp.prototype.close = function () {
-        this.removeTouchEvent(this.goldBtn, this.onClickGold);
-        this.removeTouchEvent(this.gemBtn, this.onClickGem);
+        // this.removeTouchEvent(this.goldBtn,this.onClickGold)
+        // this.removeTouchEvent(this.gemBtn,this.onClickGem)
         this.removeTouchEvent(this.returnBtn, this.onReturn);
     };
     return ShopPopUp;

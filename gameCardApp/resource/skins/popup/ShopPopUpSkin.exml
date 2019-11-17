@@ -1,31 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="ShopPopUpSkin" width="1136" height="640" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
 	<e:Rect left="0" top="0" right="0" bottom="0" alpha="0.3"/>
-	<e:Group id="content" touchChildren="true" touchEnabled="false" touchThrough="true" scaleX="0.8" scaleY="0.8" horizontalCenter="0" verticalCenter="-600">
+	<e:Group id="content" touchChildren="true" touchEnabled="false" touchThrough="true" scaleX="0.8" scaleY="0.8" horizontalCenter="0" verticalCenter="0">
 		<e:Image source="shopBg_png" x="0" y="0"/>
-		<e:Button id="gemBtn" label="Button" x="54.82" y="199.73">
-			<e:skinName>
-			<e:Skin states="up,down,disabled">
-				<e:Image width="100%" height="100%" source="gemBtn_up_png" source.down="gemBtn_down_png"/>
-				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0" visible="false"/>
-			</e:Skin>
-			</e:skinName>
-		</e:Button>
-		<e:Button id="goldBtn" label="Button" x="54.82" y="94.58" anchorOffsetX="0" width="293.25" anchorOffsetY="0" height="80" currentState="down">
-			<e:skinName>
-			<e:Skin states="up,down,disabled">
-				<e:Image width="100%" height="100%" source="goldBtn_up_png" source.down="goldBtn_down_png"/>
-				<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0" visible="false"/>
-			</e:Skin>
-			</e:skinName>
-		</e:Button>
-		<e:Scroller id="scroller" width="798.03" height="331.21" x="382" y="270" anchorOffsetY="0" anchorOffsetX="0" scrollPolicyV="off">
-			<e:List id="list">
+		<e:Scroller id="scroller" width="1094.7" height="327.88" x="85.33" y="268.33" anchorOffsetY="0" anchorOffsetX="0" scrollPolicyV="off">
+			<e:List id="list" anchorOffsetY="0" height="327.88">
 			<e:layout>
 				<e:HorizontalLayout horizontalAlign="left" verticalAlign="middle" gap="25" paddingLeft="10" paddingRight="10"/>
 			</e:layout>
 			</e:List>
 		</e:Scroller>
-		<e:Image id="returnBtn" source="common_close_2_png" x="1158.54" y="31" anchorOffsetX="0" width="48.83" anchorOffsetY="0" height="48.83"/>
+		<e:Image id="returnBtn" source="common_close_2_png" x="1158.54" y="25.99" anchorOffsetX="0" width="48.83" anchorOffsetY="0" height="48.83"/>
+		<e:Image source="shopTitlte_png" horizontalCenter="0" top="30"/>
 	</e:Group>
 </e:Skin>

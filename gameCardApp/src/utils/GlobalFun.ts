@@ -24,6 +24,22 @@ class GlobalFun {
         }
         return "";
     } 
+     /**外法光 */
+    public static lighting(obj:egret.DisplayObject,color:number = 0x33CCFF,boo:boolean = false):void{
+        var color:number = color;        /// 光晕的颜色，十六进制，不包含透明度
+        var alpha:number = 0.8;             /// 光晕的颜色透明度，是对 color 参数的透明度设定。有效值为 0.0 到 1.0。例如，0.8 设置透明度值为 80%。
+        var blurX:number = 35;              /// 水平模糊量。有效值为 0 到 255.0（浮点）
+        var blurY:number = 35;              /// 垂直模糊量。有效值为 0 到 255.0（浮点）
+        var strength:number = 2;            /// 压印的强度，值越大，压印的颜色越深，而且发光与背景之间的对比度也越强。有效值为 0 到 255。暂未实现
+        var quality:number = egret.BitmapFilterQuality.HIGH;        /// 应用滤镜的次数，建议用 BitmapFilterQuality 类的常量来体现
+        var inner:boolean = boo;            /// 指定发光是否为内侧发光，暂未实现
+        var knockout:boolean = false;            /// 指定对象是否具有挖空效果，暂未实现
+        var glowFilter:egret.GlowFilter = new egret.GlowFilter( color, alpha, blurX, blurY,
+            strength, quality, inner, knockout );
+        obj.filters = [glowFilter]
+        
+        egret.Tween.get(glowFilter,{loop:true}).to({alpha:0.2},1000).to({alpha:0.8},1000);
+    }
 	private static initX:number;                //初始位置
     private static initY: number;  
     private static target:egret.DisplayObject;  //震动目标
@@ -168,7 +184,7 @@ class GlobalFun {
      * @param loopCount 循环次数
      * @param pos 位置
      * */
-    public static createSkillEff(camp:number,id:number,parent:egret.DisplayObjectContainer,loopCount:number,pos:XY):void{
+    public static createSkillEff(camp:number,id:number,parent:egret.DisplayObjectContainer,loopCount:number,pos:XY,entitys?:SoldierEntity[],atk?:number):void{
         // let skillCfg:any = SkillCfg.skillCfg[camp];
         // let skillCfg:any
         // let curUseSkill:any;
@@ -201,6 +217,7 @@ class GlobalFun {
         textInfo.x = pos.x - 70;
         textInfo.y = pos.y - 150;
         textInfo.text = skillName;
+        
         egret.Tween.get(textInfo).to({scaleX:1,scaleY:1},600,egret.Ease.circOut).wait(500).call(()=>{
 			egret.Tween.removeTweens(textInfo);
 			if(textInfo && textInfo.parent){
@@ -211,16 +228,27 @@ class GlobalFun {
 
         if(loop){
             let count = 1;
-            let minx:number = 100;
-            let maxx:number = StageUtils.inst().getWidth() - 100;
-            let miny:number = 100;
-            let maxy:number = StageUtils.inst().getHeight() - 100;;
+            let minx:number = 150;
+            let maxx:number = StageUtils.inst().getWidth() - 240;
+            let miny:number = 150;
+            let maxy:number = StageUtils.inst().getHeight() - 100;
             let mc:MovieClip = new MovieClip();
             mc.scaleX = mc.scaleY = 1;
             parent.addChild(mc);
             mc.playFile(`${SKILL_EFF}${res}`,loopCount,null,true);
             mc.x = (Math.random()*(maxx - minx)+minx)>>0;
             mc.y = (Math.random()*(maxy - miny)+miny)>>0;
+            if(entitys && atk){
+                for(let i:number = 0;i<entitys.length;i++){
+                    if(entitys[i] && !entitys[i].isDead){
+                        let dis:number = egret.Point.distance(new egret.Point(entitys[i].x,entitys[i].y),new egret.Point(mc.x,mc.y));
+                        if(dis <= 100){
+                            entitys[i].reduceHp(atk)
+                        }
+                    }
+                }
+            }
+            
             let interVal = setInterval(()=>{
                 count += 1;
                 let mc:MovieClip = new MovieClip();
@@ -229,10 +257,21 @@ class GlobalFun {
                 mc.playFile(`${SKILL_EFF}${res}`,loopCount,null,true);
                 mc.x = (Math.random()*(maxx - minx)+minx)>>0;
                 mc.y = (Math.random()*(maxy - miny)+miny)>>0;
-                if(count >= 15){
+                if(entitys && atk){
+                    for(let i:number = 0;i<entitys.length;i++){
+                        if(entitys[i] && !entitys[i].isDead){
+                            let dis:number = egret.Point.distance(new egret.Point(entitys[i].x,entitys[i].y),new egret.Point(mc.x,mc.y));
+                            if(dis <= 100){
+                                entitys[i].reduceHp(atk)
+                            }
+                        }
+                    }
+                }
+                
+                if(count >= 10){
                     clearInterval(interVal);
                 }
-            },100)
+            },200)
         }
     }
 }

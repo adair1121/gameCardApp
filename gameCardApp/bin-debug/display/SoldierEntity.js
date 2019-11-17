@@ -19,6 +19,7 @@ var SoldierEntity = (function (_super) {
         _this.camp = 1;
         //克制攻击力
         _this.restriceAtk = 0;
+        _this.atkFrame = 6;
         _this.isReleaseSkill = false;
         /**当前boss 的技能播放状态 */
         _this.playState = false;
@@ -136,7 +137,8 @@ var SoldierEntity = (function (_super) {
         }
         if (this._camp == -1 && this.general) {
             var title = new eui.Image();
-            title.source = "title_1_png";
+            var index_1 = (Math.random() * 21 + 1) >> 0;
+            title.source = "title_" + index_1 + "_png";
             title.scaleX = title.scaleY = 1;
             this.progressGroup.addChild(title);
             title.anchorOffsetX = title.width >> 1;
@@ -167,6 +169,7 @@ var SoldierEntity = (function (_super) {
             }
         }
     };
+    // private playCount:number = 1;
     /**执行攻击动作 */
     SoldierEntity.prototype.execAtkAction = function () {
         // if(GameApp.battleState == false){return}
@@ -174,11 +177,19 @@ var SoldierEntity = (function (_super) {
             if (this.curState != ActionState.ATTACK) {
                 this.curState = ActionState.ATTACK;
                 egret.Tween.removeTweens(this);
+                var time = 900;
+                if (this.camp == 1) {
+                    if (this.soldierAttr.atkspd && this.soldierAttr.atkspd > 6) {
+                        time = time >> 1;
+                        this.atkFrame = 24;
+                        // this.playCount = 2;
+                    }
+                }
                 if (this._atkTar && !this._atkTar.isDead) {
                     var angle = Math.atan2(this._atkTar.y - this.y, this._atkTar.x - this.x) * 180 / Math.PI;
                     this.calculEntityDic(angle);
                 }
-                this._mc.playFile(this._res, 1, null, false, this.curState);
+                this._mc.playFile(this._res, 1, null, false, this.curState, null, this.atkFrame);
                 // if(this._typeId == SoldierType.ARROW){
                 // 	this.createArrow();
                 // }
@@ -200,7 +211,7 @@ var SoldierEntity = (function (_super) {
                         self_1._atkTar.reduceHp(atk);
                     }
                     else {
-                        if (self_1._camp == -1) {
+                        if (self_1._camp == -1 && self_1.x >= StageUtils.inst().getWidth() - 200) {
                             //直接攻击国王塔
                             MessageManager.inst().dispatch(CustomEvt.REDUCE_HP, { hp: self_1.soldierAttr.atk, camp: self_1.camp });
                             // if(self.soldierAttr.atktype == 2){
@@ -212,7 +223,7 @@ var SoldierEntity = (function (_super) {
                             // }
                         }
                     }
-                }, 900);
+                }, time);
             }
         }
     };

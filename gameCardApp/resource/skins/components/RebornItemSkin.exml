@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="RebornItemSkin" width="111" height="150" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+<e:Skin class="RebornItemSkin" width="136" height="186" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
 	<e:Group x="0" y="0" touchChildren="false" touchEnabled="true" touchThrough="false">
 		<e:Image source="reborn_item_png" x="0" y="0"/>
-		<e:Image id="headIcon" source="reborn_head_1_png" x="32.5" y="33.36"/>
-		<e:Image id="titleImg" source="reborn_title_1_png" horizontalCenter="0" bottom="35"/>
-		<e:Image source="main_gold_png" x="18" y="128.97" anchorOffsetX="0" width="23" anchorOffsetY="0" height="14.33"/>
-		<e:Label id="rebornCostLab" text="1111" x="41.5" y="126.97" size="14" anchorOffsetX="0" width="50" anchorOffsetY="0" height="19" verticalAlign="middle" textAlign="center"/>
+		<e:Image id="headIcon" x="42" y="28" source="reborn_1_png"/>
+		<e:Image id="titleImg" source="reborn_title_1_png" horizontalCenter="0" bottom="158"/>
+		<e:Image source="main_gold_png" x="29" y="159.97" anchorOffsetX="0" width="23" anchorOffsetY="0" height="14.33"/>
+		<e:Label id="rebornCostLab" text="1111" x="52.5" y="157.97" size="14" anchorOffsetX="0" width="50" anchorOffsetY="0" height="19" verticalAlign="middle" textAlign="center"/>
+		<e:Label id="descLab" text="1111" x="9" y="120.5" size="14" anchorOffsetX="0" width="120.5" anchorOffsetY="0" height="19" verticalAlign="middle" textAlign="center"/>
 	</e:Group>
 </e:Skin>
