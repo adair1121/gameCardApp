@@ -14,6 +14,9 @@ class ShopPopUp extends BaseEuiView{
 		super();
 	}
 	public open(...param):void{
+
+		 let precentw:number = StageUtils.inst().getWidth()/1334;
+		this.content.scaleX = this.content.scaleY = precentw;
 		egret.Tween.get(this.content).to({verticalCenter:0},600,egret.Ease.circOut).call(()=>{
 			egret.Tween.removeTweens(this.content);
 		},this)

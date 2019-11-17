@@ -22,6 +22,8 @@ var ShopPopUp = (function (_super) {
         for (var _i = 0; _i < arguments.length; _i++) {
             param[_i] = arguments[_i];
         }
+        var precentw = StageUtils.inst().getWidth() / 1334;
+        this.content.scaleX = this.content.scaleY = precentw;
         egret.Tween.get(this.content).to({ verticalCenter: 0 }, 600, egret.Ease.circOut).call(function () {
             egret.Tween.removeTweens(_this.content);
         }, this);

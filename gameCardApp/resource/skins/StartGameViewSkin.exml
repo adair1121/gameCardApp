@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="StartGameViewSkin" width="1136" height="640" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
 	<e:Image source="bg_jpg" left="0" top="0" right="0" bottom="0"/>
-	<e:Image id="roleimg2" source="dragon_png" anchorOffsetX="1.52" anchorOffsetY="0" rotation="360" scaleX="1" scaleY="1" width="1128.43" height="636.97" x="6.08" y="-4.56"/>
+	<e:Image id="roleimg2" source="dragon_png" anchorOffsetX="1.52" anchorOffsetY="0" rotation="360" scaleX="1" scaleY="1" width="1136" height="640" x="1.52" y="0"/>
 	<e:Button id="enterBtn" label="Button" horizontalCenter="0" bottom="108">
 		<e:skinName>
 			<e:Skin states="up,down,disabled">
