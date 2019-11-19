@@ -67,11 +67,17 @@ var UpgradeItem = (function (_super) {
         this.atkLab.text = data.atk.toString();
         this._curCost = data.cost;
         this.costLab.text = this._curCost.toString();
+        if (GameApp.roleGold >= this._curCost) {
+            this.redP.visible = true;
+        }
         this.levelLab.text = "Lv." + levelstr;
         this.rebornBtn.visible = false;
         if (this.data.skillType == 1) {
             this.rebornBtn.visible = true;
         }
+    };
+    UpgradeItem.prototype.changeRedPointShow = function (boo) {
+        this.redP.visible = boo;
     };
     Object.defineProperty(UpgradeItem.prototype, "skillId", {
         get: function () {

@@ -5,6 +5,7 @@ class SkilItem extends eui.ItemRenderer{
 	private _skillId:number;
 	private rect:eui.Rect;
 	private numLab:eui.Label;
+	private itemGroup:eui.Group;
 	public constructor() {
 		super();
 		this.skinName = "SkillItemSkin";
@@ -21,6 +22,12 @@ class SkilItem extends eui.ItemRenderer{
 		if(this.data.skillId){
 			this._skillId = this.data.skillId;
 		}
+	}
+	public dongyixia():void{
+		egret.Tween.get(this.itemGroup).to({rotation:this.itemGroup.rotation - 5},50).to({rotation:this.itemGroup.rotation + 5},50).to({rotation:this.itemGroup.rotation - 5},50).to({rotation:this.itemGroup.rotation + 5},50).call(()=>{
+			this.itemGroup.rotation = 0;
+			egret.Tween.removeTweens(this.itemGroup);
+		},this)
 	}
 	public set num(value:number){
 		this.numLab.visible = true;

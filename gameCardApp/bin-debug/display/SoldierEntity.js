@@ -190,13 +190,27 @@ var SoldierEntity = (function (_super) {
                     this.calculEntityDic(angle);
                 }
                 this._mc.playFile(this._res, 1, null, false, this.curState, null, this.atkFrame);
+                if (this.soldierAttr.id == 4) {
+                    var timeout_1 = setTimeout(function () {
+                        clearTimeout(timeout_1);
+                        var skillMc = new MovieClip();
+                        skillMc.scaleX = skillMc.scaleY = 0.8;
+                        skillMc.playFile(SKILL_EFF + "skill_fs", 1, null, true);
+                        self_1.addChild(skillMc);
+                        skillMc.x = self_1._mc.x;
+                        skillMc.y = self_1._mc.y;
+                        if (self_1.scaleX == -1) {
+                            skillMc.scaleX = -0.8;
+                        }
+                    }, 600);
+                }
                 // if(this._typeId == SoldierType.ARROW){
                 // 	this.createArrow();
                 // }
                 //当前实体执行攻击动作 目标实体血量值减少
                 var self_1 = this;
-                var timeout_1 = setTimeout(function () {
-                    clearTimeout(timeout_1);
+                var timeout_2 = setTimeout(function () {
+                    clearTimeout(timeout_2);
                     if (self_1 && self_1._mc) {
                         self_1.curState = ActionState.STAND;
                         self_1._mc.playFile(self_1._res, -1, null, false, self_1.curState);
@@ -209,6 +223,11 @@ var SoldierEntity = (function (_super) {
                         // 	atk = 30;
                         // }
                         self_1._atkTar.reduceHp(atk);
+                        var hurtMc = new MovieClip();
+                        hurtMc.playFile(SKILL_EFF + "hurt", 1, null, true);
+                        self_1.parent.addChild(hurtMc);
+                        hurtMc.x = self_1._atkTar.x;
+                        hurtMc.y = self_1._atkTar.y;
                     }
                     else {
                         if (self_1._camp == -1 && self_1.x >= StageUtils.inst().getWidth() - 200) {

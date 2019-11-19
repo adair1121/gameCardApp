@@ -63,6 +63,12 @@ var GameMainView = (function (_super) {
             for (var i = 0; i < arr.length; i++) {
                 GameApp.skillCfg[arr[i].skillId] = arr[i];
             }
+            for (var i = 0; i < 10; i++) {
+                var item = { skillId: 1000 + i, rebornId: 1, skillIcon: "skill_103_png", skillTitle: "skill_103_title_png", level: 1, desc: "神将", atk: 50, hp: 500, atkDis: 100, cost: 100, skillType: 1 };
+                if (!GameApp.skillCfg[item.skillId]) {
+                    GameApp.skillCfg[item.skillId] = item;
+                }
+            }
         }
         this.clickRect["autoSize"]();
         this.progressBar.mask = this.progressMark;
@@ -638,7 +644,15 @@ var GameMainView = (function (_super) {
         });
     };
     GameMainView.prototype.roleGoldChange = function (value) {
-        this.goldLab.text = value.toString();
+        this.goldLab.text = GameApp.roleGold.toString();
+        var boo = false;
+        for (var key in GameApp.skillCfg) {
+            if (GameApp.roleGold >= GameApp.skillCfg[key].cost && GameApp.skillCfg[key].cost != 0) {
+                boo = true;
+                break;
+            }
+        }
+        this.upred.visible = boo;
     };
     GameMainView.prototype.roleGemChange = function (value) {
         this.gemLab.text = value.toString();
@@ -666,6 +680,11 @@ var GameMainView = (function (_super) {
         if (!getcountstr || (getcountstr && getcountstr == "0") || (boxTimestr && (nowTime - parseInt(boxTimestr)) > this.awardBoxGetTime)) {
             //第一次进入 。第二天重置 。现在的时间-创建时间 〉 10分钟 。可以领取
             //增加金币数量
+            var goldMc = new MovieClip();
+            this.awardBox.addChild(goldMc);
+            goldMc.playFile(EFFECT + "gold", 1, null, true);
+            goldMc.x = this.awardBox.width >> 1;
+            goldMc.y = this.awardBox.height >> 1;
             GameApp.inst().gold += this.goldGetNum;
             UserTips.inst().showTips("获得金币+" + this.goldGetNum);
             //刷新新的宝箱倒计时时间戳
@@ -752,6 +771,7 @@ var GameMainView = (function (_super) {
             }
             var curItem = this.list.getChildAt(evt.itemIndex);
             curItem.focus = true;
+            curItem.dongyixia();
             this.curItem = curItem;
             if (curItem.skillId == 103) {
                 //当前是神将召唤

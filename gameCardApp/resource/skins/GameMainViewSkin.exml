@@ -43,4 +43,5 @@
 	</e:Group>
 	<e:Label id="descLab" text="点击战场召唤" horizontalCenter="0" top="81" textColor="0xffffff"/>
 	<e:Rect id="clickRect" anchorOffsetX="0" anchorOffsetY="0" alpha="0" height="409" width="1033" x="6" y="174"/>
+	<e:Image id="upred" source="readp_png" right="14" top="59" visible="false"/>
 </e:Skin>

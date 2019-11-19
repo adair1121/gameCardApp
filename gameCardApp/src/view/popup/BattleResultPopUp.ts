@@ -14,14 +14,31 @@ class BattleResultPopUp extends BaseEuiView{
 	private _cb:()=>void;
 	private _arg:any;
 	private _param:number;
+	private winIcon:eui.Image;
+	private rewardGroup:eui.Group;
+	private resultImg:eui.Image;
 	public constructor() {
 		super();
 	}
 	public open(...param):void{
-		this.alpha = 0;
-		egret.Tween.get(this).to({alpha:1},300,egret.Ease.circOut).call(()=>{
-			egret.Tween.removeTweens(this);
-		})
+		// this.alpha = 0;
+		// egret.Tween.get(this).to({alpha:1},300,egret.Ease.circOut).call(()=>{
+		// 	egret.Tween.removeTweens(this);
+		// })
+		this.rewardGroup.alpha = 0;
+		this.winIcon.alpha = 0;
+		this.winIcon.scaleX = this.winIcon.scaleY = 5;
+		this.resultImg.alpha = 0;
+		this.resultImg.scaleX = this.resultImg.scaleY = 5;
+		egret.Tween.get(this.winIcon).to({alpha:1,scaleX:1,scaleY:1},300,egret.Ease.circIn).call(()=>{
+			egret.Tween.removeTweens(this.winIcon);
+			egret.Tween.get(this.resultImg).to({alpha:1,scaleX:1,scaleY:1},300,egret.Ease.circIn).call(()=>{
+				egret.Tween.removeTweens(this.resultImg);
+				egret.Tween.get(this.rewardGroup).to({alpha:1},300).call(()=>{
+					egret.Tween.removeTweens(this.rewardGroup);
+				},this)
+			},this)
+		},this)
 
 		if(param[0].state == 1){
 			this.skin.currentState = "win";

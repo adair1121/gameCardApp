@@ -20,7 +20,7 @@ class RebornCfg {
 		{
 			cost:100,
 			mid:2,
-			name:"神将",
+			name:"剑圣",
 			level:1,
 			atktype:1,
 			atkDis:50,
@@ -37,7 +37,7 @@ class RebornCfg {
 		{
 			cost:100,
 			mid:3,
-			name:"神将",
+			name:"道祖",
 			level:1,
 			atktype:1,
 			atkDis:50,
@@ -54,7 +54,7 @@ class RebornCfg {
 		{
 			cost:100,
 			mid:4,
-			name:"神将",
+			name:"天尊",
 			level:1,
 			atktype:1,
 			atkDis:200,

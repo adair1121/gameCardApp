@@ -10,6 +10,7 @@ class UpgradeItem extends eui.ItemRenderer{
 	private costLab:eui.Label;
 	private _curCost:number;
 	private _skillId:number;
+	private redP:eui.Image;
 	public constructor() {
 		super();
 		this.skinName = "UpgradeItemSkin";
@@ -66,11 +67,17 @@ class UpgradeItem extends eui.ItemRenderer{
 		this.atkLab.text = data.atk.toString();
 		this._curCost =  data.cost;
 		this.costLab.text = this._curCost.toString();
+		if(GameApp.roleGold >= this._curCost){
+			this.redP.visible = true;
+		}
 		this.levelLab.text = "Lv."+levelstr;
 		this.rebornBtn.visible = false;
 		if(this.data.skillType == 1){
 			this.rebornBtn.visible = true;
 		}
+	}
+	public changeRedPointShow(boo:boolean){
+		this.redP.visible = boo;
 	}
 	public get skillId():number{
 		return this._skillId;

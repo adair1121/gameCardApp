@@ -28,6 +28,13 @@ var SkilItem = (function (_super) {
             this._skillId = this.data.skillId;
         }
     };
+    SkilItem.prototype.dongyixia = function () {
+        var _this = this;
+        egret.Tween.get(this.itemGroup).to({ rotation: this.itemGroup.rotation - 5 }, 50).to({ rotation: this.itemGroup.rotation + 5 }, 50).to({ rotation: this.itemGroup.rotation - 5 }, 50).to({ rotation: this.itemGroup.rotation + 5 }, 50).call(function () {
+            _this.itemGroup.rotation = 0;
+            egret.Tween.removeTweens(_this.itemGroup);
+        }, this);
+    };
     Object.defineProperty(SkilItem.prototype, "num", {
         get: function () {
             return parseInt(this.numLab.text);

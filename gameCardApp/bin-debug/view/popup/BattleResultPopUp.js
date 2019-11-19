@@ -19,10 +19,24 @@ var BattleResultPopUp = (function (_super) {
         for (var _i = 0; _i < arguments.length; _i++) {
             param[_i] = arguments[_i];
         }
-        this.alpha = 0;
-        egret.Tween.get(this).to({ alpha: 1 }, 300, egret.Ease.circOut).call(function () {
-            egret.Tween.removeTweens(_this);
-        });
+        // this.alpha = 0;
+        // egret.Tween.get(this).to({alpha:1},300,egret.Ease.circOut).call(()=>{
+        // 	egret.Tween.removeTweens(this);
+        // })
+        this.rewardGroup.alpha = 0;
+        this.winIcon.alpha = 0;
+        this.winIcon.scaleX = this.winIcon.scaleY = 5;
+        this.resultImg.alpha = 0;
+        this.resultImg.scaleX = this.resultImg.scaleY = 5;
+        egret.Tween.get(this.winIcon).to({ alpha: 1, scaleX: 1, scaleY: 1 }, 300, egret.Ease.circIn).call(function () {
+            egret.Tween.removeTweens(_this.winIcon);
+            egret.Tween.get(_this.resultImg).to({ alpha: 1, scaleX: 1, scaleY: 1 }, 300, egret.Ease.circIn).call(function () {
+                egret.Tween.removeTweens(_this.resultImg);
+                egret.Tween.get(_this.rewardGroup).to({ alpha: 1 }, 300).call(function () {
+                    egret.Tween.removeTweens(_this.rewardGroup);
+                }, _this);
+            }, _this);
+        }, this);
         if (param[0].state == 1) {
             this.skin.currentState = "win";
             // let levelstr:string = egret.localStorage.getItem(LocalStorageEnum.LEVEL);

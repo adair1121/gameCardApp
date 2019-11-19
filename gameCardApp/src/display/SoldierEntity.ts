@@ -201,7 +201,21 @@ class SoldierEntity extends BaseEntity{
 					this.calculEntityDic(angle);
 				}
 				this._mc.playFile(this._res,1,null,false,this.curState,null,this.atkFrame);
-				
+				if(this.soldierAttr.id == 4){
+					let timeout = setTimeout(function() {
+						clearTimeout(timeout)
+						let skillMc:MovieClip = new MovieClip();
+						skillMc.scaleX = skillMc.scaleY = 0.8;
+						skillMc.playFile(`${SKILL_EFF}skill_fs`,1,null,true);
+						self.addChild(skillMc);
+						skillMc.x = self._mc.x;
+						skillMc.y = self._mc.y;
+						if(self.scaleX == -1){
+							skillMc.scaleX = -0.8;
+						}
+					}, 600);
+					
+				}
 				// if(this._typeId == SoldierType.ARROW){
 				// 	this.createArrow();
 				// }
@@ -222,6 +236,11 @@ class SoldierEntity extends BaseEntity{
 						// 	atk = 30;
 						// }
 						self._atkTar.reduceHp(atk);
+						let hurtMc:MovieClip = new MovieClip();
+						hurtMc.playFile(`${SKILL_EFF}hurt`,1,null,true);
+						self.parent.addChild(hurtMc);
+						hurtMc.x = self._atkTar.x;
+						hurtMc.y = self._atkTar.y;
 					}else{
 						if(self._camp == -1 && self.x >= StageUtils.inst().getWidth() - 200){
 							//直接攻击国王塔

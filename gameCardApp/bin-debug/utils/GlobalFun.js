@@ -195,11 +195,11 @@ var GlobalFun = (function () {
         //     }
         // }
         var textInfo = new eui.Label();
-        textInfo.size = 20;
-        textInfo.scaleX = textInfo.scaleY = 3;
+        textInfo.size = 40;
+        textInfo.scaleX = textInfo.scaleY = 5;
         textInfo.textColor = 0xffffff;
         if (camp == -1) {
-            textInfo.textColor = 0xfc3434;
+            // textInfo.textColor = 0xfc3434;
         }
         else {
             res = "skill_" + id;
@@ -208,7 +208,7 @@ var GlobalFun = (function () {
         textInfo.x = pos.x - 70;
         textInfo.y = pos.y - 150;
         textInfo.text = skillName;
-        egret.Tween.get(textInfo).to({ scaleX: 1, scaleY: 1 }, 600, egret.Ease.circOut).wait(500).call(function () {
+        egret.Tween.get(textInfo).to({ scaleX: 1, scaleY: 1 }, 600, egret.Ease.circIn).wait(500).call(function () {
             egret.Tween.removeTweens(textInfo);
             if (textInfo && textInfo.parent) {
                 textInfo.parent.removeChild(textInfo);

@@ -5,6 +5,7 @@ class UpgradePopUp extends BaseEuiView{
 	private arraycollect:eui.ArrayCollection;
 	private btnClose:eui.Image;
 	private upgradeGroup:eui.Group;
+	private watcher:eui.Watcher;
 	public constructor() {
 		super();
 	}
@@ -46,6 +47,16 @@ class UpgradePopUp extends BaseEuiView{
 		this.arraycollect.source = arr;
 		this.addTouchEvent(this.btnClose,this.onReturn,true);
 		MessageManager.inst().addListener(CustomEvt.REBORNSUCCESS,this.onReborn,this);
+		this.watcher = eui.Binding.bindHandler(GameApp,["roleGold"],this.onGoldChange,this);
+	}
+	private onGoldChange():void{
+		let source:any[] = this.arraycollect.source;
+		for(let i:number = 0;i<source.length;i++){
+			let item:UpgradeItem = this.list.$children[i] as UpgradeItem;
+			if(item){
+				item.changeRedPointShow(GameApp.roleGold >= source[i].cost);
+			}
+		}
 	}
 	private onReborn(evt:CustomEvt):void{
 		for(let i:number = 0;i<this.list.$children.length;i++){
@@ -64,6 +75,7 @@ class UpgradePopUp extends BaseEuiView{
 	}
 	public close():void{
 		this.removeTouchEvent(this.btnClose,this.onReturn);
+		if(this.watcher){this.watcher.unwatch()}
 		MessageManager.inst().removeListener(CustomEvt.REBORNSUCCESS,this.onReborn,this);
 		let len:number = this.list.$children.length;
 		for(let i:number = 0;i<len;i++){

@@ -50,7 +50,8 @@ class GameMainView extends BaseEuiView{
 	private blood:eui.Image;
 	private showBlood:boolean = false;
 	private pos1:eui.Rect;
-	private pos2:eui.Rect
+	private pos2:eui.Rect;
+	private upred:eui.Image;
 	public constructor() {
 		super();
 	}
@@ -77,6 +78,12 @@ class GameMainView extends BaseEuiView{
 			GameApp.skillCfg = {};
 			for(let i:number = 0;i<arr.length;i++){
 				GameApp.skillCfg[arr[i].skillId] = arr[i];
+			}
+			for(let i:number = 0;i<10;i++){
+				let item:any = {skillId:1000+i,rebornId:1,skillIcon:"skill_103_png",skillTitle:"skill_103_title_png",level:1,desc:"神将",atk:50,hp:500,atkDis:100,cost:100,skillType:1};
+				if(!GameApp.skillCfg[item.skillId]){
+					GameApp.skillCfg[item.skillId] = item;
+				}
 			}
 		}
 		this.clickRect["autoSize"]();
@@ -638,7 +645,15 @@ class GameMainView extends BaseEuiView{
 		
 	}
 	private roleGoldChange(value:number):void{
-		this.goldLab.text = value.toString();
+		this.goldLab.text = GameApp.roleGold.toString();
+		let boo:boolean = false;
+		for(let key in GameApp.skillCfg){
+			if(GameApp.roleGold >= GameApp.skillCfg[key].cost && GameApp.skillCfg[key].cost != 0){
+				boo = true;
+				break;
+			}
+		}
+		this.upred.visible = boo;
 	}
 	private roleGemChange(value:number):void{
 		this.gemLab.text =value.toString();
@@ -667,6 +682,11 @@ class GameMainView extends BaseEuiView{
 		if(!getcountstr || (getcountstr && getcountstr == "0") || (boxTimestr && (nowTime - parseInt(boxTimestr)) > this.awardBoxGetTime)){
 			//第一次进入 。第二天重置 。现在的时间-创建时间 〉 10分钟 。可以领取
 			//增加金币数量
+			let goldMc:MovieClip = new MovieClip();
+			this.awardBox.addChild(goldMc);
+			goldMc.playFile(`${EFFECT}gold`,1,null,true);
+			goldMc.x = this.awardBox.width>>1;
+			goldMc.y = this.awardBox.height>>1;
 			GameApp.inst().gold += this.goldGetNum;
 			UserTips.inst().showTips("获得金币+"+this.goldGetNum);
 			//刷新新的宝箱倒计时时间戳
@@ -756,6 +776,7 @@ class GameMainView extends BaseEuiView{
 			}
 			let curItem:SkilItem = this.list.getChildAt(evt.itemIndex) as SkilItem;
 			curItem.focus = true;
+			curItem.dongyixia();
 			this.curItem = curItem;
 			if(curItem.skillId == 103){
 				//当前是神将召唤

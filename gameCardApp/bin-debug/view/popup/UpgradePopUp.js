@@ -58,6 +58,16 @@ var UpgradePopUp = (function (_super) {
         this.arraycollect.source = arr;
         this.addTouchEvent(this.btnClose, this.onReturn, true);
         MessageManager.inst().addListener(CustomEvt.REBORNSUCCESS, this.onReborn, this);
+        this.watcher = eui.Binding.bindHandler(GameApp, ["roleGold"], this.onGoldChange, this);
+    };
+    UpgradePopUp.prototype.onGoldChange = function () {
+        var source = this.arraycollect.source;
+        for (var i = 0; i < source.length; i++) {
+            var item = this.list.$children[i];
+            if (item) {
+                item.changeRedPointShow(GameApp.roleGold >= source[i].cost);
+            }
+        }
     };
     UpgradePopUp.prototype.onReborn = function (evt) {
         for (var i = 0; i < this.list.$children.length; i++) {
@@ -77,6 +87,9 @@ var UpgradePopUp = (function (_super) {
     };
     UpgradePopUp.prototype.close = function () {
         this.removeTouchEvent(this.btnClose, this.onReturn);
+        if (this.watcher) {
+            this.watcher.unwatch();
+        }
         MessageManager.inst().removeListener(CustomEvt.REBORNSUCCESS, this.onReborn, this);
         var len = this.list.$children.length;
         for (var i = 0; i < len; i++) {
