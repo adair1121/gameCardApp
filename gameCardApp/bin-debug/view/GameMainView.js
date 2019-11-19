@@ -423,7 +423,9 @@ var GameMainView = (function (_super) {
             else {
                 var atkItem = void 0;
                 atkItem = this_1.getNearByEntity(item, levelEntitys);
-                item.lookAt(atkItem);
+                if (atkItem && atkItem.x >= this_1.clickRect.x) {
+                    item.lookAt(atkItem);
+                }
                 if (item.isInAtkDis()) {
                     //在攻击距离
                     console.log("进入攻击距离");

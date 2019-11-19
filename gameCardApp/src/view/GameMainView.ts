@@ -436,7 +436,9 @@ class GameMainView extends BaseEuiView{
 			}else{
 				let atkItem:any;
 				atkItem = this.getNearByEntity(item,levelEntitys);
-				item.lookAt(atkItem);
+				if(atkItem && atkItem.x >= this.clickRect.x + 50 ){
+					item.lookAt(atkItem);
+				}
 				if(item.isInAtkDis()){
 					//在攻击距离
 					console.log("进入攻击距离");
