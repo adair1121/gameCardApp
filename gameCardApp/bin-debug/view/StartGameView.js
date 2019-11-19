@@ -112,13 +112,7 @@ var StartGameView = (function (_super) {
     };
     StartGameView.prototype.onFrame = function (evt) {
         if (this.clickBegin) {
-            this.customFilter4.uniforms.offset -= 0.05;
-            if (this.customFilter4.uniforms.offset <= 0) {
-                this.customFilter4.uniforms.offset = 0.0;
-                ViewManager.inst().close(StartGameView);
-                var view = ViewManager.inst().getView(GameMainView);
-                view.initialize();
-            }
+            this.onReturn();
         }
         else {
             this.customFilter1.uniforms.customUniform += 0.05;
@@ -127,47 +121,19 @@ var StartGameView = (function (_super) {
             }
         }
     };
+    StartGameView.prototype.onReturn = function () {
+        var _this = this;
+        egret.Tween.get(this).to({ alpha: 0 }, 1000).call(function () {
+            egret.Tween.removeTweens(_this);
+            ViewManager.inst().close(StartGameView);
+        }, this);
+        var view = ViewManager.inst().getView(GameMainView);
+        view.initialize(true);
+    };
     /**进入游戏 */
     StartGameView.prototype.onEnter = function (evt) {
         this.touchEnabled = false;
         SoundManager.inst().touchBg();
-        var vertexSrc = "attribute vec2 aVertexPosition;\n" +
-            "attribute vec2 aTextureCoord;\n" +
-            "attribute vec2 aColor;\n" +
-            "uniform vec2 projectionVector;\n" +
-            "varying vec2 vTextureCoord;\n" +
-            "varying vec4 vColor;\n" +
-            "const vec2 center = vec2(-1.0, 1.0);\n" +
-            "void main(void) {\n" +
-            "   gl_Position = vec4( (aVertexPosition / projectionVector) + center , 0.0, 1.0);\n" +
-            "   vTextureCoord = aTextureCoord;\n" +
-            "   vColor = vec4(aColor.x, aColor.x, aColor.x, aColor.x);\n" +
-            "}";
-        var fragmentSrc4 = [
-            "precision lowp float;\n" +
-                "varying vec2 vTextureCoord;",
-            "varying vec4 vColor;\n",
-            "uniform sampler2D uSampler;",
-            "uniform float lineWidth;",
-            "uniform float offset;",
-            "void main()",
-            "{",
-            "vec2 uv = vTextureCoord.xy;",
-            "vec2 texCoord = uv;",
-            "float modPart = mod(vTextureCoord.y, lineWidth);",
-            "float solidPart = (1.0 - offset) * lineWidth;",
-            "if(modPart > solidPart) {",
-            "gl_FragColor = texture2D(uSampler, texCoord);",
-            "} else {",
-            "gl_FragColor = vec4(0., 0., 0., 0.);",
-            "}",
-            "}"
-        ].join("\n");
-        this.customFilter4 = new egret.CustomFilter(vertexSrc, fragmentSrc4, {
-            lineWidth: 0.1,
-            offset: 1
-        });
-        this.filters = [this.customFilter4];
         this.clickBegin = true;
     };
     /**查看故事 */

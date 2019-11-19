@@ -40,6 +40,7 @@ var GameMainView = (function (_super) {
         for (var _i = 0; _i < arguments.length; _i++) {
             param[_i] = arguments[_i];
         }
+        this.alpha = 0;
         this._entitys = [];
         this._ownEntitys = [];
         this._levelEntitys = [];
@@ -296,11 +297,11 @@ var GameMainView = (function (_super) {
         this.initialize();
     };
     /**创建关卡怪物 */
-    GameMainView.prototype.createLevelMonster = function () {
+    GameMainView.prototype.createLevelMonster = function (cx) {
         var _this = this;
         var count = ((GameApp.level / 5) >> 0) + 1;
         var centery = this.clickRect.y + 150;
-        var centerx = 100;
+        var centerx = -300;
         for (var i = 0; i < count; i++) {
             var shapIndex = (Math.random() * 7) >> 0;
             var monsterCfg = GlobalFun.getMonsterCfg();
@@ -430,7 +431,7 @@ var GameMainView = (function (_super) {
                 }
                 else {
                     if (!item.playState) {
-                        if (item.atkTar && !item.atkTar.isDead) {
+                        if (item.atkTar && !item.atkTar.isDead && camp == 1) {
                             item.execMoveAction();
                         }
                         else {
@@ -619,10 +620,22 @@ var GameMainView = (function (_super) {
     GameMainView.prototype.onUpgrade = function () {
         ViewManager.inst().open(UpgradePopUp);
     };
-    GameMainView.prototype.initialize = function () {
+    GameMainView.prototype.initialize = function (boo) {
         var _this = this;
         //初始化
         console.log("game---initialize");
+        if (boo) {
+            egret.Tween.get(this).to({ alpha: 1 }, 1000).call(function () {
+                egret.Tween.removeTweens(_this);
+                _this.showText();
+            }, this);
+        }
+        else {
+            this.showText();
+        }
+    };
+    GameMainView.prototype.showText = function () {
+        var _this = this;
         this.touchEnabled = false;
         this.touchChildren = false;
         this.showLevelTxt(function () {

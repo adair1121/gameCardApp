@@ -56,6 +56,7 @@ class GameMainView extends BaseEuiView{
 		super();
 	}
 	public open(...param):void{
+		this.alpha = 0;
 		this._entitys = [];
 		this._ownEntitys = [];
 		this._levelEntitys = [];
@@ -307,10 +308,10 @@ class GameMainView extends BaseEuiView{
 		this.initialize();
 	}
 	/**创建关卡怪物 */
-	private createLevelMonster():void{
+	private createLevelMonster(cx?:number):void{
 		let count:number = ((GameApp.level/5)>>0) + 1;
 		let centery:number = this.clickRect.y + 150;
-		let centerx:number = 100;
+		let centerx:number = -300;
 		for(let i:number = 0;i<count;i++){
 			let shapIndex:number = (Math.random()*7)>>0;
 			let monsterCfg:CardVo[] = GlobalFun.getMonsterCfg();
@@ -442,7 +443,7 @@ class GameMainView extends BaseEuiView{
 					item.execAtkAction();
 				}else{
 					if(!item.playState){
-						if(item.atkTar && !item.atkTar.isDead){
+						if(item.atkTar && !item.atkTar.isDead && camp == 1){
 							item.execMoveAction()
 						}else{
 							if(camp == -1){
@@ -621,9 +622,19 @@ class GameMainView extends BaseEuiView{
 	private onUpgrade():void{
 		ViewManager.inst().open(UpgradePopUp);
 	}
-	public initialize():void{
+	public initialize(boo?:boolean):void{
 		//初始化
 		console.log("game---initialize");
+		if(boo){
+			egret.Tween.get(this).to({alpha:1},1000).call(()=>{
+				egret.Tween.removeTweens(this);
+				this.showText();
+			},this)
+		}else{
+			this.showText();
+		}
+	}
+	private showText():void{
 		this.touchEnabled = false;
 		this.touchChildren = false;
 		this.showLevelTxt(()=>{
@@ -639,10 +650,9 @@ class GameMainView extends BaseEuiView{
 				ViewManager.inst().open(GuideView);
 				let item:SkilItem = this.list.getChildAt(2) as SkilItem;
 				this.guideView = ViewManager.inst().getView(GuideView) as GuideView;
-				this.guideView.nextStep({id:"1_1",comObj:item,width:75,height:75}) ;
+				this.guideView.nextStep({id:"1_1",comObj:item,width:75,height:75});
 			}
 		})
-		
 	}
 	private roleGoldChange(value:number):void{
 		this.goldLab.text = GameApp.roleGold.toString();
