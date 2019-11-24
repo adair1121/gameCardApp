@@ -6,5 +6,9 @@
 		<e:Image id="skillTitle" source="skill_101_title_png" x="28.5" y="58"/>
 		<e:Image id="rect" source="common_xuanzhong_png" x="6.25" y="8.75" scale9Grid="9,9,57,56" touchEnabled="false" pixelHitTest="false"/>
 		<e:Label id="numLab" text="10" size="20" touchEnabled="false" textColor="0xe5ad24" right="16" top="15"/>
+		<e:Group id="cdGroup" horizontalCenter="0" verticalCenter="0.5">
+			<e:Rect width="67.12" height="63.81" x="0" y="0" anchorOffsetX="0" anchorOffsetY="0" ellipseWidth="10" ellipseHeight="10" alpha="0.5" fillColor="0x000000"/>
+			<e:Label id="cdTime" text="60" size="30" fontFamily="yt" horizontalCenter="0" verticalCenter="0"/>
+		</e:Group>
 	</e:Group>
 </e:Skin>

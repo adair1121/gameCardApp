@@ -20,6 +20,7 @@ var SoldierEntity = (function (_super) {
         //克制攻击力
         _this.restriceAtk = 0;
         _this.atkFrame = 6;
+        _this.battleState = false;
         _this.isReleaseSkill = false;
         /**当前boss 的技能播放状态 */
         _this.playState = false;
@@ -33,15 +34,24 @@ var SoldierEntity = (function (_super) {
         this._camp = camp;
         this.camp = camp;
         this.soldierAttr = attr;
-        this.scaleX = this.scaleY = 0.7;
-        this.scale = 0.7;
+        // this.scaleX = this.scaleY = 0.7;
+        // this.scale = 0.7;
         if (this._camp == -1 && (!this.general)) {
-            this.scaleX = this.scaleY = 0.4;
-            this.scale = 0.4;
+            if (this._res != "s_monster_6" && this._res != "s_monster_5") {
+                this.scaleX = this.scaleY = 0.6;
+                this.scale = 0.6;
+            }
+            else {
+                this.scaleX = this.scaleY = 0.9;
+                this.scale = 0.9;
+            }
         }
+        res = "monster_8";
         if (this.camp == 1) {
-            this.scaleX = this.scaleY = 0.5;
-            this.scale = 0.5;
+            if (res != "monster_8") {
+                this.scaleX = this.scaleY = 0.5;
+                this.scale = 0.5;
+            }
         }
         // if(res == "shanzei"){
         // 	this.scaleX = this.scaleY = 0.8;
@@ -173,10 +183,11 @@ var SoldierEntity = (function (_super) {
     /**执行攻击动作 */
     SoldierEntity.prototype.execAtkAction = function () {
         // if(GameApp.battleState == false){return}
-        if (this.isInAtkDis()) {
+        if (this.isInAtkDis() && !this.battleState) {
             if (this.curState != ActionState.ATTACK) {
                 this.curState = ActionState.ATTACK;
                 egret.Tween.removeTweens(this);
+                this.battleState = true;
                 var time = 900;
                 if (this.camp == 1) {
                     if (this.soldierAttr.atkspd && this.soldierAttr.atkspd > 6) {
@@ -210,6 +221,7 @@ var SoldierEntity = (function (_super) {
                 //当前实体执行攻击动作 目标实体血量值减少
                 var self_1 = this;
                 var timeout_2 = setTimeout(function () {
+                    self_1.battleState = false;
                     clearTimeout(timeout_2);
                     if (self_1 && self_1._mc) {
                         self_1.curState = ActionState.STAND;
@@ -263,6 +275,7 @@ var SoldierEntity = (function (_super) {
     };
     /**等待移动状态 */
     SoldierEntity.prototype.waitMoveAction = function () {
+        this.battleState = false;
         if (this.curState != ActionState.RUN) {
             this.curState = ActionState.RUN;
             this._mc.playFile(this._res, -1, null, false, this.curState);
@@ -284,6 +297,7 @@ var SoldierEntity = (function (_super) {
     SoldierEntity.prototype.execMoveAction = function (xy, cb, thisarg, isquick) {
         var _this = this;
         if (isquick === void 0) { isquick = true; }
+        this.battleState = false;
         if (xy) {
             var angle = Math.atan2(xy.y - this.y, xy.x - this.x) * 180 / Math.PI;
             this.calculEntityDic(angle);
@@ -348,13 +362,14 @@ var SoldierEntity = (function (_super) {
         if (this.x >= posx) {
             this.isReleaseSkill = true;
             this.playAtkAction(4);
-            MessageManager.inst().dispatch(CustomEvt.BOSS_RELEASESKILL);
+            MessageManager.inst().dispatch(CustomEvt.BOSS_RELEASESKILL, { xy: { x: this.x, y: this.y } });
             return true;
         }
         return false;
     };
     /**执行站立状态 */
     SoldierEntity.prototype.execStandAction = function () {
+        this.battleState = false;
         this.curState = ActionState.STAND;
         this._mc.playFile(this._res, -1, null, false, this.curState);
     };
@@ -374,6 +389,18 @@ var SoldierEntity = (function (_super) {
             clearTimeout(timeout);
             self.playState = false;
         }, 1500);
+    };
+    /**执行一次攻击动作 */
+    SoldierEntity.prototype.execOneTimeAtk = function (cb, arg, i) {
+        this.curState = ActionState.ATTACK;
+        this._mc.playFile(this._res, 1, null, false, this.curState, null);
+        var self = this;
+        var timeout = setTimeout(function () {
+            clearTimeout(timeout);
+            self.curState = ActionState.STAND;
+            self._mc.playFile(self._res, 1, null, false, self.curState, null);
+            cb.call(arg, i);
+        }, 600);
     };
     /**获取到目标位置的距离 是否达到攻击距离 */
     SoldierEntity.prototype.isInAtkDis = function () {
@@ -400,6 +427,10 @@ var SoldierEntity = (function (_super) {
         else {
             return;
         }
+    };
+    /**解锁目标 */
+    SoldierEntity.prototype.unlookAt = function () {
+        this._atkTar = null;
     };
     Object.defineProperty(SoldierEntity.prototype, "isDead", {
         get: function () {

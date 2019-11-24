@@ -19,6 +19,8 @@ class GameApp extends BaseClass {
 	public static effectMusic:number = 0.5;
 	/**技能转生配置 */
 	public static skillCfg:any;
+
+	public static gameaEnd:boolean = true;
 	public constructor() {
 		super();
 	}
@@ -27,6 +29,7 @@ class GameApp extends BaseClass {
 		return _inst
 	}
 	public load() {
+		
 		eui.Label.default_fontFamily = "Microsoft YaHei";
 		// GlobalConfig.parserData();
 		// GameMap.init(RES.getRes("map_json"));
@@ -66,6 +69,7 @@ class GameApp extends BaseClass {
 		}
 		eui.Binding.bindHandler(GameApp,["level"],this.levelChange,this);
 
+		recharge.sendToNativeLoadEnd();
 	}
 	private levelChange():void{
 		egret.localStorage.setItem(LocalStorageEnum.LEVEL,GameApp.level.toString());

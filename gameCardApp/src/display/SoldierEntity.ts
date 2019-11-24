@@ -34,12 +34,20 @@ class SoldierEntity extends BaseEntity{
 		this.scaleX = this.scaleY = 0.7;
 		this.scale = 0.7;
 		if(this._camp == -1 && (!this.general)){
-			this.scaleX = this.scaleY = 0.4;
-			this.scale = 0.4;
+			if(this._res != "s_monster_6" && this._res != "s_monster_5"){
+				this.scaleX = this.scaleY = 0.6;
+				this.scale = 0.6;
+			}else{
+				this.scaleX = this.scaleY = 0.9;
+				this.scale = 0.9;
+			}
+			
 		}
 		if(this.camp == 1){
-			this.scaleX = this.scaleY = 0.5;
-			this.scale = 0.5;
+			if(res != "monster_8"){
+				this.scaleX = this.scaleY = 0.5;
+				this.scale = 0.5;
+			}
 		}
 		// if(res == "shanzei"){
 		// 	this.scaleX = this.scaleY = 0.8;
@@ -180,14 +188,16 @@ class SoldierEntity extends BaseEntity{
 	//克制攻击力
 	private restriceAtk:number = 0;
 	private atkFrame:number = 6;
+	private battleState:boolean = false;
 	// private playCount:number = 1;
 	/**执行攻击动作 */
 	public execAtkAction():void{
 		// if(GameApp.battleState == false){return}
-		if(this.isInAtkDis()){
+		if(this.isInAtkDis() && !this.battleState){
 			if(this.curState != ActionState.ATTACK){
 				this.curState = ActionState.ATTACK;
 				egret.Tween.removeTweens(this);
+				this.battleState = true;
 				let time:number = 900;
 				if(this.camp == 1){
 					if(this.soldierAttr.atkspd && this.soldierAttr.atkspd > 6){
@@ -223,6 +233,7 @@ class SoldierEntity extends BaseEntity{
 				let self = this;
 				
 				let timeout = setTimeout(function() {
+					self.battleState = false;
 					clearTimeout(timeout);
 					if(self && self._mc){
 						self.curState = ActionState.STAND;
@@ -276,6 +287,7 @@ class SoldierEntity extends BaseEntity{
 	}
 	/**等待移动状态 */
 	public waitMoveAction():void{
+		this.battleState = false;
 		if(this.curState != ActionState.RUN){
 			this.curState = ActionState.RUN;
 			this._mc.playFile(this._res,-1,null,false,this.curState);
@@ -295,7 +307,7 @@ class SoldierEntity extends BaseEntity{
 	}
 	/**执行前往目标附近位置 */
 	public execMoveAction(xy?:XY,cb?:()=>void,thisarg?:any,isquick:boolean = true):void{
-		
+		this.battleState = false;
 		
 		if(xy){
 			let angle:number = Math.atan2(xy.y - this.y,xy.x-this.x)*180/Math.PI;
@@ -358,13 +370,14 @@ class SoldierEntity extends BaseEntity{
 		if(this.x >= posx){
 			this.isReleaseSkill = true;
 			this.playAtkAction(4);
-			MessageManager.inst().dispatch(CustomEvt.BOSS_RELEASESKILL)
+			MessageManager.inst().dispatch(CustomEvt.BOSS_RELEASESKILL,{xy:{x:this.x,y:this.y}})
 			return true;
 		}
 		return false;
 	}
 	/**执行站立状态 */
 	public execStandAction():void{
+		this.battleState = false;
 		this.curState = ActionState.STAND;
 		this._mc.playFile(this._res,-1,null,false,this.curState);
 	}
@@ -386,6 +399,18 @@ class SoldierEntity extends BaseEntity{
 			clearTimeout(timeout);
 			self.playState = false;
 		}, 1500);
+	}
+	/**执行一次攻击动作 */
+	public execOneTimeAtk(cb,arg,i):void{
+		this.curState = ActionState.ATTACK;
+		this._mc.playFile(this._res,1,null,false,this.curState,null);
+		let self = this;
+		let timeout = setTimeout(function() {
+			clearTimeout(timeout);
+			self.curState = ActionState.STAND;
+			self._mc.playFile(self._res,1,null,false,self.curState,null);
+			cb.call(arg,i);
+		}, 600);
 	}
 	public isInAtk:boolean = false;
 	/**获取到目标位置的距离 是否达到攻击距离 */
@@ -414,6 +439,10 @@ class SoldierEntity extends BaseEntity{
 		}else{
 			return;
 		}
+	}
+	/**解锁目标 */
+	public unlookAt():void{
+		this._atkTar = null;
 	}
 	public get isDead():boolean{
 		return this._isDead;

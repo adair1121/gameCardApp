@@ -63,12 +63,16 @@ var BaseEntity = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    BaseEntity.prototype.getIndex = function () {
+        return ((Math.random() * 100) >> 0) > 50 ? 1 : -1;
+    };
     BaseEntity.prototype.reduceHp = function (dmg) {
         if (this.buffHp > 0) {
             this.buffHp -= dmg;
         }
         else {
-            this._hp -= (dmg - this.buffDef);
+            var changeNum = ((dmg * 0.2) >> 0) * this.getIndex();
+            this._hp -= (dmg - this.buffDef + changeNum);
             if (this._hp <= 0) {
                 this._hp = 0;
                 this._isDead = true;

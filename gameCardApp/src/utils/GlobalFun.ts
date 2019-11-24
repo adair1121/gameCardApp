@@ -206,19 +206,19 @@ class GlobalFun {
 
         let textInfo:eui.Label =new eui.Label();
         textInfo.size = 40;
-		textInfo.scaleX = textInfo.scaleY = 5;
-		textInfo.textColor = 0xffffff
+		textInfo.scaleX = textInfo.scaleY = 1;
+		textInfo.textColor = 0xff0000;
         if(camp == -1){
             // textInfo.textColor = 0xfc3434;
         }else{
              res = "skill_"+id;
         }
 		parent.addChild(textInfo);
-        textInfo.x = pos.x - 70;
+        textInfo.x = pos.x;
         textInfo.y = pos.y - 150;
         textInfo.text = skillName;
         
-        egret.Tween.get(textInfo).to({scaleX:1,scaleY:1},600,egret.Ease.circIn).wait(500).call(()=>{
+        egret.Tween.get(textInfo).to({scaleX:2,scaleY:2},600,egret.Ease.circIn).wait(500).call(()=>{
 			egret.Tween.removeTweens(textInfo);
 			if(textInfo && textInfo.parent){
 				textInfo.parent.removeChild(textInfo);

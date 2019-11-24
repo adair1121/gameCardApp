@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="ShopItemSkin" width="174" height="254" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
 	<e:Image source="shopItemBg_png" x="0" y="0"/>
-	<e:Image id="icon" source="gemIcon_1_png" horizontalCenter="0" verticalCenter="-21.5"/>
+	<e:Image id="icon" horizontalCenter="0" verticalCenter="-21.5" source=""/>
 	<e:Label id="desc" text="这里是一个描述" x="10.33" y="152.33" size="20" fontFamily="yt" anchorOffsetX="0" width="153.34" anchorOffsetY="0" height="43.33" textAlign="center" verticalAlign="middle" textColor="0xe0ae62" stroke="1"/>
-	<e:Image id="icon_title" source="gem_font_1_png" x="44" y="14"/>
+	<e:Image id="icon_title" x="44" y="14" source=""/>
 	<e:Group id="shopBtn" x="36.5" y="206.67" touchChildren="false" touchEnabled="false" touchThrough="true">
 		<e:Image source="shopBtn_png" x="0" y="0"/>
 		<e:Label id="costLab" text="1元" size="20" fontFamily="yt" touchEnabled="false" horizontalCenter="0" verticalCenter="0" textColor="0xe0ae62" stroke="1"/>

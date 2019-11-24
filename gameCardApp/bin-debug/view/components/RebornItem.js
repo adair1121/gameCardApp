@@ -12,7 +12,7 @@ var RebornItem = (function (_super) {
     __extends(RebornItem, _super);
     function RebornItem() {
         var _this = _super.call(this) || this;
-        _this.descs = ["攻速暴增200%", "全属性增加1倍", "攻击力增幅4倍"];
+        _this.descs = ["攻速暴增200%", "攻击力增幅4倍", "全属性增加1倍"];
         _this.skinName = "RebornItemSkin";
         return _this;
     }
@@ -22,8 +22,11 @@ var RebornItem = (function (_super) {
         if (index >= 5) {
             index = 4;
         }
-        this.headIcon.source = "reborn_" + index + "_png";
-        this.titleImg.source = "reborn_title_" + index + "_png";
+        this.headIcon.source = "reborn_" + this.data.rmodel + "_png";
+        // if(this.itemIndex == 2){
+        // 	this.headIcon.x
+        // }
+        this.titleImg.source = "reborn_title_" + this.data.rmodel + "_png";
         this.rebornCostLab.text = this.data.cost;
         var reborns = GameApp.reborns[this.data.skillId];
         if (reborns && (!!~reborns.indexOf(this.data.mid))) {

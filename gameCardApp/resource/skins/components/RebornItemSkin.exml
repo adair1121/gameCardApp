@@ -2,7 +2,7 @@
 <e:Skin class="RebornItemSkin" width="136" height="186" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
 	<e:Group x="0" y="0" touchChildren="false" touchEnabled="true" touchThrough="false">
 		<e:Image source="reborn_item_png" x="0" y="0"/>
-		<e:Image id="headIcon" x="42" y="28" source="reborn_1_png"/>
+		<e:Image id="headIcon" source="reborn_1_png" horizontalCenter="9" top="28"/>
 		<e:Image id="titleImg" source="reborn_title_1_png" horizontalCenter="0" bottom="158"/>
 		<e:Image source="main_gold_png" x="29" y="159.97" anchorOffsetX="0" width="23" anchorOffsetY="0" height="14.33"/>
 		<e:Label id="rebornCostLab" text="1111" x="52.5" y="157.97" size="14" anchorOffsetX="0" width="50" anchorOffsetY="0" height="19" verticalAlign="middle" textAlign="center"/>

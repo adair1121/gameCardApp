@@ -14,8 +14,8 @@ class ShopPopUp extends BaseEuiView{
 		super();
 	}
 	public open(...param):void{
-
-		 let precentw:number = StageUtils.inst().getWidth()/1334;
+		MessageManager.inst().dispatch("end");
+		let precentw:number = StageUtils.inst().getWidth()/1334;
 		this.content.scaleX = this.content.scaleY = precentw;
 		egret.Tween.get(this.content).to({verticalCenter:0},600,egret.Ease.circOut).call(()=>{
 			egret.Tween.removeTweens(this.content);
@@ -34,6 +34,7 @@ class ShopPopUp extends BaseEuiView{
 	}
 	private onReturn():void{
 		egret.Tween.get(this.content).to({verticalCenter:-600},600,egret.Ease.circOut).call(()=>{
+			MessageManager.inst().dispatch("start")
 			egret.Tween.removeTweens(this.content);
 			ViewManager.inst().close(ShopPopUp);
 		},this)

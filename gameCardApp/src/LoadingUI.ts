@@ -120,7 +120,7 @@ class LoadingUI extends eui.UILayer implements RES.PromiseTaskReporter {
         circle.playFile(`${EFFECT}circle`,-1);
         circle.x = StageUtils.inst().getWidth()>>1;
         circle.y = StageUtils.inst().getHeight()>>1;
-        circle.scaleX = circle.scaleY = 4;
+        circle.scaleX = circle.scaleY = 3;
     }
 
     public onProgress(current: number, total: number): void {

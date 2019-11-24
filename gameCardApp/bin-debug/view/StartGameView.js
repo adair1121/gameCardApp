@@ -128,6 +128,10 @@ var StartGameView = (function (_super) {
             ViewManager.inst().close(StartGameView);
         }, this);
         var view = ViewManager.inst().getView(GameMainView);
+        if (!view) {
+            ViewManager.inst().open(GameMainView);
+            view = ViewManager.inst().getView(GameMainView);
+        }
         view.initialize(true);
     };
     /**进入游戏 */

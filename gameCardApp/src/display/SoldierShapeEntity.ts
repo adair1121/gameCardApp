@@ -23,6 +23,11 @@ class SoldierShapeEntity extends BaseClass{
 	}
 	public initData(shape:number,res:string,id:number,parent:egret.DisplayObjectContainer,xy:XY,cb:Function,thisArg:any):void{
 		this._shapeType = shape;
+		if(shape == SoldierShapType.TYPE_CIRCLE){
+			xy.y += 80;
+		}else if(shape == SoldierShapType.TYPE_ARROW){
+			xy.y += 40;
+		}
 		this.w = this.h = 60;
 		this._res = res;
 		this._id = id;

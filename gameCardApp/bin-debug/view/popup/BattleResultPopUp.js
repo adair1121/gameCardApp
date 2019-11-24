@@ -30,7 +30,7 @@ var BattleResultPopUp = (function (_super) {
         this.resultImg.scaleX = this.resultImg.scaleY = 5;
         egret.Tween.get(this.winIcon).to({ alpha: 1, scaleX: 1, scaleY: 1 }, 300, egret.Ease.circIn).call(function () {
             egret.Tween.removeTweens(_this.winIcon);
-            egret.Tween.get(_this.resultImg).to({ alpha: 1, scaleX: 1, scaleY: 1 }, 300, egret.Ease.circIn).call(function () {
+            egret.Tween.get(_this.resultImg).to({ alpha: 0.8, scaleX: 0.8, scaleY: 1 }, 300, egret.Ease.circIn).call(function () {
                 egret.Tween.removeTweens(_this.resultImg);
                 egret.Tween.get(_this.rewardGroup).to({ alpha: 1 }, 300).call(function () {
                     egret.Tween.removeTweens(_this.rewardGroup);

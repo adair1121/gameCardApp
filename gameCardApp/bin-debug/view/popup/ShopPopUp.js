@@ -22,6 +22,7 @@ var ShopPopUp = (function (_super) {
         for (var _i = 0; _i < arguments.length; _i++) {
             param[_i] = arguments[_i];
         }
+        MessageManager.inst().dispatch("end");
         var precentw = StageUtils.inst().getWidth() / 1334;
         this.content.scaleX = this.content.scaleY = precentw;
         egret.Tween.get(this.content).to({ verticalCenter: 0 }, 600, egret.Ease.circOut).call(function () {
@@ -42,6 +43,7 @@ var ShopPopUp = (function (_super) {
     ShopPopUp.prototype.onReturn = function () {
         var _this = this;
         egret.Tween.get(this.content).to({ verticalCenter: -600 }, 600, egret.Ease.circOut).call(function () {
+            MessageManager.inst().dispatch("start");
             egret.Tween.removeTweens(_this.content);
             ViewManager.inst().close(ShopPopUp);
         }, this);

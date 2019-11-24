@@ -6,7 +6,7 @@
 		<e:Scroller id="scroller" width="1094.7" height="327.88" x="85.33" y="268.33" anchorOffsetY="0" anchorOffsetX="0" scrollPolicyV="off">
 			<e:List id="list" anchorOffsetY="0" height="327.88">
 			<e:layout>
-				<e:HorizontalLayout horizontalAlign="left" verticalAlign="middle" gap="25" paddingLeft="10" paddingRight="10"/>
+				<e:HorizontalLayout horizontalAlign="left" verticalAlign="middle" gap="40" paddingRight="10" paddingLeft="30"/>
 			</e:layout>
 			</e:List>
 		</e:Scroller>

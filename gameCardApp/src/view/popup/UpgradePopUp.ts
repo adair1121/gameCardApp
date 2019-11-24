@@ -10,6 +10,7 @@ class UpgradePopUp extends BaseEuiView{
 		super();
 	}
 	public open(...param):void{
+		MessageManager.inst().dispatch("end");
 		egret.Tween.get(this.upgradeGroup).to({right:10},600,egret.Ease.circOut).call(()=>{
 			egret.Tween.removeTweens(this.upgradeGroup);
 		},this)
@@ -71,6 +72,7 @@ class UpgradePopUp extends BaseEuiView{
 		egret.Tween.get(this.upgradeGroup).to({right:-700},600,egret.Ease.circOut).call(()=>{
 			egret.Tween.removeTweens(this.upgradeGroup);
 			ViewManager.inst().close(UpgradePopUp);
+			MessageManager.inst().dispatch("start");
 		},this)
 	}
 	public close():void{

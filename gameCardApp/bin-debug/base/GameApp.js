@@ -61,6 +61,7 @@ var GameApp = (function (_super) {
             GameApp.level = parseInt(levelstr);
         }
         eui.Binding.bindHandler(GameApp, ["level"], this.levelChange, this);
+        recharge.sendToNativeLoadEnd();
     };
     GameApp.prototype.levelChange = function () {
         egret.localStorage.setItem(LocalStorageEnum.LEVEL, GameApp.level.toString());
@@ -122,6 +123,7 @@ var GameApp = (function (_super) {
     GameApp.bgMusic = 0.5;
     /**特效音乐 */
     GameApp.effectMusic = 0.5;
+    GameApp.gameaEnd = true;
     return GameApp;
 }(BaseClass));
 __reflect(GameApp.prototype, "GameApp");

@@ -15,7 +15,9 @@ class ShopItem extends eui.ItemRenderer{
 		this.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onBuy,this);
 	}
 	private onBuy():void{
-		console.log(this.shopId);
+		recharge.sendToNativePhurse({Key1:this.data.costNum.toString()},(num)=>{
+			GameApp.roleGold += parseInt(num)
+		},this)
 	}
 	protected dataChanged():void{
 		if(this.data.cost){

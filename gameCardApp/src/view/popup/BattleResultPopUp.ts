@@ -32,7 +32,7 @@ class BattleResultPopUp extends BaseEuiView{
 		this.resultImg.scaleX = this.resultImg.scaleY = 5;
 		egret.Tween.get(this.winIcon).to({alpha:1,scaleX:1,scaleY:1},300,egret.Ease.circIn).call(()=>{
 			egret.Tween.removeTweens(this.winIcon);
-			egret.Tween.get(this.resultImg).to({alpha:1,scaleX:1,scaleY:1},300,egret.Ease.circIn).call(()=>{
+			egret.Tween.get(this.resultImg).to({alpha:0.8,scaleX:0.8,scaleY:1},300,egret.Ease.circIn).call(()=>{
 				egret.Tween.removeTweens(this.resultImg);
 				egret.Tween.get(this.rewardGroup).to({alpha:1},300).call(()=>{
 					egret.Tween.removeTweens(this.rewardGroup);

@@ -29,6 +29,7 @@ var GameMainView = (function (_super) {
         _this.actionExecStandTime = 1000;
         _this.showBlood = false;
         _this.rebornids = ["1000", "1001", "1002", "1003", "1004", "1005", "1006", "1007", "1008", "1009"];
+        _this.extraBattle = false;
         _this.releaseSkill101 = false;
         _this.releaseSkill102 = false;
         _this.releaseSkill103 = false;
@@ -46,6 +47,7 @@ var GameMainView = (function (_super) {
         this._levelEntitys = [];
         this.pos1["autoSize"]();
         this.pos2["autoSize"]();
+        this.monGroup["autoSize"]();
         for (var i = 1; i <= 5; i++) {
             var skill1Level = egret.localStorage.getItem(LocalStorageEnum.SKILL_LEVEL + (100 + i));
             if (!skill1Level) {
@@ -89,6 +91,8 @@ var GameMainView = (function (_super) {
         this.awardBox.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onRewardGet, this);
         this.timer = new egret.Timer(1000);
         this.timer.addEventListener(egret.TimerEvent.TIMER, this.onTimer, this);
+        MessageManager.inst().addListener("start", this.onStart, this);
+        MessageManager.inst().addListener("end", this.onStop, this);
         this.refreshRewardBoxState();
         var boo = this.changeTime();
         if (boo) {
@@ -96,7 +100,7 @@ var GameMainView = (function (_super) {
         }
         this.goldWatcher = eui.Binding.bindHandler(GameApp, ["roleGold"], this.roleGoldChange, this);
         this.gemWatcher = eui.Binding.bindHandler(GameApp, ["roleGem"], this.roleGemChange, this);
-        this.addTouchEvent(this.addGemBtn, this.onaddGem, true);
+        // this.addTouchEvent(this.addGemBtn,this.onaddGem,true);
         this.addTouchEvent(this.addGoldBtn, this.onaddGold, true);
         this.addTouchEvent(this.upgradeBtn, this.onUpgrade, true);
         this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTouchTap, this);
@@ -114,9 +118,27 @@ var GameMainView = (function (_super) {
         this.createLevelMonster();
         // 
     };
+    GameMainView.prototype.onStart = function () {
+        if (!GameApp.gameaEnd) {
+            egret.startTick(this.execAction, this);
+        }
+    };
+    GameMainView.prototype.onStop = function () {
+        egret.stopTick(this.execAction, this);
+        egret.Tween.removeAllTweens();
+    };
     GameMainView.prototype.onBegin = function (evt) {
         var _this = this;
         if (this.releaseSkill102 && evt.target == this.clickRect) {
+            if (!this.skillrelease || (this.skillrelease && this.skillrelease != 102)) {
+                this.skillrelease = 102;
+                this.curItem.setCd();
+                var skillCfg = GameApp.skillCfg[102];
+                this.hideSkillUse();
+                if (skillCfg.buffTime) {
+                    this.showSkillUseTime(skillCfg.buffTime);
+                }
+            }
             var self_1 = this;
             this.beginPoint = new egret.Point(evt.stageX, evt.stageY);
             this.skill102 = new eui.Image("skill_102_pic_png");
@@ -137,6 +159,41 @@ var GameMainView = (function (_super) {
             }, 150);
         }
     };
+    GameMainView.prototype.showSkillUseTime = function (time) {
+        var _this = this;
+        if (this.skillInterval) {
+            return;
+        }
+        this.skillUseGroup.visible = true;
+        var self = this;
+        this.bar.mask = this.barMask;
+        var count = 0;
+        this.proTxt.text = "施法时间:" + time;
+        this.skillInterval = setInterval(function () {
+            count += 1;
+            var precentw = 300 - count / time * 300;
+            _this.proTxt.text = "施法时间:" + (time - count);
+            self.barMask.width = precentw;
+            if (count >= time) {
+                clearInterval(self.skillInterval);
+                if (self.curItem) {
+                    self.curItem.focus = false;
+                    self.curItem = null;
+                    self.skillrelease = null;
+                    self.releaseSkill101 = self.releaseSkill102 = false;
+                    self.hideSkillUse();
+                }
+            }
+        }, 1000);
+    };
+    GameMainView.prototype.hideSkillUse = function () {
+        this.skillUseGroup.visible = false;
+        this.barMask.width = 300;
+        if (this.skillInterval) {
+            clearInterval(this.skillInterval);
+            this.skillInterval = null;
+        }
+    };
     GameMainView.prototype.onEnd = function (evt) {
         if (this.skill102) {
             if (this.interval) {
@@ -147,7 +204,7 @@ var GameMainView = (function (_super) {
         }
     };
     GameMainView.prototype.onMove = function (evt) {
-        if (this.skill102) {
+        if (this.skill102 && this.releaseSkill102) {
             this.skill102.x = evt.stageX;
             this.skill102.y = evt.stageY;
             var angle = Math.atan2(evt.stageY - this.beginPoint.y, evt.stageX - this.beginPoint.x) * 180 / Math.PI;
@@ -180,11 +237,14 @@ var GameMainView = (function (_super) {
             this.beginPoint.x = evt.stageX;
             this.beginPoint.y = evt.stageY;
         }
+        else {
+            this.onEnd(null);
+        }
     };
-    GameMainView.prototype.onBossReleaseSkill = function () {
+    GameMainView.prototype.onBossReleaseSkill = function (evt) {
         var index = ((Math.random() * 9 + 1) >> 0);
-        var xy = { x: this._levelEntitys[0].x, y: this._levelEntitys[0].y };
-        GlobalFun.createSkillEff(-1, index, this, 2, xy);
+        // let xy:XY = {x:this._levelEntitys[0].x,y:this._levelEntitys[0].y};
+        GlobalFun.createSkillEff(-1, index, this, 2, evt.data.xy);
         for (var i = 0; i < this._ownEntitys.length; i++) {
             var dmg_1 = (GameApp.level) * ((Math.random() * 50) >> 0);
             this._ownEntitys[i].reduceHp(dmg_1);
@@ -232,7 +292,12 @@ var GameMainView = (function (_super) {
         egret.stopTick(this.execAction, this);
         this.timer.stop();
         this.curReborns = null;
-        ViewManager.inst().open(BattleResultPopUp, [{ state: 0, cb: this.gameEnd, arg: this }]);
+        GameApp.gameaEnd = true;
+        var self = this;
+        var timeout = setTimeout(function () {
+            clearTimeout(timeout);
+            ViewManager.inst().open(BattleResultPopUp, [{ state: 0, cb: self.gameEnd, arg: self }]);
+        }, 2000);
         console.log("游戏结束");
     };
     GameMainView.prototype.gameWin = function () {
@@ -283,6 +348,7 @@ var GameMainView = (function (_super) {
         this._ownEntitys = [];
         this._levelEntitys = [];
         this.totalHp = this.curHp = 50 * GameApp.level + 500;
+        this.list.$children[2].num = 10;
         this.touchEnabled = false;
         this.touchChildren = false;
         this.refreshRewardBoxState();
@@ -301,7 +367,7 @@ var GameMainView = (function (_super) {
         var _this = this;
         var count = ((GameApp.level / 5) >> 0) + 1;
         var centery = this.clickRect.y + 150;
-        var centerx = -300;
+        var centerx = -320;
         for (var i = 0; i < count; i++) {
             var shapIndex = (Math.random() * 7) >> 0;
             var monsterCfg = GlobalFun.getMonsterCfg();
@@ -327,7 +393,7 @@ var GameMainView = (function (_super) {
             centerx -= 230;
             var bossVo = bossCfgs[bossIndex];
             bossVo.atk = 5 * GameApp.level + 45 + (5 * GameApp.level + 45) * 0.2 * this.direct();
-            bossVo.hp = 30 * GameApp.level + 270 + this.direct() * (30 * GameApp.level + 270) * 0.2;
+            bossVo.hp = 30 * GameApp.level + 470 + this.direct() * (30 * GameApp.level + 270) * 0.2;
             boss.setSoldierData(-1, bossVo.model, bossVo);
             this._levelEntitys.push(boss);
             this._entitys.push(boss);
@@ -421,14 +487,37 @@ var GameMainView = (function (_super) {
                 return out_i_1 = i, "continue";
             }
             else {
+                if (camp == -1) {
+                    var guidepassStr = egret.localStorage.getItem(LocalStorageEnum.IS_PASS_GUIDE);
+                    if (!guidepassStr) {
+                        if (item.x >= 100) {
+                            this_1.onStop();
+                            this_1.touchEnabled = true;
+                            this_1.touchChildren = true;
+                            egret.localStorage.setItem(LocalStorageEnum.IS_PASS_GUIDE, "1");
+                            ViewManager.inst().open(GuideView);
+                            var item_1 = this_1.list.getChildAt(2);
+                            this_1.guideView = ViewManager.inst().getView(GuideView);
+                            this_1.guideView.nextStep({ id: "1_1", comObj: item_1, width: 75, height: 75 });
+                            return { value: void 0 };
+                        }
+                    }
+                }
                 var atkItem = void 0;
                 atkItem = this_1.getNearByEntity(item, levelEntitys);
-                if (atkItem && atkItem.x >= this_1.clickRect.x) {
-                    item.lookAt(atkItem);
+                if (camp == 1) {
+                    if (atkItem && atkItem.x >= this_1.clickRect.x + 50) {
+                        item.lookAt(atkItem);
+                    }
+                }
+                else {
+                    if (!item.isInAtk) {
+                        item.lookAt(atkItem);
+                    }
                 }
                 if (item.isInAtkDis()) {
                     //在攻击距离
-                    console.log("进入攻击距离");
+                    // console.log("进入攻击距离");
                     item.execAtkAction();
                 }
                 else {
@@ -441,6 +530,7 @@ var GameMainView = (function (_super) {
                                 var xy = { x: StageUtils.inst().getWidth() - 200, y: item.y };
                                 item.execMoveAction({ x: xy.x, y: xy.y }, function () {
                                     //当前移动到了塔的附近 到达了攻击距离 //执行攻击
+                                    item.unlookAt();
                                     item.isInAtk = true;
                                 }, this_1);
                             }
@@ -458,8 +548,10 @@ var GameMainView = (function (_super) {
         };
         var this_1 = this, out_i_1;
         for (var i = 0; i < ownEntitys.length; i++) {
-            _loop_1(i);
+            var state_1 = _loop_1(i);
             i = out_i_1;
+            if (typeof state_1 === "object")
+                return state_1.value;
         }
         if (this._levelEntitys.length <= 0) {
             //当前波数战斗完毕 。进行下一波
@@ -472,18 +564,77 @@ var GameMainView = (function (_super) {
         var _this = this;
         if (this.curCount >= this.totalCount) {
             //当前波数也已经打完 进行下一关;
-            egret.stopTick(this.execAction, this);
-            this.curReborns = null;
-            ViewManager.inst().open(BattleResultPopUp, [{ state: 1, cb: this.gameEnd, arg: this }]);
+            if (!this.extraBattle) {
+                var index = (Math.random() * 100) >> 0;
+                if (index >= 80) {
+                    //触发隐藏关卡；
+                    this.extraBattle = true;
+                    var count = (Math.random() * 3 + 2) >> 0;
+                    var num_1 = count * 10;
+                    var _loop_2 = function (i) {
+                        var transres = ((Math.random() * 100) >> 0) > 50 ? EFFECT + "trans" : EFFECT + "trans2";
+                        var mc = new MovieClip();
+                        mc.scaleX = mc.scaleY = 0.6;
+                        mc.playFile(transres, 3, null, true);
+                        this_2.addChild(mc);
+                        mc.x = (Math.random() * (this_2.clickRect.width - 350) + this_2.clickRect.x + 80) >> 0;
+                        mc.y = (Math.random() * (this_2.clickRect.height - 30) + this_2.clickRect.y + 50) >> 0;
+                        var monsterCfg = GlobalFun.getMonsterCfg();
+                        var index_1 = (Math.random() * monsterCfg.length) >> 0;
+                        var monsterVo = monsterCfg[index_1];
+                        monsterVo.atk = 2 * GameApp.level + 18 + (2 * GameApp.level + 18) * 0.2 * this_2.direct();
+                        monsterVo.hp = 10 * GameApp.level + 90 + (10 * GameApp.level + 90) * 0.2 * this_2.direct();
+                        var monsterEntity = new SoldierEntity();
+                        monsterEntity.setSoldierData(-1, monsterVo.model, monsterVo);
+                        this_2.addChild(monsterEntity);
+                        monsterEntity.x = mc.x;
+                        monsterEntity.y = mc.y;
+                        monsterEntity.alpha = 0;
+                        egret.Tween.get(monsterEntity).to({ alpha: 1 }, 1000).call(function () {
+                            _this._levelEntitys.push(monsterEntity);
+                            _this._entitys.push(monsterEntity);
+                            if (i >= num_1 - 1) {
+                                egret.startTick(_this.execAction, _this);
+                            }
+                        }, this_2);
+                    };
+                    var this_2 = this;
+                    for (var i = 0; i < num_1; i++) {
+                        _loop_2(i);
+                    }
+                }
+                else {
+                    this.extraBattle = false;
+                    egret.stopTick(this.execAction, this);
+                    this.curReborns = null;
+                    GameApp.gameaEnd = true;
+                    var self_3 = this;
+                    var timeout_2 = setTimeout(function () {
+                        clearTimeout(timeout_2);
+                        ViewManager.inst().open(BattleResultPopUp, [{ state: 1, cb: self_3.gameEnd, arg: self_3 }]);
+                    }, 2000);
+                }
+            }
+            else {
+                this.extraBattle = false;
+                egret.stopTick(this.execAction, this);
+                this.curReborns = null;
+                GameApp.gameaEnd = true;
+                var self_4 = this;
+                var timeout_3 = setTimeout(function () {
+                    clearTimeout(timeout_3);
+                    ViewManager.inst().open(BattleResultPopUp, [{ state: 1, cb: self_4.gameEnd, arg: self_4 }]);
+                }, 2000);
+            }
         }
         else {
             //打下一波；
             this.curCount += 1;
-            var self_3 = this;
+            var self_5 = this;
             this.curReborns = null;
             this.rebornids = ["1000", "1001", "1002", "1003", "1004", "1005", "1006", "1007", "1008", "1009"];
             this.showLevelTxt(function () {
-                self_3.createLevelMonster();
+                self_5.createLevelMonster();
                 egret.startTick(_this.execAction, _this);
             }, this.curCount);
         }
@@ -567,6 +718,14 @@ var GameMainView = (function (_super) {
         }
         else if (this.releaseSkill101 && evt.target == this.clickRect) {
             var skillCfg = GameApp.skillCfg[101];
+            if (!this.skillrelease || (this.skillrelease && this.skillrelease != 101)) {
+                this.skillrelease = 101;
+                this.curItem.setCd();
+                this.hideSkillUse();
+                if (skillCfg.buffTime) {
+                    this.showSkillUseTime(skillCfg.buffTime);
+                }
+            }
             var skillMc = new MovieClip();
             this.addChild(skillMc);
             skillMc.playFile(SKILL_EFF + "skill_101", 1, null, true);
@@ -594,10 +753,10 @@ var GameMainView = (function (_super) {
             mc2.y = this.pos2.y;
             mc.playFile(SKILL_EFF + "skill_104_c", 1, null, true);
             mc2.playFile(SKILL_EFF + "skill_104_c", 1, null, true);
-            var self_4 = this;
-            var timeout_2 = setTimeout(function () {
-                clearTimeout(timeout_2);
-                GlobalFun.createSkillEff(1, 104, self_4, 2, { x: StageUtils.inst().getWidth() - 200, y: 200 }, self_4._levelEntitys, skillCfg_1.atk);
+            var self_6 = this;
+            var timeout_4 = setTimeout(function () {
+                clearTimeout(timeout_4);
+                GlobalFun.createSkillEff(1, 104, self_6, 2, { x: StageUtils.inst().getWidth() - 200, y: 200 }, self_6._levelEntitys, skillCfg_1.atk);
             }, 800);
         }
     };
@@ -624,15 +783,136 @@ var GameMainView = (function (_super) {
     };
     GameMainView.prototype.initialize = function (boo) {
         var _this = this;
-        //初始化
-        console.log("game---initialize");
-        if (boo) {
-            egret.Tween.get(this).to({ alpha: 1 }, 1000).call(function () {
-                egret.Tween.removeTweens(_this);
-                _this.showText();
+        this.upred.visible = false;
+        var timeout = egret.setTimeout(function () {
+            var _this = this;
+            clearTimeout(timeout);
+            egret.Tween.get(this.itemGroup).to({ top: 4 }, 300, egret.Ease.backOut).call(function () {
+                egret.Tween.removeTweens(_this.itemGroup);
             }, this);
+            egret.Tween.get(this.awardBox).to({ left: 17 }, 400, egret.Ease.backOut).call(function () {
+                egret.Tween.removeTweens(_this.awardBox);
+            }, this);
+            egret.Tween.get(this.levelGroup).to({ top: 14 }, 500, egret.Ease.backOut).call(function () {
+                egret.Tween.removeTweens(_this.levelGroup);
+            }, this);
+            egret.Tween.get(this.settingBtn).to({ right: 21 }, 600, egret.Ease.backOut).call(function () {
+                egret.Tween.removeTweens(_this.settingBtn);
+            }, this);
+            egret.Tween.get(this.upgradeBtn).to({ right: 17 }, 700, egret.Ease.backOut).call(function () {
+                egret.Tween.removeTweens(_this.upgradeBtn);
+                _this.upred.visible = true;
+            });
+            egret.Tween.get(this.skillGroup).to({ right: -13 }, 800, egret.Ease.backOut).call(function () {
+                egret.Tween.removeTweens(_this.skillGroup);
+            }, this);
+            egret.Tween.get(this.hpGroup).to({ bottom: 0 }, 900, egret.Ease.backOut).call(function () {
+                egret.Tween.removeTweens(_this.hpGroup);
+            }, this);
+        }, this, 1000);
+        //初始化
+        var guidepassStr = egret.localStorage.getItem(LocalStorageEnum.IS_PASS_GUIDE);
+        GameApp.gameaEnd = false;
+        var bossnum = 0;
+        if (boo) {
+            if (!guidepassStr) {
+                this.monImg.visible = true;
+                this.monGroup.visible = true;
+                egret.Tween.get(this).to({ alpha: 1 }, 1000).call(function () {
+                    egret.Tween.removeTweens(_this);
+                    var centerx = _this.monGroup.width - 200;
+                    var txts = ["小的们,随本王出征", '列队！准备攻城!!!'];
+                    for (var i = 0; i < 2; i++) {
+                        var shapIndex = (Math.random() * 7) >> 0;
+                        var monsterCfg = GlobalFun.getMonsterCfg();
+                        var index = (Math.random() * monsterCfg.length) >> 0;
+                        var monsterVo = monsterCfg[index];
+                        SoldierShapeEntity.inst().initData(shapIndex, monsterVo.model, monsterVo.id, _this.monGroup, { x: centerx - i * 450, y: 100 }, function (arr) {
+                            var _loop_3 = function (i_1) {
+                                arr[i_1].alpha = 0;
+                                var y = arr[i_1].y;
+                                arr[i_1].y -= 200;
+                                egret.Tween.get(arr[i_1]).wait(150 * i_1).to({ alpha: 1, y: arr[i_1].y + 200 }, 150, egret.Ease.backOut).call(function () {
+                                    egret.Tween.removeTweens(arr[i_1]);
+                                    if (i_1 >= arr.length - 1) {
+                                        for (var j = 0; j < arr.length; j++) {
+                                            arr[j].execOneTimeAtk(function (index) {
+                                                if (index >= arr.length - 1) {
+                                                    var txt_1 = new eui.Label();
+                                                    _this.monGroup.addChild(txt_1);
+                                                    txt_1.text = txts.shift();
+                                                    txt_1.alpha = 0.3;
+                                                    txt_1.scaleX = txt_1.scaleY = 5;
+                                                    txt_1.anchorOffsetX = txt_1.width >> 1;
+                                                    txt_1.anchorOffsetY = txt_1.height >> 1;
+                                                    txt_1.y = 0;
+                                                    txt_1.x = centerx;
+                                                    egret.Tween.get(txt_1).to({ alpha: 1, scaleX: 1, scaleY: 1 }, 600, egret.Ease.circOut).wait(300).call(function () {
+                                                        egret.Tween.removeTweens(txt_1);
+                                                    }, _this);
+                                                    var boss_1 = new SoldierEntity();
+                                                    boss_1.alpha = 0;
+                                                    _this.monGroup.addChild(boss_1);
+                                                    boss_1.general = true;
+                                                    var bossCfgs = GlobalFun.getBossCfg();
+                                                    var bossIndex = (Math.random() * bossCfgs.length) >> 0;
+                                                    egret.Tween.get(boss_1).to({ alpha: 1 }, 600).call(function () {
+                                                        egret.Tween.removeTweens(boss_1);
+                                                    }, _this);
+                                                    centerx -= 140;
+                                                    var bossVo = bossCfgs[bossIndex];
+                                                    boss_1.setSoldierData(-1, bossVo.model, bossVo);
+                                                    boss_1.execOneTimeAtk(function (finalIndex) {
+                                                        bossnum += 1;
+                                                        if (bossnum >= 2) {
+                                                            var rect_1 = new eui.Rect(StageUtils.inst().getWidth(), StageUtils.inst().getHeight(), 0x000000);
+                                                            _this.addChild(rect_1);
+                                                            rect_1.alpha = 0;
+                                                            egret.Tween.get(rect_1).wait(1000).to({ alpha: 0.9 }, 1000).wait(300).call(function () {
+                                                                if (_this.monGroup) {
+                                                                    _this.monGroup.visible = false;
+                                                                }
+                                                                ;
+                                                                if (_this.monImg) {
+                                                                    _this.monImg.visible = false;
+                                                                }
+                                                                // this.monGroup.parent.removeChild(this.monGroup);
+                                                                // this.monImg.parent.removeChild(this.monImg);
+                                                            }, _this).to({ alpha: 0 }, 1000).call(function () {
+                                                                rect_1.parent.removeChild(rect_1);
+                                                                egret.Tween.removeTweens(rect_1);
+                                                                _this.showText();
+                                                            }, _this);
+                                                        }
+                                                    }, _this, i_1);
+                                                    boss_1.y = 200;
+                                                    boss_1.x = centerx;
+                                                    centerx -= 350;
+                                                }
+                                            }, _this, j);
+                                        }
+                                    }
+                                }, _this);
+                            };
+                            for (var i_1 = 0; i_1 < arr.length; i_1++) {
+                                _loop_3(i_1);
+                            }
+                        }, _this);
+                    }
+                    // 
+                }, this);
+            }
+            else {
+                this.monImg.visible = this.monGroup.visible = false;
+                egret.Tween.get(this).to({ alpha: 1 }, 1000).call(function () {
+                    egret.Tween.removeTweens(_this);
+                    _this.showText();
+                }, this);
+            }
         }
         else {
+            this.monImg.visible = false;
+            this.monGroup.visible = false;
             this.showText();
         }
     };
@@ -642,19 +922,15 @@ var GameMainView = (function (_super) {
         this.touchChildren = false;
         this.showLevelTxt(function () {
             var guidepassStr = egret.localStorage.getItem(LocalStorageEnum.IS_PASS_GUIDE);
-            _this.touchEnabled = true;
-            _this.touchChildren = true;
+            egret.startTick(_this.execAction, _this);
             if (guidepassStr) {
                 //执行正常出怪的逻辑
-                egret.startTick(_this.execAction, _this);
+                _this.touchEnabled = true;
+                _this.touchChildren = true;
             }
             else {
-                //需要过一下新手 指引操作
-                egret.localStorage.setItem(LocalStorageEnum.IS_PASS_GUIDE, "1");
-                ViewManager.inst().open(GuideView);
-                var item = _this.list.getChildAt(2);
-                _this.guideView = ViewManager.inst().getView(GuideView);
-                _this.guideView.nextStep({ id: "1_1", comObj: item, width: 75, height: 75 });
+                _this.touchEnabled = false;
+                _this.touchChildren = false;
             }
         });
     };
@@ -677,6 +953,9 @@ var GameMainView = (function (_super) {
         if (this.guideView) {
             var xx = (StageUtils.inst().getWidth() >> 1) + 100;
             var yy = StageUtils.inst().getHeight() >> 1;
+            this.curItem = this.list.$children[2];
+            this.curItem.focus = true;
+            this.releaseSkill103 = true;
             this.guideView.nextStep({ id: evt.data.id, comObj: { x: xx, y: yy }, width: 75, height: 75 });
         }
     };
@@ -764,9 +1043,30 @@ var GameMainView = (function (_super) {
         ViewManager.inst().open(SettingPopUp);
     };
     GameMainView.prototype.onItemTap = function (evt) {
+        var _this = this;
+        var curItem = this.list.getChildAt(evt.itemIndex);
+        if (curItem.isCd) {
+            UserTips.inst().showTips("技能冷却中");
+            return;
+        }
         var skillId = evt.item.skillId;
         var skillCfg = GlobalFun.getSkillCfg(skillId);
         if (skillCfg) {
+            if (skillCfg.skillId == 105) {
+                egret.Tween.removeAllTweens();
+                egret.stopTick(this.execAction, this);
+                ViewManager.inst().open(CommonPtompt, [{ cb: function (oper) {
+                            if (oper == 1) {
+                                //需要刷新全部技能;
+                                for (var i = 0; i < _this.list.numChildren; i++) {
+                                    var item = _this.list.$children[i];
+                                    item.removeCd();
+                                }
+                            }
+                            egret.startTick(_this.execAction, _this);
+                        }, arg: this }]);
+                return;
+            }
             this.descLab.visible = true;
             this.descLab.alpha = 0;
             this.descLab.text = skillCfg.desc;
@@ -775,16 +1075,15 @@ var GameMainView = (function (_super) {
                 clearTimeout(this.timeout);
             }
             egret.Tween.get(this.descLab, { loop: true }).to({ alpha: 1 }, 500).to({ alpha: 0 }, 500);
-            var self_5 = this;
+            var self_7 = this;
             this.timeout = setTimeout(function () {
-                clearTimeout(self_5.timeout);
-                egret.Tween.removeTweens(self_5.descLab);
+                clearTimeout(self_7.timeout);
+                egret.Tween.removeTweens(self_7.descLab);
             }, 2000);
             for (var i = 0; i < this.list.numChildren; i++) {
                 var item = this.list.$children[i];
                 item.focus = false;
             }
-            var curItem = this.list.getChildAt(evt.itemIndex);
             curItem.focus = true;
             curItem.dongyixia();
             this.curItem = curItem;
@@ -812,16 +1111,17 @@ var GameMainView = (function (_super) {
     GameMainView.prototype.showLevelTxt = function (cb, txtstr) {
         var txt = new eui.Label();
         this.addChild(txt);
-        txt.size = 25;
         txt.fontFamily = "yt";
+        txt.size = 30;
         var levelstr = egret.localStorage.getItem(LocalStorageEnum.LEVEL);
         var level = levelstr ? parseInt(levelstr) : 1;
-        txt.textFlow = new egret.HtmlTextParser().parse("\u7B2C<font color=0x00ff00>" + (txtstr ? txtstr : level) + "</font>" + (txtstr ? "波" : "关"));
+        // txt.text = `d${txtstr?txtstr:level}${txtstr?"b":"g"}`;
+        txt.textFlow = new egret.HtmlTextParser().parse("\u7B2C<font color=0xffff00>" + (txtstr ? txtstr : level) + "</font>" + (txtstr ? "波" : "关"));
         txt.x = (StageUtils.inst().getWidth() >> 1) - (txt.width >> 1) - 200;
         txt.y = (StageUtils.inst().getHeight() >> 1);
         txt.alpha = 0;
         txt.scaleX = txt.scaleY = 0;
-        egret.Tween.get(txt).to({ alpha: 1, scaleX: 1, scaleY: 1, x: txt.x + 200 }, 1000, egret.Ease.circOut).wait(500).to({ alpha: 0, scaleX: 0, scaleY: 0, x: txt.x + 400 }, 1000, egret.Ease.circOut).call(function () {
+        egret.Tween.get(txt).to({ alpha: 1, scaleX: 2, scaleY: 2, x: txt.x + 200 }, 1000, egret.Ease.circOut).wait(500).to({ alpha: 0, scaleX: 0, scaleY: 0, x: txt.x + 600 }, 1000, egret.Ease.circOut).call(function () {
             egret.Tween.removeTweens(txt);
             txt.parent.removeChild(txt);
             cb();
@@ -830,6 +1130,8 @@ var GameMainView = (function (_super) {
     GameMainView.prototype.close = function () {
         this.removeTouchEvent(this.settingBtn, this.onSetHandler);
         this.removeTouchEvent(this.upgradeBtn, this.onUpgrade);
+        MessageManager.inst().removeListener("start", this.onStart, this);
+        MessageManager.inst().removeListener("end", this.onStop, this);
         this.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onBegin, this);
         this.removeEventListener(egret.TouchEvent.TOUCH_END, this.onEnd, this);
         this.removeEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onEnd, this);

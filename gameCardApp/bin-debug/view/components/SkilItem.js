@@ -12,6 +12,7 @@ var SkilItem = (function (_super) {
     __extends(SkilItem, _super);
     function SkilItem() {
         var _this = _super.call(this) || this;
+        _this._isCd = false;
         _this.skinName = "SkillItemSkin";
         return _this;
     }
@@ -27,6 +28,41 @@ var SkilItem = (function (_super) {
         if (this.data.skillId) {
             this._skillId = this.data.skillId;
         }
+        this.cdGroup.visible = false;
+    };
+    SkilItem.prototype.setCd = function () {
+        if (this.data.cd == 0) {
+            return;
+        }
+        this.touchEnabled = false;
+        this.touchChildren = false;
+        var cdTime = this.data.cd;
+        this.cdGroup.visible = true;
+        this.cdTime.text = cdTime.toString();
+        var count = 0;
+        var self = this;
+        this._isCd = true;
+        this.cdInterval = setInterval(function () {
+            count += 1;
+            self.cdTime.text = (cdTime - count).toString();
+            if (count >= cdTime) {
+                clearInterval(self.cdInterval);
+                self._isCd = false;
+                self.touchEnabled = true;
+                self.touchChildren = true;
+                self.cdGroup.visible = false;
+            }
+        }, 1000);
+    };
+    SkilItem.prototype.removeCd = function () {
+        if (this.cdInterval) {
+            clearInterval(this.cdInterval);
+        }
+        this.cdGroup.visible = false;
+        this.touchEnabled = true;
+        this.touchChildren = true;
+        this._isCd = false;
+        this.cdTime.text = "0";
     };
     SkilItem.prototype.dongyixia = function () {
         var _this = this;
@@ -42,6 +78,13 @@ var SkilItem = (function (_super) {
         set: function (value) {
             this.numLab.visible = true;
             this.numLab.text = value.toString();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(SkilItem.prototype, "isCd", {
+        get: function () {
+            return this._isCd;
         },
         enumerable: true,
         configurable: true

@@ -7,7 +7,7 @@ class RebornItem extends eui.ItemRenderer{
 	private _rebornBoo:boolean;
 	private _id:number;
 	private descLab:eui.Label;
-	private descs:string[] = ["攻速暴增200%","全属性增加1倍","攻击力增幅4倍"];
+	private descs:string[] = ["攻速暴增200%","攻击力增幅4倍","全属性增加1倍"];
 	public constructor() {
 		super();
 		this.skinName = "RebornItemSkin"
@@ -18,8 +18,11 @@ class RebornItem extends eui.ItemRenderer{
 		if(index >= 5){
 			index = 4;
 		}
-		this.headIcon.source = `reborn_${index}_png`;
-		this.titleImg.source = `reborn_title_${index}_png`;
+		this.headIcon.source = `reborn_${this.data.rmodel}_png`;
+		// if(this.itemIndex == 2){
+		// 	this.headIcon.x
+		// }
+		this.titleImg.source = `reborn_title_${this.data.rmodel}_png`;
 		this.rebornCostLab.text = this.data.cost;
 		let reborns:number[] = GameApp.reborns[this.data.skillId];
 		if(reborns && (!!~reborns.indexOf(this.data.mid))){

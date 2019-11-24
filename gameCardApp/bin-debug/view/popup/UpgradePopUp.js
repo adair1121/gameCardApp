@@ -19,6 +19,7 @@ var UpgradePopUp = (function (_super) {
         for (var _i = 0; _i < arguments.length; _i++) {
             param[_i] = arguments[_i];
         }
+        MessageManager.inst().dispatch("end");
         egret.Tween.get(this.upgradeGroup).to({ right: 10 }, 600, egret.Ease.circOut).call(function () {
             egret.Tween.removeTweens(_this.upgradeGroup);
         }, this);
@@ -83,6 +84,7 @@ var UpgradePopUp = (function (_super) {
         egret.Tween.get(this.upgradeGroup).to({ right: -700 }, 600, egret.Ease.circOut).call(function () {
             egret.Tween.removeTweens(_this.upgradeGroup);
             ViewManager.inst().close(UpgradePopUp);
+            MessageManager.inst().dispatch("start");
         }, this);
     };
     UpgradePopUp.prototype.close = function () {

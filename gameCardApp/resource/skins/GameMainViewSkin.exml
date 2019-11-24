@@ -6,7 +6,7 @@
 	<e:Rect id="pos2" width="20" height="20" x="995.66" y="575" anchorOffsetX="10" anchorOffsetY="11" alpha="0"/>
 	<e:Image source="main_area_line_png" right="32" verticalCenter="17.5"/>
 	<e:Image id="blood" source="blood_png" rotation="0.07" top="51" bottom="20" right="73" touchEnabled="false" anchorOffsetX="0" width="143.01" anchorOffsetY="0"/>
-	<e:Group id="itemGroup" x="8" y="4" touchChildren="true" touchEnabled="false" touchThrough="true">
+	<e:Group id="itemGroup" touchChildren="true" touchEnabled="false" touchThrough="true" left="8" top="-50">
 		<e:Image source="main_font_bg_png" x="0" y="0"/>
 		<e:Image source="main_font_bg_png" x="245" y="0" visible="false"/>
 		<e:Image source="main_gold_png" x="9.12" y="12.08"/>
@@ -16,32 +16,43 @@
 		<e:Label id="goldLab" text="11111" x="48.55" y="4" anchorOffsetY="0" height="36.06" anchorOffsetX="0" width="136.12" textAlign="center" verticalAlign="middle" size="20"/>
 		<e:Label id="gemLab" text="11111" x="292.24" y="6.42" anchorOffsetY="0" height="36.06" anchorOffsetX="0" width="134.61" textAlign="center" verticalAlign="middle" size="20" visible="false"/>
 	</e:Group>
-	<e:Image id="settingBtn" source="main_setting_btn_png" right="21" top="10"/>
-	<e:Group touchChildren="false" touchEnabled="false" touchThrough="false" right="108" top="14">
+	<e:Image id="settingBtn" source="main_setting_btn_png" right="-30" top="10"/>
+	<e:Group id="levelGroup" touchChildren="false" touchEnabled="false" touchThrough="false" right="108" top="-50">
 		<e:Image source="main_font_count_png" x="144" y="0"/>
 		<e:Label id="countNumLab" text="5/6" x="209.67" y="4" size="20" anchorOffsetX="0" width="52"/>
 		<e:Label id="levelNumLab" text="100" x="61.67" y="5" size="20" anchorOffsetX="0" width="52"/>
 		<e:Image source="main_font_level_png" x="0" y="0.58"/>
 	</e:Group>
-	<e:Group right="0" bottom="0" touchChildren="false" touchEnabled="false" touchThrough="false">
+	<e:Group id="hpGroup" right="0" bottom="-60" touchChildren="false" touchEnabled="false" touchThrough="false">
 		<e:Image source="main_progressBg_png" x="0" y="0"/>
 		<e:Image id="progressBar" source="main_progressBar_png" x="14" y="27.5" anchorOffsetX="0" width="277"/>
 		<e:Rect id="progressMark" width="277" height="22" x="291" y="26.5" anchorOffsetX="277" anchorOffsetY="0"/>
 	</e:Group>
-	<e:Image id="upgradeBtn" source="main_upgrade_btn_png" right="17" top="62"/>
-	<e:Image source="main_skill_bg_png" anchorOffsetY="0" height="447" scale9Grid="44,66,44,399" right="-13" verticalCenter="37.5"/>
-	<e:Scroller id="scroller" width="87.88" height="384" anchorOffsetX="0" anchorOffsetY="0" right="4" verticalCenter="37" scrollPolicyH="off">
-		<e:List id="list" anchorOffsetX="0" width="89.4">
+	<e:Image id="upgradeBtn" source="main_upgrade_btn_png" right="-80" top="62"/>
+	<e:Group id="skillGroup" touchChildren="true" touchEnabled="false" touchThrough="true" right="-120" verticalCenter="37.5">
+		<e:Image source="main_skill_bg_png" anchorOffsetY="0" height="447" scale9Grid="44,66,44,399" x="0" y="0"/>
+		<e:Scroller id="scroller" width="87.88" height="384" anchorOffsetX="0" anchorOffsetY="0" scrollPolicyH="off" x="18.12" y="31">
+			<e:List id="list" anchorOffsetX="0" width="89.4">
 			<e:layout>
 				<e:VerticalLayout horizontalAlign="center" verticalAlign="top"/>
 			</e:layout>
-		</e:List>
-	</e:Scroller>
-	<e:Group id="awardBox" touchChildren="false" touchEnabled="true" touchThrough="false" left="17" top="62">
+			</e:List>
+		</e:Scroller>
+	</e:Group>
+	<e:Group id="awardBox" touchChildren="false" touchEnabled="true" touchThrough="false" left="-180" top="62">
 		<e:Image source="main_icon_award_png" x="0" y="0"/>
 		<e:Label id="boxLab" text="Label" size="20" fontFamily="yt" textColor="0x00ff00" left="71" verticalCenter="0" touchEnabled="false"/>
 	</e:Group>
 	<e:Label id="descLab" text="点击战场召唤" horizontalCenter="0" top="81" textColor="0xffffff"/>
-	<e:Rect id="clickRect" anchorOffsetX="0" anchorOffsetY="0" alpha="0" height="409" width="1033" x="6" y="174"/>
+	<e:Rect id="clickRect" anchorOffsetX="0" anchorOffsetY="0" alpha="0" height="409" width="929" x="6" y="174"/>
 	<e:Image id="upred" source="readp_png" right="14" top="59" visible="false"/>
+	<e:Image id="monImg" left="0" top="-227" right="0" bottom="-140" anchorOffsetY="0" source="main_bg1_jpg" visible="false"/>
+	<e:Group id="monGroup" width="1126" height="434" x="6" y="204" anchorOffsetX="0" anchorOffsetY="0">
+	</e:Group>
+	<e:Group id="skillUseGroup" x="418" y="530" visible="false">
+		<e:Image source="progress_bg2_png" x="0" y="1"/>
+		<e:Image id="bar" source="progress_pro_png" x="0" y="1"/>
+		<e:Rect id="barMask" width="300" height="15" x="0" y="0"/>
+		<e:Label id="proTxt" text="施法时间:10" size="16" horizontalCenter="0" verticalCenter="0" textColor="0xeae8e8"/>
+	</e:Group>
 </e:Skin>

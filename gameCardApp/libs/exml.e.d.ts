@@ -64,6 +64,8 @@ declare class GuideViewSkin extends eui.Skin{
 }
 declare class BattleResultPopUpSkin extends eui.Skin{
 }
+declare class CommonPtomptSkin extends eui.Skin{
+}
 declare class RebornPanelSkin extends eui.Skin{
 }
 declare class RebornTipPopUpSkin extends eui.Skin{

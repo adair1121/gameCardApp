@@ -19,7 +19,9 @@ var ShopItem = (function (_super) {
         this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onBuy, this);
     };
     ShopItem.prototype.onBuy = function () {
-        console.log(this.shopId);
+        recharge.sendToNativePhurse({ Key1: this.data.costNum.toString() }, function (num) {
+            GameApp.roleGold += parseInt(num);
+        }, this);
     };
     ShopItem.prototype.dataChanged = function () {
         if (this.data.cost) {

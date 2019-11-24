@@ -127,7 +127,12 @@ class StartGameView extends BaseEuiView{
 			ViewManager.inst().close(StartGameView);
 		},this)
 		let view:GameMainView = ViewManager.inst().getView(GameMainView) as GameMainView;
+		if(!view){
+			ViewManager.inst().open(GameMainView);
+			view = ViewManager.inst().getView(GameMainView) as GameMainView;
+		}
 		view.initialize(true);
+		
 	}
 	/**进入游戏 */
 	private onEnter(evt:egret.TouchEvent):void{

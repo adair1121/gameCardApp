@@ -100,7 +100,7 @@ class Main extends eui.UILayer {
      * Create scene interface
      */
     protected createGameScene(): void {
-        eui.Button.prototype["autoSize"] = eui.Image.prototype["autoSize"] = eui.Rect.prototype["autoSize"]= function(){
+        eui.Button.prototype["autoSize"] = eui.Image.prototype["autoSize"] = eui.Rect.prototype["autoSize"] = eui.Group.prototype["autoSize"]= function(){
             let precentw:number = StageUtils.inst().getWidth()/1136;
 		    let precenth:number = StageUtils.inst().getHeight()/640;
             this.width *= precentw;
@@ -108,6 +108,7 @@ class Main extends eui.UILayer {
             this.x *= precentw;
             this.y *= precenth;
         }
+        
         egret.localStorage.clear();
         //获取平台参数;
         let platform_param:string = GlobalFun.getOption("pf");

@@ -169,7 +169,7 @@ var Main = (function (_super) {
      * Create scene interface
      */
     Main.prototype.createGameScene = function () {
-        eui.Button.prototype["autoSize"] = eui.Image.prototype["autoSize"] = eui.Rect.prototype["autoSize"] = function () {
+        eui.Button.prototype["autoSize"] = eui.Image.prototype["autoSize"] = eui.Rect.prototype["autoSize"] = eui.Group.prototype["autoSize"] = function () {
             var precentw = StageUtils.inst().getWidth() / 1136;
             var precenth = StageUtils.inst().getHeight() / 640;
             this.width *= precentw;

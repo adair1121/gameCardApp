@@ -28,8 +28,9 @@ var SettingPopUp = (function (_super) {
         for (var _i = 0; _i < arguments.length; _i++) {
             param[_i] = arguments[_i];
         }
+        MessageManager.inst().dispatch("end");
         egret.Tween.get(this.content).to({ verticalCenter: 0 }, 600, egret.Ease.circOut).call(function () {
-            egret.Tween.removeTweens(_this);
+            egret.Tween.removeTweens(_this.content);
         }, this);
         this.musicBar.mask = this.musicBarMask;
         this.effectBar.mask = this.effectBarMask;
@@ -54,6 +55,7 @@ var SettingPopUp = (function (_super) {
         egret.Tween.get(this.content).to({ verticalCenter: -500 }, 600, egret.Ease.circOut).call(function () {
             egret.Tween.removeTweens(_this.content);
             ViewManager.inst().close(SettingPopUp);
+            MessageManager.inst().dispatch("start");
             //只为了调刷新接口
             ViewManager.inst().open(GameMainView);
         }, this);

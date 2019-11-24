@@ -42,11 +42,15 @@ class BaseEntity extends eui.Component{
 	public set attack(value:number){
 		this._attack = value;
 	}
+	public getIndex():number{
+		return ((Math.random()*100)>>0) > 50?1:-1;
+	}
 	public reduceHp(dmg:number):void{
 		if(this.buffHp > 0){
 			this.buffHp -= dmg;
 		}else{
-			this._hp-=(dmg - this.buffDef);
+			let changeNum:number = ((dmg*0.2)>>0)*this.getIndex();
+			this._hp-=(dmg - this.buffDef + changeNum);
 			if(this._hp<=0){
 				this._hp = 0;
 				this._isDead = true;

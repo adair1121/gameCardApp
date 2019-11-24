@@ -19,6 +19,12 @@ var SoldierShapeEntity = (function (_super) {
     };
     SoldierShapeEntity.prototype.initData = function (shape, res, id, parent, xy, cb, thisArg) {
         this._shapeType = shape;
+        if (shape == SoldierShapType.TYPE_CIRCLE) {
+            xy.y += 80;
+        }
+        else if (shape == SoldierShapType.TYPE_ARROW) {
+            xy.y += 40;
+        }
         this.w = this.h = 60;
         this._res = res;
         this._id = id;

@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "description_json,config_zip,map_json,egret_icon_png,button_down_png,button_up_png,checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,thumb_pb_png,track_pb_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,track_sb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,bg_jpg,progress_bg_png,progress_bar_png,enter_down_png,enter_up_png,storyBtn_png,common_close_png,story_bg_png,story_font_png,main_font_bg_png,main_gold_png,main_gem_png,main_add_btn_png,main_setting_btn_png,main_font_level_png,main_font_count_png,main_icon_award_png,main_bg_2_jpg,main_upgrade_btn_png,main_skill_bg_png,main_item_bg_png,main_progressBg_png,main_progressBar_png,main_area_line_png,main_top_bg_png,skill_101_png,skill_101_title_png,skill_102_png,skill_102_title_png,skill_103_png,skill_103_title_png,skill_104_png,skill_104_title_png,skill_105_png,skill_105_title_png,common_xuanzhong_png,common_close_2_png,audio_bar_bg_png,audio_bar_png,audio_icon_png,autio_title_png,effect_title_png,setting_panel_png,prompt_bg_png,prompt_cancleBtn_png,prompt_gold_png,prompt_sureBtn_png,continueBtn_png,exitBtn_png,fail_font_png,fail_icon_png,nextLevelBtn_png,result_bg_png,win_font_png,win_icon_png,gold_font_1_png,gold_font_2_png,gold_font_3_png,gold_font_4_png,goldBtn_down_png,goldBtn_up_png,goldIcon_1_png,goldIcon_2_png,goldIcon_3_png,goldIcon_4_png,shopBg_png,shopBtn_png,shopItemBg_png,upgrade_panel_png,upgrade_item_png,atkFont_png,general_bottom_png,goldBtn_png,reborn_head_1_png,reborn_head_2_png,reborn_head_3_png,reborn_item_png,reborn_panel_png,reborn_title_1_png,reborn_title_2_png,reborn_title_3_png,rebornBtn_png,skill_bottom_png,upgarde_close_png,upgrade_font_bg_png,item_fire_7_png,item_fire_2_png,item_fire_3_png,item_fire_4_png,item_fire_5_png,item_fire_6_png,item_fire_1_png,dmg_fnt,dmg_png,blood_png,title_1_png,title_2_png,title_3_png,title_4_png,title_5_png,title_6_png,title_7_png,title_8_png,title_9_png,title_10_png,main_bg1_jpg,skill_102_pic_png,title_11_png,title_12_png,title_13_png,title_14_png,title_15_png,title_16_png,title_17_png,title_18_png,title_19_png,title_20_png,title_21_png,dragon_png,gold_font_5_png,goldIcon_5_png,shopTitlte_png,common_tips_bg_png,reborn_1_png,reborn_2_png,reborn_3_png,title_png,readp_png",
+			"keys": "description_json,config_zip,map_json,egret_icon_png,button_down_png,button_up_png,checkbox_select_disabled_png,checkbox_select_down_png,checkbox_select_up_png,checkbox_unselect_png,selected_png,border_png,header_png,thumb_pb_png,track_pb_png,radiobutton_select_disabled_png,radiobutton_select_down_png,radiobutton_select_up_png,radiobutton_unselect_png,roundthumb_png,track_sb_png,thumb_png,track_png,tracklight_png,handle_png,off_png,on_png,bg_jpg,progress_bg_png,progress_bar_png,enter_down_png,enter_up_png,storyBtn_png,common_close_png,story_bg_png,story_font_png,main_font_bg_png,main_gold_png,main_gem_png,main_add_btn_png,main_setting_btn_png,main_font_level_png,main_font_count_png,main_icon_award_png,main_bg_2_jpg,main_upgrade_btn_png,main_skill_bg_png,main_item_bg_png,main_progressBg_png,main_progressBar_png,main_area_line_png,main_top_bg_png,skill_101_png,skill_101_title_png,skill_102_png,skill_102_title_png,skill_103_png,skill_103_title_png,skill_104_png,skill_104_title_png,skill_105_png,skill_105_title_png,common_xuanzhong_png,common_close_2_png,audio_bar_bg_png,audio_bar_png,audio_icon_png,autio_title_png,effect_title_png,setting_panel_png,prompt_bg_png,prompt_cancleBtn_png,prompt_gold_png,prompt_sureBtn_png,continueBtn_png,exitBtn_png,fail_font_png,fail_icon_png,nextLevelBtn_png,result_bg_png,win_font_png,win_icon_png,gold_font_1_png,gold_font_2_png,gold_font_3_png,gold_font_4_png,goldBtn_down_png,goldBtn_up_png,goldIcon_1_png,goldIcon_2_png,goldIcon_3_png,goldIcon_4_png,shopBg_png,shopBtn_png,shopItemBg_png,upgrade_panel_png,upgrade_item_png,atkFont_png,general_bottom_png,goldBtn_png,reborn_head_1_png,reborn_head_2_png,reborn_head_3_png,reborn_item_png,reborn_panel_png,reborn_title_1_png,reborn_title_2_png,reborn_title_3_png,rebornBtn_png,skill_bottom_png,upgarde_close_png,upgrade_font_bg_png,item_fire_7_png,item_fire_2_png,item_fire_3_png,item_fire_4_png,item_fire_5_png,item_fire_6_png,item_fire_1_png,dmg_fnt,dmg_png,blood_png,title_1_png,title_2_png,title_3_png,title_4_png,title_5_png,title_6_png,title_7_png,title_8_png,title_9_png,title_10_png,main_bg1_jpg,skill_102_pic_png,title_11_png,title_12_png,title_13_png,title_14_png,title_15_png,title_16_png,title_17_png,title_18_png,title_19_png,title_20_png,title_21_png,dragon_png,gold_font_5_png,goldIcon_5_png,shopTitlte_png,common_tips_bg_png,reborn_1_png,reborn_2_png,reborn_3_png,title_png,readp_png,progress_bg2_png,progress_pro_png,levelfnt_fnt,levelfnt_png",
 			"name": "preload"
 		}
 	],
@@ -780,6 +780,26 @@
 			"name": "readp_png",
 			"type": "image",
 			"url": "res/view/main/readp.png"
+		},
+		{
+			"name": "progress_bg2_png",
+			"type": "image",
+			"url": "res/common/progress_bg.png"
+		},
+		{
+			"name": "progress_pro_png",
+			"type": "image",
+			"url": "res/common/progress_pro.png"
+		},
+		{
+			"name": "levelfnt_fnt",
+			"type": "font",
+			"url": "res/font/levelfnt.fnt"
+		},
+		{
+			"name": "levelfnt_png",
+			"type": "image",
+			"url": "res/font/levelfnt.png"
 		}
 	]
 }

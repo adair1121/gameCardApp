@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="BattleResultPopUpSkin" width="1136" height="768" currentState="win" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" states="win,fail" >
+<e:Skin class="BattleResultPopUpSkin" width="1136" height="640" currentState="win" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" states="win,fail" >
 	<e:Image source="result_bg_png" anchorOffsetX="0" left="0" top="0" right="0" bottom="0"/>
-	<e:Image id="winIcon" source="win_icon_png" left="63" top="96" source.fail="fail_icon_png" left.fail="15" top.fail="96" left.win="63" top.win="96" anchorOffsetX.win="251.52" anchorOffsetY.win="260.61"/>
+	<e:Image id="winIcon" source="win_icon_png" left="63" top="128" source.fail="fail_icon_png" left.fail="61" top.fail="90" left.win="96" top.win="93" anchorOffsetX.win="251.52" anchorOffsetY.win="260.61" scaleX="0.8" scaleY="0.8"/>
 	<e:Image id="resultImg" source="win_font_png" top="96" left="638" source.fail="fail_font_png"/>
 	<e:Label text="时间:" top="302" left="638" visible.fail="false" visible.win="false"/>
 	<e:Label id="timeLab" text="8.55" anchorOffsetX="0" width="189" textAlign="left" verticalAlign="middle" top="302" left="736" visible.fail="false" visible.win="false"/>
-	<e:Image id="nextBtn" source="nextLevelBtn_png" left="673" top="482" includeIn="win"/>
-	<e:Group id="rewardGroup" anchorOffsetX.win="0" width.win="334" anchorOffsetY.win="0" height.win="83.12" left.win="638" top.win="306" anchorOffsetX.fail="0" width.fail="279.33" anchorOffsetY.fail="0" height.fail="60" left.fail="662" top.fail="314">
+	<e:Image id="nextBtn" source="nextLevelBtn_png" left="673" top="416" includeIn="win"/>
+	<e:Group id="rewardGroup" anchorOffsetX.win="0" width.win="334" anchorOffsetY.win="0" height.win="83.12" left.win="644" top.win="268" anchorOffsetX.fail="0" width.fail="279.33" anchorOffsetY.fail="0" height.fail="60" left.fail="640" top.fail="282">
 		<e:Label id="goldNumLab" text="1000" anchorOffsetX="0" width="189" textAlign="left" verticalAlign="middle" top.win="28" x="147" y="0" x.win="118.5" x.fail="132" y.fail="16.66"/>
 		<e:Label text="奖励:" left.win="1" top.win="27" x="0" y="0" x.fail="0" y.fail="16.66"/>
 		<e:Image source="prompt_gold_png" left.win="80" top.win="32" x="98" y="5" x.fail="86" y.fail="21.66"/>
 	</e:Group>
-	<e:Image id="continueBtn" source="continueBtn_png" includeIn="fail" left="530" top="491"/>
-	<e:Image id="exitBtn" source="exitBtn_png" includeIn="fail" left="831" top="491"/>
+	<e:Image id="continueBtn" source="continueBtn_png" includeIn="fail" left="530" top="415"/>
+	<e:Image id="exitBtn" source="exitBtn_png" includeIn="fail" left="831" top="415"/>
 </e:Skin>

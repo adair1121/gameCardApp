@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="SettingPopUpSkin" width="1136" height="640" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
 	<e:Rect left="0" top="0" right="0" bottom="0" alpha="0.3"/>
-	<e:Group id="content" touchChildren="true" touchEnabled="false" touchThrough="true" horizontalCenter="0" verticalCenter="-500">
+	<e:Group id="content" touchChildren="true" touchEnabled="false" touchThrough="true" horizontalCenter="0" verticalCenter="-600">
 		<e:Image source="setting_panel_png" x="0" y="0"/>
 		<e:Image id="btnClose" source="common_close_2_png" x="406.5" y="18.33"/>
 		<e:Image source="autio_title_png" x="139.83" y="129"/>
-		<e:Image source="effect_title_png" x="139.83" y="189.83"/>
+		<e:Image source="effect_title_png" x="139.83" y="189.83" visible="false"/>
 		<e:Image source="audio_bar_bg_png" x="186.5" y="127.5"/>
-		<e:Image source="audio_bar_bg_png" x="186.5" y="186.83"/>
+		<e:Image source="audio_bar_bg_png" x="186.5" y="186.83" visible="false"/>
 		<e:Image id="musicBar" source="audio_bar_png" x="187.16" y="127.16"/>
 		<e:Rect id="musicBarMask" width="139" height="26" x="186.83" y="124.5" anchorOffsetX="0" anchorOffsetY="0"/>
-		<e:Image id="effectBar" source="audio_bar_png" x="186.5" y="187.16"/>
-		<e:Rect id="effectBarMask" width="139" height="26" x="186.16" y="182.49" anchorOffsetX="0" anchorOffsetY="0"/>
+		<e:Image id="effectBar" source="audio_bar_png" x="186.5" y="187.16" visible="false"/>
+		<e:Rect id="effectBarMask" width="139" height="26" x="186.16" y="182.49" anchorOffsetX="0" anchorOffsetY="0" visible="false"/>
 		<e:Image id="m_sound_control" source="audio_icon_png" x="327.76" y="138.56" anchorOffsetX="12.93" anchorOffsetY="13.39" width="25" height="25.5"/>
-		<e:Image id="e_sound_control" source="audio_icon_png" x="328" y="195.66" anchorOffsetX="13.17" anchorOffsetY="13" height="25.5" width="25"/>
+		<e:Image id="e_sound_control" source="audio_icon_png" x="328" y="195.66" anchorOffsetX="13.17" anchorOffsetY="13" height="25.5" width="25" visible="false"/>
 	</e:Group>
 </e:Skin>
