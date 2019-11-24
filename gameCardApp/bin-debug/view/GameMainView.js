@@ -781,35 +781,33 @@ var GameMainView = (function (_super) {
     GameMainView.prototype.onUpgrade = function () {
         ViewManager.inst().open(UpgradePopUp);
     };
+    GameMainView.prototype.showEffect = function () {
+        var _this = this;
+        egret.Tween.get(this.itemGroup).to({ top: 4 }, 300, egret.Ease.backOut).call(function () {
+            egret.Tween.removeTweens(_this.itemGroup);
+        }, this);
+        egret.Tween.get(this.awardBox).to({ left: 17 }, 400, egret.Ease.backOut).call(function () {
+            egret.Tween.removeTweens(_this.awardBox);
+        }, this);
+        egret.Tween.get(this.levelGroup).to({ top: 14 }, 500, egret.Ease.backOut).call(function () {
+            egret.Tween.removeTweens(_this.levelGroup);
+        }, this);
+        egret.Tween.get(this.settingBtn).to({ right: 21 }, 600, egret.Ease.backOut).call(function () {
+            egret.Tween.removeTweens(_this.settingBtn);
+        }, this);
+        egret.Tween.get(this.upgradeBtn).to({ right: 17 }, 700, egret.Ease.backOut).call(function () {
+            egret.Tween.removeTweens(_this.upgradeBtn);
+            _this.upred.visible = true;
+        });
+        egret.Tween.get(this.skillGroup).to({ right: -13 }, 800, egret.Ease.backOut).call(function () {
+            egret.Tween.removeTweens(_this.skillGroup);
+        }, this);
+        egret.Tween.get(this.hpGroup).to({ bottom: 0 }, 900, egret.Ease.backOut).call(function () {
+            egret.Tween.removeTweens(_this.hpGroup);
+        }, this);
+    };
     GameMainView.prototype.initialize = function (boo) {
         var _this = this;
-        this.upred.visible = false;
-        var timeout = egret.setTimeout(function () {
-            var _this = this;
-            clearTimeout(timeout);
-            egret.Tween.get(this.itemGroup).to({ top: 4 }, 300, egret.Ease.backOut).call(function () {
-                egret.Tween.removeTweens(_this.itemGroup);
-            }, this);
-            egret.Tween.get(this.awardBox).to({ left: 17 }, 400, egret.Ease.backOut).call(function () {
-                egret.Tween.removeTweens(_this.awardBox);
-            }, this);
-            egret.Tween.get(this.levelGroup).to({ top: 14 }, 500, egret.Ease.backOut).call(function () {
-                egret.Tween.removeTweens(_this.levelGroup);
-            }, this);
-            egret.Tween.get(this.settingBtn).to({ right: 21 }, 600, egret.Ease.backOut).call(function () {
-                egret.Tween.removeTweens(_this.settingBtn);
-            }, this);
-            egret.Tween.get(this.upgradeBtn).to({ right: 17 }, 700, egret.Ease.backOut).call(function () {
-                egret.Tween.removeTweens(_this.upgradeBtn);
-                _this.upred.visible = true;
-            });
-            egret.Tween.get(this.skillGroup).to({ right: -13 }, 800, egret.Ease.backOut).call(function () {
-                egret.Tween.removeTweens(_this.skillGroup);
-            }, this);
-            egret.Tween.get(this.hpGroup).to({ bottom: 0 }, 900, egret.Ease.backOut).call(function () {
-                egret.Tween.removeTweens(_this.hpGroup);
-            }, this);
-        }, this, 1000);
         //初始化
         var guidepassStr = egret.localStorage.getItem(LocalStorageEnum.IS_PASS_GUIDE);
         GameApp.gameaEnd = false;
@@ -863,6 +861,8 @@ var GameMainView = (function (_super) {
                                                     var bossVo = bossCfgs[bossIndex];
                                                     boss_1.setSoldierData(-1, bossVo.model, bossVo);
                                                     boss_1.execOneTimeAtk(function (finalIndex) {
+                                                        // if(this.monGroup){this.monGroup.visible = false};
+                                                        // if(this.monImg){this.monImg.visible = false}
                                                         bossnum += 1;
                                                         if (bossnum >= 2) {
                                                             var rect_1 = new eui.Rect(StageUtils.inst().getWidth(), StageUtils.inst().getHeight(), 0x000000);
@@ -881,6 +881,7 @@ var GameMainView = (function (_super) {
                                                             }, _this).to({ alpha: 0 }, 1000).call(function () {
                                                                 rect_1.parent.removeChild(rect_1);
                                                                 egret.Tween.removeTweens(rect_1);
+                                                                _this.showEffect();
                                                                 _this.showText();
                                                             }, _this);
                                                         }
@@ -906,6 +907,7 @@ var GameMainView = (function (_super) {
                 this.monImg.visible = this.monGroup.visible = false;
                 egret.Tween.get(this).to({ alpha: 1 }, 1000).call(function () {
                     egret.Tween.removeTweens(_this);
+                    _this.showEffect();
                     _this.showText();
                 }, this);
             }
@@ -913,6 +915,7 @@ var GameMainView = (function (_super) {
         else {
             this.monImg.visible = false;
             this.monGroup.visible = false;
+            this.showEffect();
             this.showText();
         }
     };

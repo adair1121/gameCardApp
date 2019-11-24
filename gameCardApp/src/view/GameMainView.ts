@@ -792,10 +792,7 @@ class GameMainView extends BaseEuiView{
 	private onUpgrade():void{
 		ViewManager.inst().open(UpgradePopUp);
 	}
-	public initialize(boo?:boolean):void{
-		this.upred.visible = false;
-		let timeout = egret.setTimeout(function() {
-			clearTimeout(timeout)
+	private showEffect(){
 			egret.Tween.get(this.itemGroup).to({top:4},300,egret.Ease.backOut).call(()=>{
 				egret.Tween.removeTweens(this.itemGroup);
 			},this);
@@ -822,10 +819,8 @@ class GameMainView extends BaseEuiView{
 			egret.Tween.get(this.hpGroup).to({bottom:0},900,egret.Ease.backOut).call(()=>{
 				egret.Tween.removeTweens(this.hpGroup);
 			},this)
-			
-		}, this,1000);
-
-
+	}
+	public initialize(boo?:boolean):void{
 		//初始化
 		let guidepassStr:string = egret.localStorage.getItem(LocalStorageEnum.IS_PASS_GUIDE);
 		GameApp.gameaEnd = false;
@@ -881,6 +876,8 @@ class GameMainView extends BaseEuiView{
 													let bossVo:CardVo = bossCfgs[bossIndex];
 													boss.setSoldierData(-1,bossVo.model,bossVo);
 													boss.execOneTimeAtk((finalIndex)=>{
+														// if(this.monGroup){this.monGroup.visible = false};
+														// if(this.monImg){this.monImg.visible = false}
 														bossnum += 1;
 														if(bossnum >= 2){
 															let rect:eui.Rect = new eui.Rect(StageUtils.inst().getWidth(),StageUtils.inst().getHeight(),0x000000);
@@ -894,6 +891,7 @@ class GameMainView extends BaseEuiView{
 															},this).to({alpha:0},1000).call(()=>{
 																rect.parent.removeChild(rect);
 																egret.Tween.removeTweens(rect);
+																this.showEffect();
 																this.showText();
 															},this)
 														}
@@ -915,12 +913,14 @@ class GameMainView extends BaseEuiView{
 				this.monImg.visible = this.monGroup.visible = false;
 				egret.Tween.get(this).to({alpha:1},1000).call(()=>{
 					egret.Tween.removeTweens(this);
+					this.showEffect();
 					this.showText();
 				},this)
 			}
 		}else{
 			this.monImg.visible = false;
 			this.monGroup.visible = false;
+			this.showEffect();
 			this.showText();
 		}
 	}

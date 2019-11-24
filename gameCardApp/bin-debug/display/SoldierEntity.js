@@ -34,8 +34,8 @@ var SoldierEntity = (function (_super) {
         this._camp = camp;
         this.camp = camp;
         this.soldierAttr = attr;
-        // this.scaleX = this.scaleY = 0.7;
-        // this.scale = 0.7;
+        this.scaleX = this.scaleY = 0.7;
+        this.scale = 0.7;
         if (this._camp == -1 && (!this.general)) {
             if (this._res != "s_monster_6" && this._res != "s_monster_5") {
                 this.scaleX = this.scaleY = 0.6;
@@ -46,7 +46,6 @@ var SoldierEntity = (function (_super) {
                 this.scale = 0.9;
             }
         }
-        res = "monster_8";
         if (this.camp == 1) {
             if (res != "monster_8") {
                 this.scaleX = this.scaleY = 0.5;
