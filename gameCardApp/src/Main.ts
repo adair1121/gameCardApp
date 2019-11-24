@@ -103,6 +103,13 @@ class Main extends eui.UILayer {
         eui.Button.prototype["autoSize"] = eui.Image.prototype["autoSize"] = eui.Rect.prototype["autoSize"] = eui.Group.prototype["autoSize"]= function(){
             let precentw:number = StageUtils.inst().getWidth()/1136;
 		    let precenth:number = StageUtils.inst().getHeight()/640;
+            this.scaleX = this.scaleY = precentw
+            this.x *= precentw;
+            this.y *= precenth;
+        }
+        eui.Rect.prototype["changeSize"] = function(){
+            let precentw:number = StageUtils.inst().getWidth()/1136;
+		    let precenth:number = StageUtils.inst().getHeight()/640;
             this.width *= precentw;
             this.height *= precenth;
             this.x *= precentw;

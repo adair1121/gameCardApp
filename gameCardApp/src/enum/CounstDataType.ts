@@ -25,7 +25,7 @@ enum SoldierShapType{
 	// TYPE_LINGXING,
 	TYPE_TRIANGLE,
 	TYPE_TIXING,
-	TYPE_ARROW,
+	// TYPE_ARROW,
 	TYPE_CROSS,
 }
 

@@ -20,7 +20,7 @@ var UpgradePopUp = (function (_super) {
             param[_i] = arguments[_i];
         }
         MessageManager.inst().dispatch("end");
-        egret.Tween.get(this.upgradeGroup).to({ right: 10 }, 600, egret.Ease.circOut).call(function () {
+        egret.Tween.get(this.upgradeGroup).to({ right: 0 }, 600, egret.Ease.circOut).call(function () {
             egret.Tween.removeTweens(_this.upgradeGroup);
         }, this);
         this.arraycollect = new eui.ArrayCollection();
@@ -81,7 +81,12 @@ var UpgradePopUp = (function (_super) {
     };
     UpgradePopUp.prototype.onReturn = function () {
         var _this = this;
-        egret.Tween.get(this.upgradeGroup).to({ right: -700 }, 600, egret.Ease.circOut).call(function () {
+        var self = this;
+        var timeout = setTimeout(function () {
+            clearTimeout(timeout);
+            self.rect.alpha = 0;
+        }, 300);
+        egret.Tween.get(this.upgradeGroup).to({ right: -500 }, 600, egret.Ease.circOut).call(function () {
             egret.Tween.removeTweens(_this.upgradeGroup);
             ViewManager.inst().close(UpgradePopUp);
             MessageManager.inst().dispatch("start");

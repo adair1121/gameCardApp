@@ -20,10 +20,11 @@ var RebornCfg = (function () {
             skillId: 0,
             model: "skill_103_1",
             skillType: 1,
-            atkspd: 6
+            atkspd: 6,
+            desc: "神将"
         },
         {
-            cost: 100,
+            cost: 1000,
             mid: 2,
             name: "剑圣",
             level: 1,
@@ -38,29 +39,12 @@ var RebornCfg = (function () {
             skillId: 0,
             model: "skill_103_2",
             skillType: 1,
-            atkspd: 6
+            atkspd: 6,
+            desc: "攻速暴增200%"
         },
         {
-            cost: 100,
+            cost: 2000,
             mid: 3,
-            name: "法神",
-            level: 1,
-            atktype: 1,
-            atkDis: 200,
-            rmodel: 2,
-            type: 1,
-            spd: 30,
-            atk: 50,
-            hp: 500,
-            id: 4,
-            skillId: 0,
-            model: "skill_103_4",
-            skillType: 1,
-            atkspd: 6
-        },
-        {
-            cost: 100,
-            mid: 4,
             name: "天尊",
             level: 1,
             atktype: 1,
@@ -74,8 +58,28 @@ var RebornCfg = (function () {
             skillId: 0,
             model: "skill_103_3",
             skillType: 1,
-            atkspd: 6
-        }
+            atkspd: 6,
+            desc: "全属性增加1倍"
+        },
+        {
+            cost: 3000,
+            mid: 4,
+            name: "法神",
+            level: 1,
+            atktype: 1,
+            atkDis: 200,
+            rmodel: 2,
+            type: 1,
+            spd: 30,
+            atk: 50,
+            hp: 500,
+            id: 4,
+            skillId: 0,
+            model: "skill_103_4",
+            skillType: 1,
+            atkspd: 6,
+            desc: "攻击力增幅4倍"
+        },
     ];
     return RebornCfg;
 }());

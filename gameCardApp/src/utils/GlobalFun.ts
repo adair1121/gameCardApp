@@ -177,6 +177,9 @@ class GlobalFun {
             }
         }
     }
+    public static getIndex():number{
+		return ((Math.random()*100)>>0) > 50?1:-1;
+	}
     /**
      * 创建技能特效显示
      * @param id 技能id
@@ -243,7 +246,7 @@ class GlobalFun {
                     if(entitys[i] && !entitys[i].isDead){
                         let dis:number = egret.Point.distance(new egret.Point(entitys[i].x,entitys[i].y),new egret.Point(mc.x,mc.y));
                         if(dis <= 100){
-                            entitys[i].reduceHp(atk)
+                            entitys[i].reduceHp(atk + ((this.getIndex()*0.2)>>0))
                         }
                     }
                 }

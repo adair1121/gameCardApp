@@ -42,6 +42,11 @@ var ShopPopUp = (function (_super) {
     };
     ShopPopUp.prototype.onReturn = function () {
         var _this = this;
+        var self = this;
+        var timeout = setTimeout(function () {
+            clearTimeout(timeout);
+            self.rect.alpha = 0;
+        }, 300);
         egret.Tween.get(this.content).to({ verticalCenter: -600 }, 600, egret.Ease.circOut).call(function () {
             MessageManager.inst().dispatch("start");
             egret.Tween.removeTweens(_this.content);

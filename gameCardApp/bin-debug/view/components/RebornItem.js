@@ -12,7 +12,7 @@ var RebornItem = (function (_super) {
     __extends(RebornItem, _super);
     function RebornItem() {
         var _this = _super.call(this) || this;
-        _this.descs = ["攻速暴增200%", "攻击力增幅4倍", "全属性增加1倍"];
+        _this.descs = ["攻速暴增200%", "全属性增加1倍", "攻击力增幅4倍"];
         _this.skinName = "RebornItemSkin";
         return _this;
     }
@@ -56,7 +56,8 @@ var RebornItem = (function (_super) {
                 break;
             }
         }
-        var obj = { skillId: this.data.skillId, rebornId: this.data.mid, skillIcon: this.icon, skillTitle: "skill_103_title_png", level: skillCfg.level, desc: curRebornCfg.desc, atk: 5 * skillCfg.level + 45, hp: 50 * skillCfg.level + 450, atkDis: 100, cost: 10 * skillCfg.level + 90, skillType: 1 };
+        1;
+        var obj = { skillId: this.data.skillId, rebornId: this.data.mid, skillIcon: this.icon, skillTitle: "reborn_title_" + this.data.rmodel + "_png", level: skillCfg.level, desc: curRebornCfg.desc, atk: 5 * skillCfg.level + 45, hp: 50 * skillCfg.level + 450, atkDis: 100, cost: 10 * skillCfg.level + 90, skillType: 1 };
         GameApp.skillCfg[this.data.skillId] = obj;
         egret.localStorage.setItem(LocalStorageEnum.REBORNCFG, JSON.stringify(GameApp.skillCfg));
         MessageManager.inst().dispatch(CustomEvt.REBORNSUCCESS, { skillId: this.data.skillId });

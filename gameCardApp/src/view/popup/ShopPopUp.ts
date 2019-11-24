@@ -10,6 +10,7 @@ class ShopPopUp extends BaseEuiView{
 	private selectIndex = 0;
 	private dataArr:any[] = [];
 	private returnBtn:eui.Image;
+	private rect:eui.Rect;
 	public constructor() {
 		super();
 	}
@@ -33,6 +34,11 @@ class ShopPopUp extends BaseEuiView{
 		this.addTouchEvent(this.returnBtn,this.onReturn,true);
 	}
 	private onReturn():void{
+		let self = this;
+		let timeout = setTimeout(function() {
+			clearTimeout(timeout);
+			self.rect.alpha = 0;
+		}, 300);
 		egret.Tween.get(this.content).to({verticalCenter:-600},600,egret.Ease.circOut).call(()=>{
 			MessageManager.inst().dispatch("start")
 			egret.Tween.removeTweens(this.content);

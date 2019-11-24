@@ -6,12 +6,13 @@ class UpgradePopUp extends BaseEuiView{
 	private btnClose:eui.Image;
 	private upgradeGroup:eui.Group;
 	private watcher:eui.Watcher;
+	private rect:eui.Rect;
 	public constructor() {
 		super();
 	}
 	public open(...param):void{
 		MessageManager.inst().dispatch("end");
-		egret.Tween.get(this.upgradeGroup).to({right:10},600,egret.Ease.circOut).call(()=>{
+		egret.Tween.get(this.upgradeGroup).to({right:0},600,egret.Ease.circOut).call(()=>{
 			egret.Tween.removeTweens(this.upgradeGroup);
 		},this)
 		this.arraycollect = new eui.ArrayCollection();
@@ -69,7 +70,12 @@ class UpgradePopUp extends BaseEuiView{
 		}
 	}
 	private onReturn():void{
-		egret.Tween.get(this.upgradeGroup).to({right:-700},600,egret.Ease.circOut).call(()=>{
+		let self = this;
+		let timeout = setTimeout(function() {
+			clearTimeout(timeout);
+			self.rect.alpha = 0;
+		}, 300);
+		egret.Tween.get(this.upgradeGroup).to({right:-500},600,egret.Ease.circOut).call(()=>{
 			egret.Tween.removeTweens(this.upgradeGroup);
 			ViewManager.inst().close(UpgradePopUp);
 			MessageManager.inst().dispatch("start");

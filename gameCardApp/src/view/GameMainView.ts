@@ -73,8 +73,9 @@ class GameMainView extends BaseEuiView{
 		this._entitys = [];
 		this._ownEntitys = [];
 		this._levelEntitys = [];
-		this.pos1["autoSize"]();
-		this.pos2["autoSize"]();
+		this.pos1["changeSize"]();
+		this.pos2["changeSize"]();
+		this.clickRect["changeSize"]();
 		this.monGroup["autoSize"]();
 		for(let i:number = 1;i<=5;i++){
 			let skill1Level:string = egret.localStorage.getItem(LocalStorageEnum.SKILL_LEVEL+(100+i))
@@ -101,7 +102,7 @@ class GameMainView extends BaseEuiView{
 				}
 			}
 		}
-		this.clickRect["autoSize"]();
+		
 		this.progressBar.mask = this.progressMark;
 		this.totalHp = this.curHp = 50*GameApp.level + 500;
 		this.touchEnabled = false;
@@ -151,9 +152,9 @@ class GameMainView extends BaseEuiView{
 		// 
 	}
 	private onStart():void{
-		if(!GameApp.gameaEnd){
+		// if(!GameApp.gameaEnd){
 			egret.startTick(this.execAction,this);
-		}
+		// }
 	}
 	private onStop():void{
 		egret.stopTick(this.execAction,this);
@@ -187,7 +188,7 @@ class GameMainView extends BaseEuiView{
 				for(let i:number = 0;i<this._levelEntitys.length;i++){
 					let dis:number = egret.Point.distance(new egret.Point(this._levelEntitys[i].x,this._levelEntitys[i].y),new egret.Point(this.skill102.x,this.skill102.y));
 					if(dis <= 100){
-						this._levelEntitys[i].reduceHp(GameApp.skillCfg[102].atk);
+						this._levelEntitys[i].reduceHp(GameApp.skillCfg[102].atk + ((GameApp.skillCfg[102].atk*0.2*GlobalFun.getIndex())>>0));
 					}
 				}
 			},150)
@@ -317,6 +318,7 @@ class GameMainView extends BaseEuiView{
 		this.curReborns = null;
 		GameApp.gameaEnd = true;
 		let self = this;
+		this.hideSkillUse();
 		let timeout = setTimeout(function() {
 			clearTimeout(timeout);
 			ViewManager.inst().open(BattleResultPopUp,[{state:0,cb:self.gameEnd,arg:self}])
@@ -388,9 +390,9 @@ class GameMainView extends BaseEuiView{
 	private createLevelMonster(cx?:number):void{
 		let count:number = ((GameApp.level/5)>>0) + 1;
 		let centery:number = this.clickRect.y + 150;
-		let centerx:number = -320;
+		let centerx:number = -270;
 		for(let i:number = 0;i<count;i++){
-			let shapIndex:number = (Math.random()*7)>>0;
+			let shapIndex:number = (Math.random()*6)>>0;
 			let monsterCfg:CardVo[] = GlobalFun.getMonsterCfg();
 			let index:number = (Math.random()*monsterCfg.length)>>0;
 			if(GameApp.level <= 11){
@@ -555,6 +557,7 @@ class GameMainView extends BaseEuiView{
 									item.isInAtk = true;
 								},this);
 							}else{
+								egret.Tween.removeTweens(item);
 								item.execStandAction();
 							}
 						}
@@ -621,11 +624,11 @@ class GameMainView extends BaseEuiView{
 					this.curReborns = null;
 					GameApp.gameaEnd = true;
 					let self = this;
+					this.hideSkillUse();
 					let timeout = setTimeout(function() {
 						clearTimeout(timeout);
 						ViewManager.inst().open(BattleResultPopUp,[{state:1,cb:self.gameEnd,arg:self}])
 					}, 2000);
-					
 				}
 			}else{
 				this.extraBattle = false;
@@ -633,6 +636,7 @@ class GameMainView extends BaseEuiView{
 				this.curReborns = null;
 				GameApp.gameaEnd = true;
 				let self = this;
+				this.hideSkillUse();
 				let timeout = setTimeout(function() {
 					clearTimeout(timeout);
 					ViewManager.inst().open(BattleResultPopUp,[{state:1,cb:self.gameEnd,arg:self}])
@@ -745,13 +749,20 @@ class GameMainView extends BaseEuiView{
 			for(let i:number = 0;i<this._levelEntitys.length;i++){
 				let dis:number = egret.Point.distance(new egret.Point(this._levelEntitys[i].x,this._levelEntitys[i].y),new egret.Point(evt.stageX,evt.stageY));
 				if(dis <= 100){
-					this._levelEntitys[i].reduceHp(skillCfg.atk)
+					this._levelEntitys[i].reduceHp(skillCfg.atk + ((skillCfg.atk*GlobalFun.getIndex()*0.2)>>0))
 				}
 			}
 		}else if(this.releaseSkill102 && evt.target == this.clickRect){
 			
 		}else if(this.releaseSkill104 && evt.target == this.clickRect){
+			if(this.curItem && this.curItem.isCd){
+				return;
+			}
 			let skillCfg:any = GameApp.skillCfg[104];
+			this.skillrelease = 104;
+			this.curItem.setCd();
+			this.hideSkillUse();
+			
 			let mc:MovieClip = new MovieClip();
 			this.addChild(mc);
 			mc.x = this.pos1.x;
@@ -771,6 +782,7 @@ class GameMainView extends BaseEuiView{
 			}, 800);
 		}
 	}
+	
 	private onLevelChange():void{
 		this.levelNumLab.text = GameApp.level.toString();
 		this.totalCount = ((GameApp.level/GameApp.totalCount)>>0)+1;
@@ -818,10 +830,12 @@ class GameMainView extends BaseEuiView{
 			},this)
 			egret.Tween.get(this.hpGroup).to({bottom:0},900,egret.Ease.backOut).call(()=>{
 				egret.Tween.removeTweens(this.hpGroup);
+				this.upred.visible = true;
 			},this)
 	}
 	public initialize(boo?:boolean):void{
 		//初始化
+		this.upred.visible = false;
 		let guidepassStr:string = egret.localStorage.getItem(LocalStorageEnum.IS_PASS_GUIDE);
 		GameApp.gameaEnd = false;
 		let bossnum:number = 0;
@@ -834,7 +848,7 @@ class GameMainView extends BaseEuiView{
 					let centerx:number = this.monGroup.width - 200;
 					let txts:string[] = ["小的们,随本王出征",'列队！准备攻城!!!']
 					for(let i:number = 0;i<2;i++){
-						let shapIndex:number = (Math.random()*7)>>0;
+						let shapIndex:number = (Math.random()*6)>>0;
 						let monsterCfg:CardVo[] = GlobalFun.getMonsterCfg();
 						let index:number = (Math.random()*monsterCfg.length)>>0;
 						let monsterVo:CardVo = monsterCfg[index];
@@ -883,12 +897,12 @@ class GameMainView extends BaseEuiView{
 															let rect:eui.Rect = new eui.Rect(StageUtils.inst().getWidth(),StageUtils.inst().getHeight(),0x000000);
 															this.addChild(rect);
 															rect.alpha = 0;
-															egret.Tween.get(rect).wait(1000).to({alpha:0.9},1000).wait(300).call(()=>{
+															egret.Tween.get(rect).wait(2000).to({alpha:0.9},1000).wait(300).call(()=>{
 																if(this.monGroup){this.monGroup.visible = false};
 																if(this.monImg){this.monImg.visible = false}
 																// this.monGroup.parent.removeChild(this.monGroup);
 																// this.monImg.parent.removeChild(this.monImg);
-															},this).to({alpha:0},1000).call(()=>{
+															},this).to({alpha:0},2000).call(()=>{
 																rect.parent.removeChild(rect);
 																egret.Tween.removeTweens(rect);
 																this.showEffect();

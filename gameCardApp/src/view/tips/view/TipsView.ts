@@ -29,7 +29,7 @@ class TipsView extends BaseEuiView {
 	public showTips(str: string): void {
 		let tips: TipsItem = ObjectPool.pop("TipsItem");
 		tips.horizontalCenter = 0;
-		let bottomNum:number = (StageUtils.inst().getHeight()>>1);
+		let bottomNum:number = (StageUtils.inst().getHeight()>>1) + 120;
 		tips.bottom = bottomNum;
 		this.addChild(tips);
 		tips.labelText = str;

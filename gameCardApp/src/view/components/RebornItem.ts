@@ -7,7 +7,7 @@ class RebornItem extends eui.ItemRenderer{
 	private _rebornBoo:boolean;
 	private _id:number;
 	private descLab:eui.Label;
-	private descs:string[] = ["攻速暴增200%","攻击力增幅4倍","全属性增加1倍"];
+	private descs:string[] = ["攻速暴增200%","全属性增加1倍","攻击力增幅4倍"];
 	public constructor() {
 		super();
 		this.skinName = "RebornItemSkin"
@@ -52,7 +52,8 @@ class RebornItem extends eui.ItemRenderer{
 				break;
 			}
 		}
-		let obj:any = {skillId:this.data.skillId,rebornId:this.data.mid,skillIcon:this.icon,skillTitle:"skill_103_title_png",level:skillCfg.level,desc:curRebornCfg.desc,atk:5*skillCfg.level + 45,hp:50*skillCfg.level+450,atkDis:100,cost:10*skillCfg.level+90,skillType:1};
+		1
+		let obj:any = {skillId:this.data.skillId,rebornId:this.data.mid,skillIcon:this.icon,skillTitle:`reborn_title_${this.data.rmodel}_png`,level:skillCfg.level,desc:curRebornCfg.desc,atk:5*skillCfg.level + 45,hp:50*skillCfg.level+450,atkDis:100,cost:10*skillCfg.level+90,skillType:1};
 		GameApp.skillCfg[this.data.skillId] = obj;
 		egret.localStorage.setItem(LocalStorageEnum.REBORNCFG,JSON.stringify(GameApp.skillCfg));
 

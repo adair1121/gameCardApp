@@ -14,37 +14,60 @@ var BattleResultPopUp = (function (_super) {
         return _super.call(this) || this;
     }
     BattleResultPopUp.prototype.open = function () {
+        // this.alpha = 0;
+        // egret.Tween.get(this).to({alpha:1},300,egret.Ease.circOut).call(()=>{
+        // 	egret.Tween.removeTweens(this);
+        // })
         var _this = this;
         var param = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             param[_i] = arguments[_i];
         }
-        // this.alpha = 0;
-        // egret.Tween.get(this).to({alpha:1},300,egret.Ease.circOut).call(()=>{
-        // 	egret.Tween.removeTweens(this);
-        // })
+        var precentw = StageUtils.inst().getWidth() / 1136;
+        this.winIcon["autoSize"]();
+        this.resultImg["autoSize"]();
+        this.resultImg2["autoSize"]();
+        this.rewardGroup["autoSize"]();
+        this.nextBtn["autoSize"]();
+        this.continueBtn["autoSize"]();
+        this.exitBtn["autoSize"]();
         this.rewardGroup.alpha = 0;
         this.winIcon.alpha = 0;
         this.winIcon.scaleX = this.winIcon.scaleY = 5;
         this.resultImg.alpha = 0;
         this.resultImg.scaleX = this.resultImg.scaleY = 5;
-        egret.Tween.get(this.winIcon).to({ alpha: 1, scaleX: 1, scaleY: 1 }, 300, egret.Ease.circIn).call(function () {
-            egret.Tween.removeTweens(_this.winIcon);
-            egret.Tween.get(_this.resultImg).to({ alpha: 0.8, scaleX: 0.8, scaleY: 1 }, 300, egret.Ease.circIn).call(function () {
-                egret.Tween.removeTweens(_this.resultImg);
-                egret.Tween.get(_this.rewardGroup).to({ alpha: 1 }, 300).call(function () {
-                    egret.Tween.removeTweens(_this.rewardGroup);
-                }, _this);
-            }, _this);
-        }, this);
+        this.resultImg2.alpha = 0;
+        this.resultImg2.scaleX = this.resultImg2.scaleY = 5;
         if (param[0].state == 1) {
-            this.skin.currentState = "win";
+            this._state = "win";
+            this.invalidateState();
+            // this.skin.currentState = "win";
             // let levelstr:string = egret.localStorage.getItem(LocalStorageEnum.LEVEL);
             this.goldNum = (10 * GameApp.level + 90) + ((Math.random() * 20) >> 0);
+            egret.Tween.get(this.winIcon).to({ alpha: 1, scaleX: precentw, scaleY: precentw }, 300, egret.Ease.circIn).call(function () {
+                egret.Tween.removeTweens(_this.winIcon);
+                egret.Tween.get(_this.resultImg).to({ alpha: 1, scaleX: precentw, scaleY: precentw }, 300, egret.Ease.circIn).call(function () {
+                    egret.Tween.removeTweens(_this.resultImg);
+                    egret.Tween.get(_this.rewardGroup).to({ alpha: 1 }, 300).call(function () {
+                        egret.Tween.removeTweens(_this.rewardGroup);
+                    }, _this);
+                }, _this);
+            }, this);
             // this.goldNum = parseInt(levelstr);
         }
         else {
-            this.skin.currentState = "fail";
+            this._state = "fail";
+            this.invalidateState();
+            egret.Tween.get(this.winIcon).to({ alpha: 1, scaleX: precentw, scaleY: precentw }, 300, egret.Ease.circIn).call(function () {
+                egret.Tween.removeTweens(_this.winIcon);
+                egret.Tween.get(_this.resultImg2).to({ alpha: 1, scaleX: precentw, scaleY: precentw }, 300, egret.Ease.circIn).call(function () {
+                    egret.Tween.removeTweens(_this.resultImg2);
+                    egret.Tween.get(_this.rewardGroup).to({ alpha: 1 }, 300).call(function () {
+                        egret.Tween.removeTweens(_this.rewardGroup);
+                    }, _this);
+                }, _this);
+            }, this);
+            // this.skin.currentState = "fail";
             this.goldNum = (5 * GameApp.level + 20) + ((Math.random() * 10) >> 0);
         }
         if (param[0].time) {
@@ -61,6 +84,9 @@ var BattleResultPopUp = (function (_super) {
         this.addTouchEvent(this.nextBtn, this.onNextLevel, true);
         this.addTouchEvent(this.continueBtn, this.onContinue, true);
         this.addTouchEvent(this.exitBtn, this.onExit, true);
+    };
+    BattleResultPopUp.prototype.getCurrentState = function () {
+        return this._state;
     };
     BattleResultPopUp.prototype.onNextLevel = function () {
         this._param = BattleResultPopUp.OPER_NEXT;

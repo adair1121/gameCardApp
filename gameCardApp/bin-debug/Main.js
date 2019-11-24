@@ -172,6 +172,13 @@ var Main = (function (_super) {
         eui.Button.prototype["autoSize"] = eui.Image.prototype["autoSize"] = eui.Rect.prototype["autoSize"] = eui.Group.prototype["autoSize"] = function () {
             var precentw = StageUtils.inst().getWidth() / 1136;
             var precenth = StageUtils.inst().getHeight() / 640;
+            this.scaleX = this.scaleY = precentw;
+            this.x *= precentw;
+            this.y *= precenth;
+        };
+        eui.Rect.prototype["changeSize"] = function () {
+            var precentw = StageUtils.inst().getWidth() / 1136;
+            var precenth = StageUtils.inst().getHeight() / 640;
             this.width *= precentw;
             this.height *= precenth;
             this.x *= precentw;

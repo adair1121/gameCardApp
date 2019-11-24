@@ -69,7 +69,7 @@ var SoldierEntity = (function (_super) {
         // }
         this.hp = this.thp = this.soldierAttr.hp;
         var index = ((Math.random() * 100) >> 0) > 50 ? 1 : -1;
-        this.soldierAttr.atkDis += ((Math.random() * 20) >> 0) * index;
+        this.soldierAttr.atkDis += ((Math.random() * 7) >> 0) * index;
         // this.w = this.soldierAttr.w;
         // this.h = this.soldierAttr.h;
         this._direc = this._camp == 1 ? 1 : -1;

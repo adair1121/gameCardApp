@@ -53,7 +53,7 @@ class RebornPanel extends BaseEuiView{
 					break;
 				}
 			}
-			let obj:any = {skillId:this._skillId,rebornId:item.mid,skillIcon:item.icon,skillTitle:"skill_103_title_png",level:skillCfg.level,desc:curRebornCfg.desc,atk:5*skillCfg.level+45,hp:50*skillCfg.level+450,atkDis:100,cost:10*skillCfg.level+90,skillType:1};
+			let obj:any = {skillId:this._skillId,rebornId:item.mid,skillIcon:item.icon,skillTitle:`reborn_title_${curRebornCfg.rmodel}_png`,level:skillCfg.level,desc:curRebornCfg.desc,atk:5*skillCfg.level+45,hp:50*skillCfg.level+450,atkDis:100,cost:10*skillCfg.level+90,skillType:1};
 			GameApp.skillCfg[this._skillId] = obj;
 			egret.localStorage.setItem(LocalStorageEnum.REBORNCFG,JSON.stringify(GameApp.skillCfg));
 			return;

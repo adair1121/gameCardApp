@@ -25,9 +25,10 @@ class SoldierShapeEntity extends BaseClass{
 		this._shapeType = shape;
 		if(shape == SoldierShapType.TYPE_CIRCLE){
 			xy.y += 80;
-		}else if(shape == SoldierShapType.TYPE_ARROW){
-			xy.y += 40;
 		}
+		// else if(shape == SoldierShapType.TYPE_ARROW){
+		// 	xy.y += 40;
+		// }
 		this.w = this.h = 60;
 		this._res = res;
 		this._id = id;
@@ -40,12 +41,12 @@ class SoldierShapeEntity extends BaseClass{
 	}
 	private onCreateShape():void{
 		switch(this._shapeType){
-			case SoldierShapType.TYPE_ARROW:
-				this.createArrow();
-				if(this._cb && this._arg){
-					this._cb.call(this._arg,this.arr)
-				}
-				break;
+			// case SoldierShapType.TYPE_ARROW:
+			// 	this.createArrow();
+			// 	if(this._cb && this._arg){
+			// 		this._cb.call(this._arg,this.arr)
+			// 	}
+			// 	break;
 			case SoldierShapType.TYPE_CIRCLE:
 				this.createCircle();
 				if(this._cb && this._arg){

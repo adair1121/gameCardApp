@@ -39,7 +39,7 @@ class TipsItem extends BaseView {
 
 		if(!this.addToEvent) {
 			this.addToEvent = true;
-			TimerManager.inst().doTimer(1200, 1, this.removeFromParent, this);
+			TimerManager.inst().doTimer(2000, 1, this.removeFromParent, this);
 		}
 	}
 

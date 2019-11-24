@@ -45,8 +45,9 @@ var GameMainView = (function (_super) {
         this._entitys = [];
         this._ownEntitys = [];
         this._levelEntitys = [];
-        this.pos1["autoSize"]();
-        this.pos2["autoSize"]();
+        this.pos1["changeSize"]();
+        this.pos2["changeSize"]();
+        this.clickRect["changeSize"]();
         this.monGroup["autoSize"]();
         for (var i = 1; i <= 5; i++) {
             var skill1Level = egret.localStorage.getItem(LocalStorageEnum.SKILL_LEVEL + (100 + i));
@@ -73,7 +74,6 @@ var GameMainView = (function (_super) {
                 }
             }
         }
-        this.clickRect["autoSize"]();
         this.progressBar.mask = this.progressMark;
         this.totalHp = this.curHp = 50 * GameApp.level + 500;
         this.touchEnabled = false;
@@ -119,9 +119,9 @@ var GameMainView = (function (_super) {
         // 
     };
     GameMainView.prototype.onStart = function () {
-        if (!GameApp.gameaEnd) {
-            egret.startTick(this.execAction, this);
-        }
+        // if(!GameApp.gameaEnd){
+        egret.startTick(this.execAction, this);
+        // }
     };
     GameMainView.prototype.onStop = function () {
         egret.stopTick(this.execAction, this);
@@ -153,7 +153,7 @@ var GameMainView = (function (_super) {
                 for (var i = 0; i < _this._levelEntitys.length; i++) {
                     var dis = egret.Point.distance(new egret.Point(_this._levelEntitys[i].x, _this._levelEntitys[i].y), new egret.Point(_this.skill102.x, _this.skill102.y));
                     if (dis <= 100) {
-                        _this._levelEntitys[i].reduceHp(GameApp.skillCfg[102].atk);
+                        _this._levelEntitys[i].reduceHp(GameApp.skillCfg[102].atk + ((GameApp.skillCfg[102].atk * 0.2 * GlobalFun.getIndex()) >> 0));
                     }
                 }
             }, 150);
@@ -294,6 +294,7 @@ var GameMainView = (function (_super) {
         this.curReborns = null;
         GameApp.gameaEnd = true;
         var self = this;
+        this.hideSkillUse();
         var timeout = setTimeout(function () {
             clearTimeout(timeout);
             ViewManager.inst().open(BattleResultPopUp, [{ state: 0, cb: self.gameEnd, arg: self }]);
@@ -367,9 +368,9 @@ var GameMainView = (function (_super) {
         var _this = this;
         var count = ((GameApp.level / 5) >> 0) + 1;
         var centery = this.clickRect.y + 150;
-        var centerx = -320;
+        var centerx = -270;
         for (var i = 0; i < count; i++) {
-            var shapIndex = (Math.random() * 7) >> 0;
+            var shapIndex = (Math.random() * 6) >> 0;
             var monsterCfg = GlobalFun.getMonsterCfg();
             var index = (Math.random() * monsterCfg.length) >> 0;
             if (GameApp.level <= 11) {
@@ -535,6 +536,7 @@ var GameMainView = (function (_super) {
                                 }, this_1);
                             }
                             else {
+                                egret.Tween.removeTweens(item);
                                 item.execStandAction();
                             }
                         }
@@ -609,6 +611,7 @@ var GameMainView = (function (_super) {
                     this.curReborns = null;
                     GameApp.gameaEnd = true;
                     var self_3 = this;
+                    this.hideSkillUse();
                     var timeout_2 = setTimeout(function () {
                         clearTimeout(timeout_2);
                         ViewManager.inst().open(BattleResultPopUp, [{ state: 1, cb: self_3.gameEnd, arg: self_3 }]);
@@ -621,6 +624,7 @@ var GameMainView = (function (_super) {
                 this.curReborns = null;
                 GameApp.gameaEnd = true;
                 var self_4 = this;
+                this.hideSkillUse();
                 var timeout_3 = setTimeout(function () {
                     clearTimeout(timeout_3);
                     ViewManager.inst().open(BattleResultPopUp, [{ state: 1, cb: self_4.gameEnd, arg: self_4 }]);
@@ -735,14 +739,20 @@ var GameMainView = (function (_super) {
             for (var i = 0; i < this._levelEntitys.length; i++) {
                 var dis = egret.Point.distance(new egret.Point(this._levelEntitys[i].x, this._levelEntitys[i].y), new egret.Point(evt.stageX, evt.stageY));
                 if (dis <= 100) {
-                    this._levelEntitys[i].reduceHp(skillCfg.atk);
+                    this._levelEntitys[i].reduceHp(skillCfg.atk + ((skillCfg.atk * GlobalFun.getIndex() * 0.2) >> 0));
                 }
             }
         }
         else if (this.releaseSkill102 && evt.target == this.clickRect) {
         }
         else if (this.releaseSkill104 && evt.target == this.clickRect) {
+            if (this.curItem && this.curItem.isCd) {
+                return;
+            }
             var skillCfg_1 = GameApp.skillCfg[104];
+            this.skillrelease = 104;
+            this.curItem.setCd();
+            this.hideSkillUse();
             var mc = new MovieClip();
             this.addChild(mc);
             mc.x = this.pos1.x;
@@ -804,11 +814,13 @@ var GameMainView = (function (_super) {
         }, this);
         egret.Tween.get(this.hpGroup).to({ bottom: 0 }, 900, egret.Ease.backOut).call(function () {
             egret.Tween.removeTweens(_this.hpGroup);
+            _this.upred.visible = true;
         }, this);
     };
     GameMainView.prototype.initialize = function (boo) {
         var _this = this;
         //初始化
+        this.upred.visible = false;
         var guidepassStr = egret.localStorage.getItem(LocalStorageEnum.IS_PASS_GUIDE);
         GameApp.gameaEnd = false;
         var bossnum = 0;
@@ -821,7 +833,7 @@ var GameMainView = (function (_super) {
                     var centerx = _this.monGroup.width - 200;
                     var txts = ["小的们,随本王出征", '列队！准备攻城!!!'];
                     for (var i = 0; i < 2; i++) {
-                        var shapIndex = (Math.random() * 7) >> 0;
+                        var shapIndex = (Math.random() * 6) >> 0;
                         var monsterCfg = GlobalFun.getMonsterCfg();
                         var index = (Math.random() * monsterCfg.length) >> 0;
                         var monsterVo = monsterCfg[index];
@@ -868,7 +880,7 @@ var GameMainView = (function (_super) {
                                                             var rect_1 = new eui.Rect(StageUtils.inst().getWidth(), StageUtils.inst().getHeight(), 0x000000);
                                                             _this.addChild(rect_1);
                                                             rect_1.alpha = 0;
-                                                            egret.Tween.get(rect_1).wait(1000).to({ alpha: 0.9 }, 1000).wait(300).call(function () {
+                                                            egret.Tween.get(rect_1).wait(2000).to({ alpha: 0.9 }, 1000).wait(300).call(function () {
                                                                 if (_this.monGroup) {
                                                                     _this.monGroup.visible = false;
                                                                 }
@@ -878,7 +890,7 @@ var GameMainView = (function (_super) {
                                                                 }
                                                                 // this.monGroup.parent.removeChild(this.monGroup);
                                                                 // this.monImg.parent.removeChild(this.monImg);
-                                                            }, _this).to({ alpha: 0 }, 1000).call(function () {
+                                                            }, _this).to({ alpha: 0 }, 2000).call(function () {
                                                                 rect_1.parent.removeChild(rect_1);
                                                                 egret.Tween.removeTweens(rect_1);
                                                                 _this.showEffect();

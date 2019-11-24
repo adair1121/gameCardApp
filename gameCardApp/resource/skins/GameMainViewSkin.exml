@@ -44,12 +44,12 @@
 		<e:Label id="boxLab" text="Label" size="20" fontFamily="yt" textColor="0x00ff00" left="71" verticalCenter="0" touchEnabled="false"/>
 	</e:Group>
 	<e:Label id="descLab" text="点击战场召唤" horizontalCenter="0" top="81" textColor="0xffffff"/>
-	<e:Rect id="clickRect" anchorOffsetX="0" anchorOffsetY="0" alpha="0" height="409" width="929" x="6" y="174"/>
+	<e:Rect id="clickRect" anchorOffsetX="0" anchorOffsetY="0" alpha="0" height="466.58" width="929" x="6" y="174"/>
 	<e:Image id="upred" source="readp_png" right="14" top="59" visible="false"/>
-	<e:Image id="monImg" left="0" top="-227" right="0" bottom="-140" anchorOffsetY="0" source="main_bg1_jpg" visible="false"/>
+	<e:Image id="monImg" left="0" top="-227" right="0" bottom="-140" anchorOffsetY="0" source="main_bg1_jpg"/>
 	<e:Group id="monGroup" width="1126" height="434" x="6" y="204" anchorOffsetX="0" anchorOffsetY="0">
 	</e:Group>
-	<e:Group id="skillUseGroup" x="418" y="530" visible="false">
+	<e:Group id="skillUseGroup" horizontalCenter="0" bottom="20" visible="false">
 		<e:Image source="progress_bg2_png" x="0" y="1"/>
 		<e:Image id="bar" source="progress_pro_png" x="0" y="1"/>
 		<e:Rect id="barMask" width="300" height="15" x="0" y="0"/>

@@ -23,7 +23,7 @@ var SoldierShapType;
     // TYPE_LINGXING,
     SoldierShapType[SoldierShapType["TYPE_TRIANGLE"] = 3] = "TYPE_TRIANGLE";
     SoldierShapType[SoldierShapType["TYPE_TIXING"] = 4] = "TYPE_TIXING";
-    SoldierShapType[SoldierShapType["TYPE_ARROW"] = 5] = "TYPE_ARROW";
-    SoldierShapType[SoldierShapType["TYPE_CROSS"] = 6] = "TYPE_CROSS";
+    // TYPE_ARROW,
+    SoldierShapType[SoldierShapType["TYPE_CROSS"] = 5] = "TYPE_CROSS";
 })(SoldierShapType || (SoldierShapType = {}));
 //# sourceMappingURL=CounstDataType.js.map
