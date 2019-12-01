@@ -69,7 +69,7 @@ var SoldierEntity = (function (_super) {
         // }
         this.hp = this.thp = this.soldierAttr.hp;
         var index = ((Math.random() * 100) >> 0) > 50 ? 1 : -1;
-        this.soldierAttr.atkDis += ((Math.random() * 7) >> 0) * index;
+        this.soldierAttr.atkDis += ((Math.random() * 10) >> 0) * index;
         // this.w = this.soldierAttr.w;
         // this.h = this.soldierAttr.h;
         this._direc = this._camp == 1 ? 1 : -1;
@@ -203,14 +203,16 @@ var SoldierEntity = (function (_super) {
                 if (this.soldierAttr.id == 4) {
                     var timeout_1 = setTimeout(function () {
                         clearTimeout(timeout_1);
-                        var skillMc = new MovieClip();
-                        skillMc.scaleX = skillMc.scaleY = 0.8;
-                        skillMc.playFile(SKILL_EFF + "skill_fs", 1, null, true);
-                        self_1.addChild(skillMc);
-                        skillMc.x = self_1._mc.x;
-                        skillMc.y = self_1._mc.y;
-                        if (self_1.scaleX == -1) {
-                            skillMc.scaleX = -0.8;
+                        if (self_1 && self_1._mc) {
+                            var skillMc = new MovieClip();
+                            skillMc.scaleX = skillMc.scaleY = 0.8;
+                            skillMc.playFile(SKILL_EFF + "skill_fs", 1, null, true);
+                            self_1.addChild(skillMc);
+                            skillMc.x = self_1._mc.x;
+                            skillMc.y = self_1._mc.y;
+                            if (self_1.scaleX == -1) {
+                                skillMc.scaleX = -0.8;
+                            }
                         }
                     }, 600);
                 }
@@ -282,7 +284,7 @@ var SoldierEntity = (function (_super) {
         egret.Tween.removeTweens(this);
     };
     /**执行y轴一个身位的移动 */
-    SoldierEntity.prototype.execYmoveAction = function (dit, dis) {
+    SoldierEntity.prototype.execYmoveAction = function (dis) {
         egret.Tween.removeTweens(this);
         if (this.curState != ActionState.RUN) {
             this.curState = ActionState.RUN;

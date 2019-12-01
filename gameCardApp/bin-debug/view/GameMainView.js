@@ -111,12 +111,18 @@ var GameMainView = (function (_super) {
         this.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.onEnd, this);
         MessageManager.inst().addListener(CustomEvt.REDUCE_HP, this.onTowerHpReduce, this);
         MessageManager.inst().addListener(CustomEvt.BOSS_RELEASESKILL, this.onBossReleaseSkill, this);
+        MessageManager.inst().addListener("closeMain", this.onCloseMain, this);
         this.blood.visible = false;
         eui.Binding.bindHandler(GameApp, ["level"], this.onLevelChange, this);
         this.descLab.visible = false;
         this.descLab.alpha = 0;
         this.createLevelMonster();
         // 
+    };
+    GameMainView.prototype.onCloseMain = function () {
+        // egret.Tween.removeAllTweens();
+        ViewManager.inst().close(GameMainView);
+        ViewManager.inst().open(StartGameView);
     };
     GameMainView.prototype.onStart = function () {
         // if(!GameApp.gameaEnd){
@@ -125,7 +131,13 @@ var GameMainView = (function (_super) {
     };
     GameMainView.prototype.onStop = function () {
         egret.stopTick(this.execAction, this);
-        egret.Tween.removeAllTweens();
+        // egret.Tween.removeAllTweens();
+        for (var i = 0; i < this._ownEntitys.length; i++) {
+            egret.Tween.removeTweens(this._ownEntitys[i]);
+        }
+        for (var j = 0; j < this._levelEntitys.length; j++) {
+            egret.Tween.removeTweens(this._levelEntitys[j]);
+        }
     };
     GameMainView.prototype.onBegin = function (evt) {
         var _this = this;
@@ -246,10 +258,10 @@ var GameMainView = (function (_super) {
         // let xy:XY = {x:this._levelEntitys[0].x,y:this._levelEntitys[0].y};
         GlobalFun.createSkillEff(-1, index, this, 2, evt.data.xy);
         for (var i = 0; i < this._ownEntitys.length; i++) {
-            var dmg_1 = (GameApp.level) * ((Math.random() * 50) >> 0);
+            var dmg_1 = (GameApp.level) * ((Math.random() * 10) >> 0);
             this._ownEntitys[i].reduceHp(dmg_1);
         }
-        var dmg = (GameApp.level) * ((Math.random() * 50) >> 0);
+        var dmg = (GameApp.level) * ((Math.random() * 10) >> 0);
         this.curHp -= dmg;
         this.onTowerHpReduce({ data: { hp: dmg } });
     };
@@ -294,7 +306,13 @@ var GameMainView = (function (_super) {
         this.curReborns = null;
         GameApp.gameaEnd = true;
         var self = this;
+        this.releaseSkill101 = this.releaseSkill102 = this.releaseSkill103 = this.releaseSkill104 = false;
+        this.skillrelease = null;
         this.hideSkillUse();
+        if (this.curItem) {
+            this.curItem.focus = false;
+            this.curItem = null;
+        }
         var timeout = setTimeout(function () {
             clearTimeout(timeout);
             ViewManager.inst().open(BattleResultPopUp, [{ state: 0, cb: self.gameEnd, arg: self }]);
@@ -525,6 +543,17 @@ var GameMainView = (function (_super) {
                     if (!item.playState) {
                         if (item.atkTar && !item.atkTar.isDead && camp == 1) {
                             item.execMoveAction();
+                            if (this_1.checkXBlock(1, item, this_1._ownEntitys)) {
+                                //x轴有阻挡
+                                var moveY = item.y + (((Math.random() * 100) >> 0) > 50 ? 1 : -1) * 40;
+                                if (moveY >= this_1.clickRect.y + this_1.clickRect.height || moveY <= this_1.clickRect.y) {
+                                    item.execStandAction();
+                                    egret.Tween.removeTweens(item);
+                                }
+                                else {
+                                    item.execYmoveAction(moveY);
+                                }
+                            }
                         }
                         else {
                             if (camp == -1) {
@@ -611,7 +640,13 @@ var GameMainView = (function (_super) {
                     this.curReborns = null;
                     GameApp.gameaEnd = true;
                     var self_3 = this;
+                    this.releaseSkill101 = this.releaseSkill102 = this.releaseSkill103 = this.releaseSkill104 = false;
+                    this.skillrelease = null;
                     this.hideSkillUse();
+                    if (this.curItem) {
+                        this.curItem.focus = false;
+                        this.curItem = null;
+                    }
                     var timeout_2 = setTimeout(function () {
                         clearTimeout(timeout_2);
                         ViewManager.inst().open(BattleResultPopUp, [{ state: 1, cb: self_3.gameEnd, arg: self_3 }]);
@@ -624,7 +659,13 @@ var GameMainView = (function (_super) {
                 this.curReborns = null;
                 GameApp.gameaEnd = true;
                 var self_4 = this;
+                this.releaseSkill101 = this.releaseSkill102 = this.releaseSkill103 = this.releaseSkill104 = false;
+                this.skillrelease = null;
                 this.hideSkillUse();
+                if (this.curItem) {
+                    this.curItem.focus = false;
+                    this.curItem = null;
+                }
                 var timeout_3 = setTimeout(function () {
                     clearTimeout(timeout_3);
                     ViewManager.inst().open(BattleResultPopUp, [{ state: 1, cb: self_4.gameEnd, arg: self_4 }]);
@@ -637,6 +678,13 @@ var GameMainView = (function (_super) {
             var self_5 = this;
             this.curReborns = null;
             this.rebornids = ["1000", "1001", "1002", "1003", "1004", "1005", "1006", "1007", "1008", "1009"];
+            this.releaseSkill101 = this.releaseSkill102 = this.releaseSkill103 = this.releaseSkill104 = false;
+            this.skillrelease = null;
+            this.hideSkillUse();
+            if (this.curItem) {
+                this.curItem.focus = false;
+                this.curItem = null;
+            }
             this.showLevelTxt(function () {
                 self_5.createLevelMonster();
                 egret.startTick(_this.execAction, _this);
@@ -663,6 +711,26 @@ var GameMainView = (function (_super) {
             return 0;
         }
     };
+    /**检测y轴是否有阻挡 */
+    // private checkYBlock(camp:number,item:SoldierEntity,entitys:any[]):number{ 
+    // 	let x:number = item.x;
+    // 	let y:number = item.y;
+    // 	let num:number = 0;
+    // 	for(let i:number = 0;i<entitys.length;i++){
+    // 		let otherItem:any = entitys[i];
+    // 		if(item != otherItem){
+    // 			let ox:number = otherItem.x;
+    // 			let oy:number = otherItem.y;
+    // 			if(oy > y && oy-y >= 40 && item.y <= (this.clickRect.y +this.clickRect.height -20)){
+    // 				return 1;
+    // 			}
+    // 			if(oy < y && y-oy >= 40 && item.y >= this.clickRect.y + 20){
+    // 				return -1
+    // 			}
+    // 		}
+    // 	}
+    // 	return num;
+    // }
     /**检测X轴是否有阻挡 */
     GameMainView.prototype.checkXBlock = function (camp, item, entitys) {
         var x = item.x;
@@ -672,9 +740,18 @@ var GameMainView = (function (_super) {
             if (item != otherItem) {
                 var ox = otherItem.x;
                 var oy = otherItem.y;
-                var contition = camp == -1 ? (ox - x <= 40 && ox - x >= 0) : (x - ox <= 40 && x - ox >= 0);
-                if (contition && Math.abs(oy - y) <= 10) {
-                    return true;
+                if (item.atkTar) {
+                    var direct = item.x > item.atkTar.x ? 1 : -1;
+                    var condition = false;
+                    if (direct == 1) {
+                        condition = (x - ox <= 40 && x > ox && Math.abs(y - oy) <= 20);
+                    }
+                    else {
+                        condition = (ox - x <= 40 && ox > x && Math.abs(y - oy) <= 20);
+                    }
+                    if (condition) {
+                        return true;
+                    }
                 }
             }
         }
@@ -711,13 +788,17 @@ var GameMainView = (function (_super) {
     GameMainView.prototype.onTouchTap = function (evt) {
         if (this.releaseSkill103 && evt.target == this.clickRect) {
             //当前可以释放技人物;
-            if ((!this.curItem.num)) {
-                //神将已经召唤完毕
-                UserTips.inst().showTips("已无更多的神将");
-            }
-            else {
-                this.createOwnGenral({ x: evt.stageX, y: evt.stageY });
-                this.curItem.num -= 1;
+            this.skillrelease = 103;
+            this.hideSkillUse();
+            if (this.curItem) {
+                if ((!this.curItem.num)) {
+                    //神将已经召唤完毕
+                    UserTips.inst().showTips("已无更多的神将");
+                }
+                else {
+                    this.createOwnGenral({ x: evt.stageX, y: evt.stageY });
+                    this.curItem.num -= 1;
+                }
             }
         }
         else if (this.releaseSkill101 && evt.target == this.clickRect) {
@@ -1068,8 +1149,9 @@ var GameMainView = (function (_super) {
         var skillCfg = GlobalFun.getSkillCfg(skillId);
         if (skillCfg) {
             if (skillCfg.skillId == 105) {
-                egret.Tween.removeAllTweens();
-                egret.stopTick(this.execAction, this);
+                // egret.Tween.removeAllTweens();
+                // egret.stopTick(this.execAction,this);
+                this.onStop();
                 ViewManager.inst().open(CommonPtompt, [{ cb: function (oper) {
                             if (oper == 1) {
                                 //需要刷新全部技能;
@@ -1147,6 +1229,7 @@ var GameMainView = (function (_super) {
         this.removeTouchEvent(this.upgradeBtn, this.onUpgrade);
         MessageManager.inst().removeListener("start", this.onStart, this);
         MessageManager.inst().removeListener("end", this.onStop, this);
+        MessageManager.inst().removeListener("closeMain", this.onCloseMain, this);
         this.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onBegin, this);
         this.removeEventListener(egret.TouchEvent.TOUCH_END, this.onEnd, this);
         this.removeEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onEnd, this);

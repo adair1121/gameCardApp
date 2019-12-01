@@ -184,7 +184,7 @@ var Main = (function (_super) {
             this.x *= precentw;
             this.y *= precenth;
         };
-        egret.localStorage.clear();
+        // egret.localStorage.clear();
         //获取平台参数;
         var platform_param = GlobalFun.getOption("pf");
         if (!platform) {

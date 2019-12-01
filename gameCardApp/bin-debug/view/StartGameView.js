@@ -21,6 +21,7 @@ var StartGameView = (function (_super) {
         for (var _i = 0; _i < arguments.length; _i++) {
             param[_i] = arguments[_i];
         }
+        egret.Tween.removeAllTweens();
         this.roleimg2.width = StageUtils.inst().getWidth();
         this.roleimg2.height = StageUtils.inst().getHeight() - 10;
         this.roleimg2.anchorOffsetX = this.roleimg2.width >> 1;

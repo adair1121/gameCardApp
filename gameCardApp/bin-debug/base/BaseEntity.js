@@ -71,8 +71,9 @@ var BaseEntity = (function (_super) {
             this.buffHp -= dmg;
         }
         else {
-            var changeNum = ((dmg * 0.2) >> 0) * this.getIndex();
-            this._hp -= (dmg - this.buffDef + changeNum);
+            var changeNum = ((parseInt(dmg) * 0.2) >> 0) * this.getIndex();
+            var dmgNum = (parseInt(dmg) - this.buffDef + changeNum);
+            this._hp -= dmgNum;
             if (this._hp <= 0) {
                 this._hp = 0;
                 this._isDead = true;
@@ -83,7 +84,7 @@ var BaseEntity = (function (_super) {
             if (this.parent) {
                 this.parent.addChildAt(dmgfont_1, this.parent.numChildren - 1);
             }
-            dmgfont_1.text = "-" + dmg;
+            dmgfont_1.text = "-" + dmgNum;
             dmgfont_1.x = this.x;
             dmgfont_1.y = this.y + -100 + ((Math.random() * 50) >> 0);
             egret.Tween.get(dmgfont_1).to({ y: this.y - 150 }, 600 + ((Math.random() * 400) >> 0), egret.Ease.circIn).call(function () {

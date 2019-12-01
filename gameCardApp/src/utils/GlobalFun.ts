@@ -141,6 +141,13 @@ class GlobalFun {
             }
         }
     }
+    public static deepCopy(obj):any{
+        let obj2:any = {};
+        for(let key in obj){
+            obj2[key] = obj[key];
+        }
+        return obj2;
+    }
     /**根据id获取技能神将配置 */
     public static getSkillGeneralCfg(id:number):CardVo{
         let cfgs:any[] = RebornCfg.cfg;
@@ -148,8 +155,8 @@ class GlobalFun {
          for(let key in cfgs){
             if(cfgs[key].mid == id){
                 cfgs[key].id = id;
-                curCfg = cfgs[key];
-                curCfg.atkDis  = curCfg.atkDis + ((Math.random()*15))
+                curCfg = this.deepCopy(cfgs[key]);
+                // curCfg.atkDis  = curCfg.atkDis + ((Math.random()*15))
                 break;
             }
         }

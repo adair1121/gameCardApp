@@ -52,10 +52,12 @@ var RebornTipPopUp = (function (_super) {
         if (this._cost) {
             this._param = 1;
             if (this._cost > goldNum) {
+                this._param = 0;
                 UserTips.inst().showTips("金币不足");
                 return;
             }
             else {
+                this._param = 1;
                 GameApp.inst().gold -= this._cost;
                 UserTips.inst().showTips("转生成功");
                 // if(!GameApp.reborns[this._skillid]){

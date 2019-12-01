@@ -49,15 +49,31 @@ var SettingPopUp = (function (_super) {
         this.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.onMusicTouchEnd, this);
         this.e_sound_control.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onEffectTouchBegin, this);
         this.addTouchEvent(this.btnClose, this.onReturn, true);
+        this.addTouchEvent(this.continueBtn, this.onReturn, true);
+        this.addTouchEvent(this.exitBtn, this.onExit, true);
     };
-    SettingPopUp.prototype.onReturn = function () {
+    SettingPopUp.prototype.onExit = function () {
+        this.onReturn(null, true);
+    };
+    SettingPopUp.prototype.onReturn = function (evt, result) {
         var _this = this;
+        if (result === void 0) { result = false; }
+        var self = this;
+        var timeout = setTimeout(function () {
+            clearTimeout(timeout);
+            self.rect.alpha = 0;
+        }, 300);
         egret.Tween.get(this.content).to({ verticalCenter: -500 }, 600, egret.Ease.circOut).call(function () {
             egret.Tween.removeTweens(_this.content);
             ViewManager.inst().close(SettingPopUp);
-            MessageManager.inst().dispatch("start");
-            //只为了调刷新接口
-            ViewManager.inst().open(GameMainView);
+            if (result) {
+                MessageManager.inst().dispatch("closeMain");
+            }
+            else {
+                MessageManager.inst().dispatch("start");
+                //只为了调刷新接口
+                ViewManager.inst().open(GameMainView);
+            }
         }, this);
     };
     SettingPopUp.prototype.onMusicTouchBegin = function (evt) {
@@ -105,6 +121,8 @@ var SettingPopUp = (function (_super) {
         this.removeEventListener(egret.TouchEvent.TOUCH_END, this.onMusicTouchEnd, this);
         this.removeEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.onMusicTouchEnd, this);
         this.removeTouchEvent(this.btnClose, this.onReturn);
+        this.removeTouchEvent(this.continueBtn, this.onReturn);
+        this.removeTouchEvent(this.exitBtn, this.onExit);
         this.e_sound_control.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onEffectTouchBegin, this);
     };
     return SettingPopUp;

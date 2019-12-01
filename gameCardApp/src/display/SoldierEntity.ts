@@ -67,7 +67,7 @@ class SoldierEntity extends BaseEntity{
 		// }
 		this.hp = this.thp = this.soldierAttr.hp;
 		let index:number = ((Math.random()*100)>>0) >50?1:-1;
-		this.soldierAttr.atkDis += ((Math.random()*7)>>0)*index
+		this.soldierAttr.atkDis += ((Math.random()*10)>>0)*index
 		// this.w = this.soldierAttr.w;
 		// this.h = this.soldierAttr.h;
 		this._direc = this._camp == 1?1:-1;
@@ -214,15 +214,18 @@ class SoldierEntity extends BaseEntity{
 				if(this.soldierAttr.id == 4){
 					let timeout = setTimeout(function() {
 						clearTimeout(timeout)
-						let skillMc:MovieClip = new MovieClip();
-						skillMc.scaleX = skillMc.scaleY = 0.8;
-						skillMc.playFile(`${SKILL_EFF}skill_fs`,1,null,true);
-						self.addChild(skillMc);
-						skillMc.x = self._mc.x;
-						skillMc.y = self._mc.y;
-						if(self.scaleX == -1){
-							skillMc.scaleX = -0.8;
+						if(self && self._mc){
+							let skillMc:MovieClip = new MovieClip();
+							skillMc.scaleX = skillMc.scaleY = 0.8;
+							skillMc.playFile(`${SKILL_EFF}skill_fs`,1,null,true);
+							self.addChild(skillMc);
+							skillMc.x = self._mc.x;
+							skillMc.y = self._mc.y;
+							if(self.scaleX == -1){
+								skillMc.scaleX = -0.8;
+							}
 						}
+						
 					}, 600);
 					
 				}
@@ -295,7 +298,7 @@ class SoldierEntity extends BaseEntity{
 		egret.Tween.removeTweens(this);
 	}
 	/**执行y轴一个身位的移动 */
-	public execYmoveAction(dit:number,dis:number):void{
+	public execYmoveAction(dis:number):void{
 		egret.Tween.removeTweens(this);
 		if(this.curState != ActionState.RUN){
 			this.curState = ActionState.RUN;

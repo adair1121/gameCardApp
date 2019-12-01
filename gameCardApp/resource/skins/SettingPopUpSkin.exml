@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="SettingPopUpSkin" width="1136" height="640" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Rect left="0" top="0" right="0" bottom="0" alpha="0.3"/>
+	<e:Rect id="rect" left="0" top="0" right="0" bottom="0" alpha="0.3"/>
 	<e:Group id="content" touchChildren="true" touchEnabled="false" touchThrough="true" horizontalCenter="0" verticalCenter="-600">
 		<e:Image source="setting_panel_png" x="0" y="0"/>
+		<e:Image id="exitBtn" source="exitBtn_png"  x="256" y="193.2" scaleX="0.8" scaleY="0.8"/>
+		<e:Image id="continueBtn" source="continueBtn_png"  x="44" y="193.2" scaleX="0.8" scaleY="0.8"/>
 		<e:Image id="btnClose" source="common_close_2_png" x="406.5" y="18.33"/>
 		<e:Image source="autio_title_png" x="139.83" y="129"/>
 		<e:Image source="effect_title_png" x="139.83" y="189.83" visible="false"/>

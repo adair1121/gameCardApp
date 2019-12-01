@@ -134,6 +134,13 @@ var GlobalFun = (function () {
             }
         }
     };
+    GlobalFun.deepCopy = function (obj) {
+        var obj2 = {};
+        for (var key in obj) {
+            obj2[key] = obj[key];
+        }
+        return obj2;
+    };
     /**根据id获取技能神将配置 */
     GlobalFun.getSkillGeneralCfg = function (id) {
         var cfgs = RebornCfg.cfg;
@@ -141,8 +148,8 @@ var GlobalFun = (function () {
         for (var key in cfgs) {
             if (cfgs[key].mid == id) {
                 cfgs[key].id = id;
-                curCfg = cfgs[key];
-                curCfg.atkDis = curCfg.atkDis + ((Math.random() * 15));
+                curCfg = this.deepCopy(cfgs[key]);
+                // curCfg.atkDis  = curCfg.atkDis + ((Math.random()*15))
                 break;
             }
         }

@@ -19,6 +19,9 @@ class SettingPopUp extends BaseEuiView{
 	private _barWidth:number = 139;
 	private _minx:number = 0;
 	private _maxx:number = 0;
+	private rect:eui.Rect;
+	private continueBtn:eui.Image;
+	private exitBtn:eui.Image;
 	public constructor() {
 		super();
 	}
@@ -49,14 +52,29 @@ class SettingPopUp extends BaseEuiView{
 		this.e_sound_control.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.onEffectTouchBegin,this);
 
 		this.addTouchEvent(this.btnClose,this.onReturn,true);
+		this.addTouchEvent(this.continueBtn,this.onReturn,true);
+		this.addTouchEvent(this.exitBtn,this.onExit,true);
 	}
-	private onReturn():void{
+	private onExit():void{
+		this.onReturn(null,true)
+	}
+	private onReturn(evt:egret.TouchEvent,result:boolean = false):void{
+		let self = this;
+		let timeout = setTimeout(function() {
+			clearTimeout(timeout);
+			self.rect.alpha = 0;
+		}, 300);
 		egret.Tween.get(this.content).to({verticalCenter:-500},600,egret.Ease.circOut).call(()=>{
 			egret.Tween.removeTweens(this.content);
 			ViewManager.inst().close(SettingPopUp);
-			MessageManager.inst().dispatch("start");
-			//只为了调刷新接口
-			ViewManager.inst().open(GameMainView);
+			if(result){
+				MessageManager.inst().dispatch("closeMain");
+			}else{
+				MessageManager.inst().dispatch("start");
+				//只为了调刷新接口
+				ViewManager.inst().open(GameMainView);
+			}
+			
 		},this)
 	}
 	//背景音乐事件处理
@@ -104,6 +122,8 @@ class SettingPopUp extends BaseEuiView{
 		this.removeEventListener(egret.TouchEvent.TOUCH_END,this.onMusicTouchEnd,this);
 		this.removeEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE,this.onMusicTouchEnd,this);
 		this.removeTouchEvent(this.btnClose,this.onReturn)
+		this.removeTouchEvent(this.continueBtn,this.onReturn);
+		this.removeTouchEvent(this.exitBtn,this.onExit);
 
 		this.e_sound_control.removeEventListener(egret.TouchEvent.TOUCH_BEGIN,this.onEffectTouchBegin,this);
 	}

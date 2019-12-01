@@ -13,7 +13,7 @@
 	<e:Image id="rebornBtn" source="rebornBtn_png" x="350" y="17"/>
 	<e:Group id="upgradeBtn" x="447" y="17" touchChildren="false" touchEnabled="true" touchThrough="false">
 		<e:Image source="goldBtn_png" x="0" y="0"/>
-		<e:Label id="costLab" text="100000" x="29.5" y="5" size="12" fontFamily="yt" anchorOffsetX="0" width="53" anchorOffsetY="0" height="22" verticalAlign="middle" textAlign="center"/>
+		<e:Label id="costLab" text="100000" x="29.5" y="5" size="16" fontFamily="yt" anchorOffsetX="0" width="53" anchorOffsetY="0" height="22" verticalAlign="middle" textAlign="center"/>
 		<e:Image id="redP" source="readp_png" x="71" y="-4" anchorOffsetX="0" width="17.74" anchorOffsetY="0" height="17" visible="false"/>
 	</e:Group>
 	<e:Label id="levelLab" text="Lv.1" x="239" y="27" size="18" fontFamily="yt"/>

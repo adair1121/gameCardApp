@@ -116,7 +116,7 @@ class Main extends eui.UILayer {
             this.y *= precenth;
         }
         
-        egret.localStorage.clear();
+        // egret.localStorage.clear();
         //获取平台参数;
         let platform_param:string = GlobalFun.getOption("pf");
         if(!platform){

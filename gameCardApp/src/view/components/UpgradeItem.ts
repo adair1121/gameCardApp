@@ -52,7 +52,7 @@ class UpgradeItem extends eui.ItemRenderer{
 		this._curCost = GameApp.skillCfg[this._skillId].cost
 		this.levelLab.text = "Lv."+GameApp.skillCfg[this._skillId].level;
 		this.costLab.text = this._curCost.toString();
-		this.atkLab.text = (GameApp.skillCfg[this._skillId].level*this.data.atk).toString();
+		this.atkLab.text = GameApp.skillCfg[this._skillId].atk.toString();
 		UserTips.inst().showTips("升级成功");
 	}
 	protected dataChanged():void{

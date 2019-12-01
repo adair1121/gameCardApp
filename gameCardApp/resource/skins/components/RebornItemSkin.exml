@@ -5,7 +5,7 @@
 		<e:Image id="headIcon" source="reborn_1_png" horizontalCenter="9" top="28"/>
 		<e:Image id="titleImg" source="reborn_title_1_png" horizontalCenter="0" bottom="158"/>
 		<e:Image source="main_gold_png" x="29" y="159.97" anchorOffsetX="0" width="23" anchorOffsetY="0" height="14.33"/>
-		<e:Label id="rebornCostLab" text="1111" x="52.5" y="157.97" size="14" anchorOffsetX="0" width="50" anchorOffsetY="0" height="19" verticalAlign="middle" textAlign="center"/>
-		<e:Label id="descLab" text="1111" x="9" y="120.5" size="14" anchorOffsetX="0" width="120.5" anchorOffsetY="0" height="19" verticalAlign="middle" textAlign="center"/>
+		<e:Label id="rebornCostLab" text="1111" x="52.5" y="157.97" size="18" anchorOffsetX="0" width="50" anchorOffsetY="0" height="19" verticalAlign="middle" textAlign="center"/>
+		<e:Label id="descLab" text="1111" x="9" y="120.5" size="18" anchorOffsetX="0" width="120.5" anchorOffsetY="0" height="19" verticalAlign="middle" textAlign="center"/>
 	</e:Group>
 </e:Skin>

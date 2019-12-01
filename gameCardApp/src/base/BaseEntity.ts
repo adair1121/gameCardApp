@@ -45,12 +45,13 @@ class BaseEntity extends eui.Component{
 	public getIndex():number{
 		return ((Math.random()*100)>>0) > 50?1:-1;
 	}
-	public reduceHp(dmg:number):void{
+	public reduceHp(dmg):void{
 		if(this.buffHp > 0){
 			this.buffHp -= dmg;
 		}else{
-			let changeNum:number = ((dmg*0.2)>>0)*this.getIndex();
-			this._hp-=(dmg - this.buffDef + changeNum);
+			let changeNum:number = ((parseInt(dmg)*0.2)>>0)*this.getIndex();
+			let dmgNum:number =(parseInt(dmg) - this.buffDef + changeNum);
+			this._hp-=dmgNum;
 			if(this._hp<=0){
 				this._hp = 0;
 				this._isDead = true;
@@ -61,7 +62,7 @@ class BaseEntity extends eui.Component{
 			if(this.parent){
 				this.parent.addChildAt(dmgfont,this.parent.numChildren - 1);
 			}
-			dmgfont.text = "-"+dmg;
+			dmgfont.text = "-"+dmgNum;
 			dmgfont.x = this.x;
 			dmgfont.y = this.y + -100 + ((Math.random()*50)>>0);
 			egret.Tween.get(dmgfont).to({y:this.y-150},600+((Math.random()*400)>>0),egret.Ease.circIn).call(()=>{

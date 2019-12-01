@@ -10,6 +10,7 @@ class StartGameView extends BaseEuiView{
 		super();
 	}
 	public open(...param):void{
+		egret.Tween.removeAllTweens();
 		this.roleimg2.width = StageUtils.inst().getWidth();
 		this.roleimg2.height = StageUtils.inst().getHeight() - 10;
 		this.roleimg2.anchorOffsetX = this.roleimg2.width>>1;
