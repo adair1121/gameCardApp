@@ -53,7 +53,7 @@ class RebornItem extends eui.ItemRenderer{
 			}
 		}
 		1
-		let obj:any = {skillId:this.data.skillId,rebornId:this.data.mid,skillIcon:this.icon,skillTitle:`reborn_title_${this.data.rmodel}_png`,level:skillCfg.level,desc:curRebornCfg.desc,atk:5*skillCfg.level + 45,hp:50*skillCfg.level+450,atkDis:100,cost:10*skillCfg.level+90,skillType:1};
+		let obj:any = {skillId:this.data.skillId,rebornId:this.data.mid,skillIcon:this.icon,skillTitle:`reborn_title_${this.data.rmodel}_png`,level:skillCfg.level,desc:curRebornCfg.desc,atk:5*skillCfg.level + 45,hp:50*skillCfg.level+550,atkDis:100,cost:10*skillCfg.level+90,skillType:1};
 		GameApp.skillCfg[this.data.skillId] = obj;
 		egret.localStorage.setItem(LocalStorageEnum.REBORNCFG,JSON.stringify(GameApp.skillCfg));
 

@@ -71,8 +71,8 @@ abstract class BaseEuiView extends eui.Component implements IBaseEuiView{
 		if(evt.target && evt.target.filters){
 			evt.target.filters = [];
 		}
-		SoundManager.inst().stopEffect();
-		SoundManager.inst().playEffect(`${RES_AUDIO}buttonClick.mp3`);
+		// SoundManager.inst().stopEffect();
+		// SoundManager.inst().playEffect(`${RES_AUDIO}buttonClick.mp3`);
 	}
 	private changeFilter(obj:egret.DisplayObjectContainer):void{
 		var colorMatrix = [

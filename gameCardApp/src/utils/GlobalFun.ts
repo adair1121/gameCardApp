@@ -258,7 +258,8 @@ class GlobalFun {
                     }
                 }
             }
-            
+            let playCount = 15;
+            if(id == 104){playCount = 30}
             let interVal = setInterval(()=>{
                 count += 1;
                 let mc:MovieClip = new MovieClip();
@@ -278,7 +279,7 @@ class GlobalFun {
                     }
                 }
                 
-                if(count >= 10){
+                if(count >= playCount){
                     clearInterval(interVal);
                 }
             },200)

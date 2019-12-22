@@ -25,6 +25,8 @@ var BattleResultPopUp = (function (_super) {
         }
         var precentw = StageUtils.inst().getWidth() / 1136;
         this.winIcon["autoSize"]();
+        // this.winIcon.scaleX *=precentw;
+        // this.winIcon.scaleY *= precentw;
         this.resultImg["autoSize"]();
         this.resultImg2["autoSize"]();
         this.rewardGroup["autoSize"]();
@@ -43,8 +45,8 @@ var BattleResultPopUp = (function (_super) {
             this.invalidateState();
             // this.skin.currentState = "win";
             // let levelstr:string = egret.localStorage.getItem(LocalStorageEnum.LEVEL);
-            this.goldNum = (10 * GameApp.level + 90) + ((Math.random() * 20) >> 0);
-            egret.Tween.get(this.winIcon).to({ alpha: 1, scaleX: precentw, scaleY: precentw }, 300, egret.Ease.circIn).call(function () {
+            this.goldNum = 100 + ((Math.random() * 20) >> 0);
+            egret.Tween.get(this.winIcon).to({ alpha: 1, scaleX: 0.7, scaleY: 0.7 }, 300, egret.Ease.circIn).call(function () {
                 egret.Tween.removeTweens(_this.winIcon);
                 egret.Tween.get(_this.resultImg).to({ alpha: 1, scaleX: precentw, scaleY: precentw }, 300, egret.Ease.circIn).call(function () {
                     egret.Tween.removeTweens(_this.resultImg);
@@ -58,7 +60,7 @@ var BattleResultPopUp = (function (_super) {
         else {
             this._state = "fail";
             this.invalidateState();
-            egret.Tween.get(this.winIcon).to({ alpha: 1, scaleX: precentw, scaleY: precentw }, 300, egret.Ease.circIn).call(function () {
+            egret.Tween.get(this.winIcon).to({ alpha: 1, scaleX: 0.7, scaleY: 0.7 }, 300, egret.Ease.circIn).call(function () {
                 egret.Tween.removeTweens(_this.winIcon);
                 egret.Tween.get(_this.resultImg2).to({ alpha: 1, scaleX: precentw, scaleY: precentw }, 300, egret.Ease.circIn).call(function () {
                     egret.Tween.removeTweens(_this.resultImg2);
@@ -68,7 +70,7 @@ var BattleResultPopUp = (function (_super) {
                 }, _this);
             }, this);
             // this.skin.currentState = "fail";
-            this.goldNum = (5 * GameApp.level + 20) + ((Math.random() * 10) >> 0);
+            this.goldNum = 12 + ((Math.random() * 10) >> 0);
         }
         if (param[0].time) {
             // this.timeLab.text = param[0].time.toString();

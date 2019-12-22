@@ -96,7 +96,7 @@ class GameMainView extends BaseEuiView{
 				GameApp.skillCfg[arr[i].skillId] = arr[i];
 			}
 			for(let i:number = 0;i<10;i++){
-				let item:any = {skillId:1000+i,rebornId:1,skillIcon:"skill_103_png",skillTitle:"skill_103_title_png",level:1,desc:"神将",atk:50,hp:500,atkDis:100,cost:100,skillType:1};
+				let item:any = {skillId:1000+i,rebornId:1,skillIcon:"skill_103_png",skillTitle:"skill_103_title_png",level:1,desc:"神将",atk:50,hp:550,atkDis:100,cost:100,skillType:1};
 				if(!GameApp.skillCfg[item.skillId]){
 					GameApp.skillCfg[item.skillId] = item;
 				}
@@ -104,7 +104,7 @@ class GameMainView extends BaseEuiView{
 		}
 		
 		this.progressBar.mask = this.progressMark;
-		this.totalHp = this.curHp = 50*GameApp.level + 500;
+		this.totalHp = this.curHp = 50*GameApp.level + 950;
 		this.touchEnabled = false;
 		this.touchChildren = false;
 		this.addTouchEvent(this.settingBtn,this.onSetHandler,true);
@@ -201,6 +201,8 @@ class GameMainView extends BaseEuiView{
 					let dis:number = egret.Point.distance(new egret.Point(this._levelEntitys[i].x,this._levelEntitys[i].y),new egret.Point(this.skill102.x,this.skill102.y));
 					if(dis <= 100){
 						this._levelEntitys[i].reduceHp(GameApp.skillCfg[102].atk + ((GameApp.skillCfg[102].atk*0.2*GlobalFun.getIndex())>>0));
+						egret.Tween.removeTweens(this._levelEntitys[i])
+						this._levelEntitys[i].x -= ((Math.random()*40)>>0);
 					}
 				}
 			},150)
@@ -314,7 +316,7 @@ class GameMainView extends BaseEuiView{
 		dmgfont.scaleX = dmgfont.scaleY = 0.7;
 		dmgfont.font = "dmg_fnt";
 		this.addChild(dmgfont);
-		dmgfont.text = "-"+dmg;
+		dmgfont.text = "-"+Math.floor(dmg);
 		dmgfont.bottom = 80;
 		dmgfont.right = 150 + ((Math.random()*50)>>0);
 		egret.Tween.get(dmgfont).to({bottom:dmgfont.bottom+100},600+((Math.random()*400)>>0),egret.Ease.circIn).call(()=>{
@@ -351,6 +353,26 @@ class GameMainView extends BaseEuiView{
 	private gameEnd(param):void{
 		this.curReborns = null;
 		this.rebornids = ["1000","1001","1002","1003","1004","1005","1006","1007","1008","1009"];
+		egret.stopTick(this.execAction,this);
+		egret.Tween.removeAllTweens();
+		for(let i:number = 0;i<this._entitys.length;i++){
+			if(this._entitys[i] && this._entitys[i].parent){
+				this._entitys[i].parent.removeChild(this._entitys[i]);
+			}
+		}
+		for(let i:number = 0;i<this._ownEntitys.length;i++){
+			if(this._ownEntitys[i]&& this._ownEntitys[i].parent){
+				this._ownEntitys[i].dispose();
+			}
+		}
+		for(let i:number = 0;i<this._levelEntitys.length;i++){
+			if(this._levelEntitys[i]&& this._levelEntitys[i].parent){
+				this._levelEntitys[i].dispose();
+			}
+		}
+		this._entitys = [];
+		this._ownEntitys = [];
+		this._levelEntitys = [];
 		if(param == BattleResultPopUp.OPER_EXIT){
 			ViewManager.inst().close(GameMainView);
 			ViewManager.inst().open(StartGameView);
@@ -384,12 +406,18 @@ class GameMainView extends BaseEuiView{
 				this._entitys[i].parent.removeChild(this._entitys[i]);
 			}
 		}
+		for(let i:number = 0;i<this.list.numChildren;i++){
+			let item:SkilItem = this.list.$children[i] as SkilItem;
+			if(item){
+				item.removeCd();
+			}
+		}
 		this.rebornids = ["1000","1001","1002","1003","1004","1005","1006","1007","1008","1009"];
 		this.curReborns = null;
 		this._entitys = [];
 		this._ownEntitys = [];
 		this._levelEntitys = [];
-		this.totalHp = this.curHp = 50*GameApp.level + 500;
+		this.totalHp = this.curHp = 50*GameApp.level + 950;
 		(this.list.$children[2] as SkilItem).num = 10;
 		this.touchEnabled = false;
 		this.touchChildren = false;
@@ -435,7 +463,7 @@ class GameMainView extends BaseEuiView{
 			centerx -= 230;
 			let bossVo:CardVo = bossCfgs[bossIndex];
 			bossVo.atk = 5*GameApp.level + 45 + (5*GameApp.level + 45)*0.2*this.direct();
-			bossVo.hp = 30*GameApp.level + 470 + this.direct()*(30*GameApp.level + 270)*0.2;
+			bossVo.hp = 30*GameApp.level + 800 + this.direct()*(30*GameApp.level + 270)*0.2;
 			boss.setSoldierData(-1,bossVo.model,bossVo);
 			this._levelEntitys.push(boss);
 			this._entitys.push(boss);
@@ -586,7 +614,8 @@ class GameMainView extends BaseEuiView{
 								},this);
 							}else{
 								egret.Tween.removeTweens(item);
-								item.execStandAction();
+								// item.execStandAction();
+								item.execMoveAction({x:(this.clickRect.x + this.clickRect.width - 100 - ((Math.random()*150)>>0)),y:item.y})
 							}
 						}
 					}
@@ -613,8 +642,8 @@ class GameMainView extends BaseEuiView{
 				if(index >= 80){
 					//触发隐藏关卡；
 					this.extraBattle = true;
-					let count:number = (Math.random()*3 + 2)>>0;
-					let num:number = count *10;
+					let count:number = (Math.random()*15 + 10)>>0;
+					let num:number = count;
 					for(let i:number = 0;i<num;i++){
 						let transres:string = ((Math.random()*100)>>0) > 50?`${EFFECT}trans`:`${EFFECT}trans2`;
 						let mc:MovieClip = new MovieClip();
@@ -647,6 +676,12 @@ class GameMainView extends BaseEuiView{
 						},this)
 					}
 				}else{
+					for(let i:number = 0;i<this.list.numChildren;i++){
+						let item:SkilItem = this.list.$children[i] as SkilItem;
+						if(item){
+							item.removeCd();
+						}
+					}
 					this.extraBattle = false;
 					egret.stopTick(this.execAction,this);
 					this.curReborns = null;
@@ -686,6 +721,7 @@ class GameMainView extends BaseEuiView{
 		}else{
 			//打下一波；
 			this.curCount += 1;
+			this.countNumLab.text = this.curCount+"/"+this.totalCount;
 			let self = this;
 			this.curReborns = null;
 			this.rebornids = ["1000","1001","1002","1003","1004","1005","1006","1007","1008","1009"];
@@ -870,7 +906,7 @@ class GameMainView extends BaseEuiView{
 		if(this.totalCount >= GameApp.totalCount){
 			this.totalCount = GameApp.totalCount;
 		}
-		this.totalHp = this.curHp = 50*GameApp.level + 500;
+		this.totalHp = this.curHp = 50*GameApp.level + 950;
 		// this.totalHp = this.curHp = GameApp.level*2000;
 		this.countNumLab.text = this.curCount+"/"+this.totalCount;
 		this.progressMark.width = this.curHp/this.totalHp*277
@@ -1165,6 +1201,9 @@ class GameMainView extends BaseEuiView{
 						for(let i:number = 0;i<this.list.numChildren;i++){
 							let item:SkilItem = this.list.$children[i] as SkilItem;
 							item.removeCd();
+							if(item.skillId == 103){
+								item.num = 10;
+							}
 						}
 					}
 					egret.startTick(this.execAction,this);

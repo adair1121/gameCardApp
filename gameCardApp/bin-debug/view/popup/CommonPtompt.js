@@ -39,13 +39,13 @@ var CommonPtompt = (function (_super) {
         }
     };
     CommonPtompt.prototype.onSure = function () {
-        if (GameApp.roleGold < 200) {
+        if (GameApp.roleGold < 300) {
             UserTips.inst().showTips("金币不足");
             return;
         }
         else {
             this.oper = 1;
-            GameApp.roleGold -= 200;
+            GameApp.roleGold -= 300;
             UserTips.inst().showTips("刷新成功");
         }
         this.onReturn();

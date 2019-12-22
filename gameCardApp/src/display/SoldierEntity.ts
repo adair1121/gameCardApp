@@ -311,7 +311,6 @@ class SoldierEntity extends BaseEntity{
 	/**执行前往目标附近位置 */
 	public execMoveAction(xy?:XY,cb?:()=>void,thisarg?:any,isquick:boolean = true):void{
 		this.battleState = false;
-		
 		if(xy){
 			let angle:number = Math.atan2(xy.y - this.y,xy.x-this.x)*180/Math.PI;
 			this.calculEntityDic(angle)
@@ -392,16 +391,19 @@ class SoldierEntity extends BaseEntity{
 		this.curState = ActionState.ATTACK;
 		this._mc.playFile(this._res,-1,null,false,this.curState,null,framnum);
 		let releaseMc:MovieClip = new MovieClip();
-		this.parent.addChild(releaseMc);
-		releaseMc.playFile(`${EFFECT}release`,3);
-		releaseMc.x = this.x;
-		releaseMc.y = this.y - 50;
-		this.playState = true;
-		let self = this;
-		let timeout = setTimeout(function() {
-			clearTimeout(timeout);
-			self.playState = false;
-		}, 1500);
+		if(this && this.parent){
+			this.parent.addChild(releaseMc);
+			releaseMc.playFile(`${EFFECT}release`,3);
+			releaseMc.x = this.x;
+			releaseMc.y = this.y - 50;
+			this.playState = true;
+			let self = this;
+			let timeout = setTimeout(function() {
+				clearTimeout(timeout);
+				self.playState = false;
+			}, 1500);
+		}
+		
 	}
 	/**执行一次攻击动作 */
 	public execOneTimeAtk(cb,arg,i):void{
@@ -469,6 +471,14 @@ class SoldierEntity extends BaseEntity{
 		// 		self.parent.removeChild(self);
 		// 	}
 		// }, 600);
+		if(this._camp == -1){
+			let goldEff:MovieClip = new MovieClip();
+			goldEff.playFile(`${EFFECT}gold`,1,null,true);
+			this.parent.addChild(goldEff);
+			goldEff.x = this.x;
+			goldEff.y = this.y;
+			GameApp.inst().gold += ((Math.random()*3)>>0)
+		}
 		self._atkTar = null;
 		if(self && self._mc){
 			self.removeChild(self._mc);

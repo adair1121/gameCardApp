@@ -2,7 +2,7 @@
 <e:Skin class="BattleResultPopUpSkin" width="1136" height="640" currentState="win" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" states="win,fail" >
 	<e:Image source="result_bg_png" anchorOffsetX="0" left="0" top="0" right="0" bottom="0"/>
 	<e:Image id="resultImg" source="win_font_png" includeIn="win" horizontalCenter="202.5" top="96"/>
-	<e:Image id="winIcon" source="win_icon_png" source.fail="fail_icon_png" scaleX="0.8" scaleY="0.8" x.fail="61" y.fail="90" x.win="94.5" y.win="62.6"/>
+	<e:Image id="winIcon" source="win_icon_png" source.fail="fail_icon_png" scaleX="0.8" scaleY="0.8" scaleX.fail="0.7" scaleY.fail="0.7" scaleX.win="0.7" scaleY.win="0.7" left.win="140" verticalCenter.win="-33" left.fail="87" verticalCenter.fail="-27"/>
 	<e:Image id="resultImg2"  source.fail="fail_font_png"  x.fail="638" y.fail="96" includeIn="fail" horizontalCenter="202" top="96"/>
 	<e:Label text="时间:" top="302" left="638" visible.fail="false" visible.win="false"/>
 	<e:Label id="timeLab" text="8.55" anchorOffsetX="0" width="189" textAlign="left" verticalAlign="middle" top="302" left="736" visible.fail="false" visible.win="false"/>

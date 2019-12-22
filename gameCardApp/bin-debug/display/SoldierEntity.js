@@ -380,16 +380,18 @@ var SoldierEntity = (function (_super) {
         this.curState = ActionState.ATTACK;
         this._mc.playFile(this._res, -1, null, false, this.curState, null, framnum);
         var releaseMc = new MovieClip();
-        this.parent.addChild(releaseMc);
-        releaseMc.playFile(EFFECT + "release", 3);
-        releaseMc.x = this.x;
-        releaseMc.y = this.y - 50;
-        this.playState = true;
-        var self = this;
-        var timeout = setTimeout(function () {
-            clearTimeout(timeout);
-            self.playState = false;
-        }, 1500);
+        if (this && this.parent) {
+            this.parent.addChild(releaseMc);
+            releaseMc.playFile(EFFECT + "release", 3);
+            releaseMc.x = this.x;
+            releaseMc.y = this.y - 50;
+            this.playState = true;
+            var self_2 = this;
+            var timeout_3 = setTimeout(function () {
+                clearTimeout(timeout_3);
+                self_2.playState = false;
+            }, 1500);
+        }
     };
     /**执行一次攻击动作 */
     SoldierEntity.prototype.execOneTimeAtk = function (cb, arg, i) {
@@ -459,6 +461,14 @@ var SoldierEntity = (function (_super) {
         // 		self.parent.removeChild(self);
         // 	}
         // }, 600);
+        if (this._camp == -1) {
+            var goldEff = new MovieClip();
+            goldEff.playFile(EFFECT + "gold", 1, null, true);
+            this.parent.addChild(goldEff);
+            goldEff.x = this.x;
+            goldEff.y = this.y;
+            GameApp.inst().gold += ((Math.random() * 3) >> 0);
+        }
         self._atkTar = null;
         if (self && self._mc) {
             self.removeChild(self._mc);

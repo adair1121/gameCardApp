@@ -247,6 +247,10 @@ var GlobalFun = (function () {
                     }
                 }
             }
+            var playCount_1 = 15;
+            if (id == 104) {
+                playCount_1 = 30;
+            }
             var interVal_1 = setInterval(function () {
                 count_1 += 1;
                 var mc = new MovieClip();
@@ -265,7 +269,7 @@ var GlobalFun = (function () {
                         }
                     }
                 }
-                if (count_1 >= 10) {
+                if (count_1 >= playCount_1) {
                     clearInterval(interVal_1);
                 }
             }, 200);

@@ -13,7 +13,7 @@ var RebornCfg = (function () {
             atktype: 1,
             atkDis: 50,
             type: 1,
-            spd: 30,
+            spd: 100,
             atk: 50,
             hp: 500,
             id: 4,
@@ -24,7 +24,7 @@ var RebornCfg = (function () {
             desc: "神将"
         },
         {
-            cost: 1000,
+            cost: 1500,
             mid: 2,
             name: "剑圣",
             level: 1,
@@ -32,7 +32,7 @@ var RebornCfg = (function () {
             atktype: 1,
             atkDis: 50,
             type: 1,
-            spd: 30,
+            spd: 100,
             atk: 50,
             hp: 500,
             id: 4,
@@ -51,7 +51,7 @@ var RebornCfg = (function () {
             atkDis: 50,
             rmodel: 3,
             type: 1,
-            spd: 30,
+            spd: 100,
             atk: 50,
             hp: 500,
             id: 4,
@@ -62,7 +62,7 @@ var RebornCfg = (function () {
             desc: "全属性增加1倍"
         },
         {
-            cost: 3000,
+            cost: 2500,
             mid: 4,
             name: "法神",
             level: 1,
@@ -70,7 +70,7 @@ var RebornCfg = (function () {
             atkDis: 200,
             rmodel: 2,
             type: 1,
-            spd: 30,
+            spd: 100,
             atk: 50,
             hp: 500,
             id: 4,

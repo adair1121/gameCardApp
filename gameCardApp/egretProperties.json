@@ -34,6 +34,10 @@
       "appname": "dragon",
       "packagename": "adair",
       "hybrid": false
+    },
+    "android": {
+      "appname": "adair",
+      "packagename": "com.companyname"
     }
   }
 }

@@ -25,7 +25,7 @@ class UpgradeItem extends eui.ItemRenderer{
 	private onUpgrade():void{
 		let userGold:number = GameApp.inst().gold;
 		if(this._curCost > userGold){
-			UserTips.inst().showTips("元宝不足");
+			UserTips.inst().showTips("金币不足");
 			return;
 		}
 		GameApp.inst().gold -= this._curCost;
@@ -33,12 +33,12 @@ class UpgradeItem extends eui.ItemRenderer{
 		GameApp.skillCfg[this._skillId].level += 1;
 		if(this._skillId  >= 1000){
 			GameApp.skillCfg[this._skillId].atk = 5*GameApp.skillCfg[this._skillId].level+45;
-			GameApp.skillCfg[this._skillId].hp = 50*GameApp.skillCfg[this._skillId].level+450;
+			GameApp.skillCfg[this._skillId].hp = 50*GameApp.skillCfg[this._skillId].level+550;
 			GameApp.skillCfg[this._skillId].cost = 10*GameApp.skillCfg[this._skillId].level+90;
 		}else{
 			if(this._skillId == 101 || this._skillId == 102){
-				GameApp.skillCfg[this._skillId].atk = 0.5*GameApp.skillCfg[this._skillId].level+4.5;
-				GameApp.skillCfg[this._skillId].cost = 5*GameApp.skillCfg[this._skillId].level+45;
+				GameApp.skillCfg[this._skillId].atk = 0.5*GameApp.skillCfg[this._skillId].level+7.5;
+				GameApp.skillCfg[this._skillId].cost = 5*GameApp.skillCfg[this._skillId].level+25;
 			}else{
 				GameApp.skillCfg[this._skillId].atk = 2*GameApp.skillCfg[this._skillId].level+18;
 				GameApp.skillCfg[this._skillId].cost = 10*GameApp.skillCfg[this._skillId].level+90;

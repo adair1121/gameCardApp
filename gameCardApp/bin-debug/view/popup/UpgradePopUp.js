@@ -44,7 +44,7 @@ var UpgradePopUp = (function (_super) {
             }
         }
         for (var i = 0; i < 10; i++) {
-            var item = { skillId: 1000 + i, rebornId: 1, skillIcon: "skill_103_png", skillTitle: "skill_103_title_png", level: 1, desc: "神将", atk: 50, hp: 500, atkDis: 100, cost: 100, skillType: 1 };
+            var item = { skillId: 1000 + i, rebornId: 1, skillIcon: "skill_103_png", skillTitle: "skill_103_title_png", level: 1, desc: "神将", atk: 50, hp: 550, atkDis: 100, cost: 100, skillType: 1 };
             if (GameApp.skillCfg[item.skillId]) {
                 item = GameApp.skillCfg[item.skillId];
             }
@@ -58,6 +58,7 @@ var UpgradePopUp = (function (_super) {
         }
         this.arraycollect.source = arr;
         this.addTouchEvent(this.btnClose, this.onReturn, true);
+        this.rect.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onReturn, this);
         MessageManager.inst().addListener(CustomEvt.REBORNSUCCESS, this.onReborn, this);
         this.watcher = eui.Binding.bindHandler(GameApp, ["roleGold"], this.onGoldChange, this);
     };
@@ -94,6 +95,7 @@ var UpgradePopUp = (function (_super) {
     };
     UpgradePopUp.prototype.close = function () {
         this.removeTouchEvent(this.btnClose, this.onReturn);
+        this.rect.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onReturn, this);
         if (this.watcher) {
             this.watcher.unwatch();
         }
