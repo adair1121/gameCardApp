@@ -16,5 +16,6 @@
 		<e:Rect id="effectBarMask" width="139" height="26" x="186.16" y="182.49" anchorOffsetX="0" anchorOffsetY="0" visible="false"/>
 		<e:Image id="m_sound_control" source="audio_icon_png" x="327.76" y="138.56" anchorOffsetX="12.93" anchorOffsetY="13.39" width="25" height="25.5"/>
 		<e:Image id="e_sound_control" source="audio_icon_png" x="328" y="195.66" anchorOffsetX="13.17" anchorOffsetY="13" height="25.5" width="25" visible="false"/>
+		<e:Label text="QQ邮箱:1446344217@qq.com" size="20" horizontalCenter="0.5" bottom="14" textColor="0xbfb5b5"/>
 	</e:Group>
 </e:Skin>

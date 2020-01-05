@@ -272,6 +272,7 @@ var GameMainView = (function (_super) {
         this.curHp -= evt.data.hp;
         if (this.curHp <= 0) {
             this.curHp = 0;
+            this.progressMark.width = this.curHp / this.totalHp * 277;
             this.gameFail();
         }
         if (!this.showBlood) {
@@ -330,6 +331,7 @@ var GameMainView = (function (_super) {
         this.rebornids = ["1000", "1001", "1002", "1003", "1004", "1005", "1006", "1007", "1008", "1009"];
         egret.stopTick(this.execAction, this);
         egret.Tween.removeAllTweens();
+        this.descLab.visible = false;
         for (var i = 0; i < this._entitys.length; i++) {
             if (this._entitys[i] && this._entitys[i].parent) {
                 this._entitys[i].parent.removeChild(this._entitys[i]);
@@ -368,6 +370,10 @@ var GameMainView = (function (_super) {
             this._levelEntitys = [];
             var skillItem = this.list.getChildAt(2);
             skillItem.num = 10;
+            for (var j = 0; j < this.list.numChildren; j++) {
+                var item = this.list.getChildAt(2);
+                item.removeCd();
+            }
             var timeout_1 = setTimeout(function () {
                 clearTimeout(timeout_1);
                 self_2.showLevelTxt(function () {
@@ -394,6 +400,8 @@ var GameMainView = (function (_super) {
         this._entitys = [];
         this._ownEntitys = [];
         this._levelEntitys = [];
+        this.curCount = 1;
+        this.countNumLab.text = this.curCount + "/" + this.totalCount;
         this.totalHp = this.curHp = 50 * GameApp.level + 950;
         this.list.$children[2].num = 10;
         this.touchEnabled = false;
@@ -437,7 +445,7 @@ var GameMainView = (function (_super) {
             if (GameApp.level <= 9) {
                 bossIndex = GameApp.level - 1;
             }
-            centerx -= 230;
+            centerx -= 330;
             var bossVo = bossCfgs[bossIndex];
             bossVo.atk = 5 * GameApp.level + 45 + (5 * GameApp.level + 45) * 0.2 * this.direct();
             bossVo.hp = 30 * GameApp.level + 800 + this.direct() * (30 * GameApp.level + 270) * 0.2;
@@ -446,7 +454,7 @@ var GameMainView = (function (_super) {
             this._entitys.push(boss);
             boss.y = this.clickRect.y + (this.clickRect.height >> 1);
             boss.x = centerx;
-            centerx -= 650;
+            centerx -= 750;
         }
         this.dealLayerRelation();
     };
@@ -559,7 +567,7 @@ var GameMainView = (function (_super) {
                 }
                 else {
                     if (!item.isInAtk) {
-                        item.lookAt(atkItem);
+                        item.lookAt(atkItem, true);
                     }
                 }
                 if (item.isInAtkDis()) {
@@ -884,6 +892,7 @@ var GameMainView = (function (_super) {
             var timeout_4 = setTimeout(function () {
                 clearTimeout(timeout_4);
                 GlobalFun.createSkillEff(1, 104, self_6, 2, { x: StageUtils.inst().getWidth() - 200, y: 200 }, self_6._levelEntitys, skillCfg_1.atk);
+                GlobalFun.shakeObj(self_6, 7, 15, 5);
             }, 800);
         }
     };
@@ -924,20 +933,19 @@ var GameMainView = (function (_super) {
         }, this);
         egret.Tween.get(this.upgradeBtn).to({ right: 17 }, 700, egret.Ease.backOut).call(function () {
             egret.Tween.removeTweens(_this.upgradeBtn);
-            _this.upred.visible = true;
+            _this.upred.right = 14;
         });
         egret.Tween.get(this.skillGroup).to({ right: -13 }, 800, egret.Ease.backOut).call(function () {
             egret.Tween.removeTweens(_this.skillGroup);
         }, this);
         egret.Tween.get(this.hpGroup).to({ bottom: 0 }, 900, egret.Ease.backOut).call(function () {
             egret.Tween.removeTweens(_this.hpGroup);
-            _this.upred.visible = true;
         }, this);
     };
     GameMainView.prototype.initialize = function (boo) {
         var _this = this;
         //初始化
-        this.upred.visible = false;
+        // this.upred.visible = false;
         var guidepassStr = egret.localStorage.getItem(LocalStorageEnum.IS_PASS_GUIDE);
         GameApp.gameaEnd = false;
         var bossnum = 0;

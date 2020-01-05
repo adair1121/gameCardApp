@@ -477,7 +477,7 @@ class SoldierEntity extends BaseEntity{
 			this.parent.addChild(goldEff);
 			goldEff.x = this.x;
 			goldEff.y = this.y;
-			GameApp.inst().gold += ((Math.random()*3)>>0)
+			GameApp.inst().gold += ((Math.random()*4+2)>>0)
 		}
 		self._atkTar = null;
 		if(self && self._mc){

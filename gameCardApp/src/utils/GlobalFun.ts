@@ -278,7 +278,6 @@ class GlobalFun {
                         }
                     }
                 }
-                
                 if(count >= playCount){
                     clearInterval(interVal);
                 }

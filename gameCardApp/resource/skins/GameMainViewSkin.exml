@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="GameMainViewSkin" width="1136" height="640" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Image left="0" top="-227" right="0" bottom="-140" anchorOffsetY="0" source="main_bg1_jpg"/>
+	<e:Image id="bgImg" left="0" top="-227" right="0" bottom="-140" anchorOffsetY="0" source="main_bg1_jpg"/>
 	<e:Image source="main_top_bg_png" left="0" right="0" top="0" anchorOffsetY="0" height="53"/>
 	<e:Rect id="pos1" width="20" height="20" x="1003.67" y="201" anchorOffsetX="10" anchorOffsetY="11" alpha="0"/>
 	<e:Rect id="pos2" width="20" height="20" x="995.66" y="575" anchorOffsetX="10" anchorOffsetY="11" alpha="0"/>
@@ -45,7 +45,7 @@
 	</e:Group>
 	<e:Label id="descLab" text="点击战场召唤" horizontalCenter="0" top="81" textColor="0xffffff"/>
 	<e:Rect id="clickRect" anchorOffsetX="0" anchorOffsetY="0" alpha="0" height="466.58" width="929" x="6" y="174"/>
-	<e:Image id="upred" source="readp_png" right="14" top="59" visible="false"/>
+	<e:Image id="upred" source="readp_png" right="-100" top="59" visible="false"/>
 	<e:Image id="monImg" left="0" top="-227" right="0" bottom="-140" anchorOffsetY="0" source="main_bg1_jpg"/>
 	<e:Group id="monGroup" width="1126" height="434" x="6" y="204" anchorOffsetX="0" anchorOffsetY="0">
 	</e:Group>
