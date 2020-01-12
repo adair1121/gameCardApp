@@ -36,24 +36,50 @@ var SkilItem = (function (_super) {
         }
         this.touchEnabled = false;
         this.touchChildren = false;
-        var cdTime = this.data.cd;
+        // let cdTime:number = this.data.cd;
         this.cdGroup.visible = true;
-        this.cdTime.text = cdTime.toString();
-        var count = 0;
+        this.cdTime.text = this.data.cd.toString();
+        this.count = 0;
         var self = this;
         this._isCd = true;
         this.cdInterval = setInterval(function () {
-            count += 1;
-            self.cdTime.text = (cdTime - count).toString();
-            if (count >= cdTime) {
+            self.count += 1;
+            self.cdTime.text = (self.data.cd - self.count).toString();
+            if (self.count >= self.data.cd) {
                 clearInterval(self.cdInterval);
                 self._isCd = false;
                 self.touchEnabled = true;
+                self.count = 0;
                 self.touchChildren = true;
                 self.cdGroup.visible = false;
             }
         }, 1000);
     };
+    /**技能cd暂停 */
+    SkilItem.prototype.pauseCd = function () {
+        if (this.cdInterval) {
+            clearInterval(this.cdInterval);
+        }
+    };
+    /**技能cd取消暂停 */
+    SkilItem.prototype.canclePause = function () {
+        if (this.data.cd && this.count < this.data.cd) {
+            var self_1 = this;
+            this.cdInterval = setInterval(function () {
+                self_1.count += 1;
+                self_1.cdTime.text = (self_1.data.cd - self_1.count).toString();
+                if (self_1.count >= self_1.data.cd) {
+                    clearInterval(self_1.cdInterval);
+                    self_1._isCd = false;
+                    self_1.count = 0;
+                    self_1.touchEnabled = true;
+                    self_1.touchChildren = true;
+                    self_1.cdGroup.visible = false;
+                }
+            }, 1000);
+        }
+    };
+    /**技能cd移除 */
     SkilItem.prototype.removeCd = function () {
         if (this.cdInterval) {
             clearInterval(this.cdInterval);
@@ -61,6 +87,7 @@ var SkilItem = (function (_super) {
         this.cdGroup.visible = false;
         this.touchEnabled = true;
         this.touchChildren = true;
+        this.count = 0;
         this._isCd = false;
         this.cdTime.text = "0";
     };

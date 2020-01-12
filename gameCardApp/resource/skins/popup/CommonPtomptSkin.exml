@@ -4,7 +4,7 @@
 	<e:Group id="tipGroup" touchChildren="true" touchEnabled="false" touchThrough="true" horizontalCenter="0.5" verticalCenter="0.5">
 		<e:Image source="prompt_bg_png" x="0" y="0"/>
 		<e:Image id="returnBtn" source="common_close_2_png" x="403.17" y="15.83" anchorOffsetX="0" width="33.33" anchorOffsetY="0" height="33.33"/>
-		<e:Label text="是否花费300" x="117.5" y="110.5" size="20" fontFamily="yt" textColor="0xd1cccc"/>
+		<e:Label text="是否花费200" x="117.5" y="110.5" size="20" fontFamily="yt" textColor="0xd1cccc"/>
 		<e:Label text="刷新技能" x="268.5" y="111.5" size="20" fontFamily="yt" textColor="0xD1CCCC"/>
 		<e:Image source="prompt_gold_png" x="230.5" y="111.5"/>
 		<e:Image id="cancleBtn" source="prompt_cancleBtn_png" x="95.5" y="205.5"/>

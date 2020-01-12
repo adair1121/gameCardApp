@@ -51,6 +51,7 @@ var ShopPopUp = (function (_super) {
             MessageManager.inst().dispatch("start");
             egret.Tween.removeTweens(_this.content);
             ViewManager.inst().close(ShopPopUp);
+            MessageManager.inst().dispatch(CustomEvt.CANCLESKILLCDPAUSE);
         }, this);
     };
     /**点击金币商城 */

@@ -37,10 +37,19 @@ class UpgradeItem extends eui.ItemRenderer{
 			GameApp.skillCfg[this._skillId].cost = 10*GameApp.skillCfg[this._skillId].level+90;
 		}else{
 			if(this._skillId == 101 || this._skillId == 102){
-				GameApp.skillCfg[this._skillId].atk = 0.5*GameApp.skillCfg[this._skillId].level+7.5;
+				if(this._skillId == 101){
+					GameApp.skillCfg[this._skillId].atk = GameApp.skillCfg[this._skillId].level+8;
+				}else{
+					GameApp.skillCfg[this._skillId].atk = GameApp.skillCfg[this._skillId].level+6;
+				}
+				
 				GameApp.skillCfg[this._skillId].cost = 5*GameApp.skillCfg[this._skillId].level+25;
 			}else{
-				GameApp.skillCfg[this._skillId].atk = 2*GameApp.skillCfg[this._skillId].level+18;
+				if(this._skillId == 104){
+					GameApp.skillCfg[this._skillId].atk = 5*GameApp.skillCfg[this._skillId].level+35;
+				}else{
+					GameApp.skillCfg[this._skillId].atk = 2*GameApp.skillCfg[this._skillId].level+18;
+				}
 				GameApp.skillCfg[this._skillId].cost = 10*GameApp.skillCfg[this._skillId].level+90;
 			}
 			

@@ -39,7 +39,7 @@ class GameApp extends BaseClass {
 
 		let goldstr:string = egret.localStorage.getItem(LocalStorageEnum.ROLE_GOLD);
 		if(!goldstr){
-			GameApp.roleGold = 200;
+			GameApp.roleGold = 800;
 		}else{
 			GameApp.roleGold = parseInt(goldstr);
 		}

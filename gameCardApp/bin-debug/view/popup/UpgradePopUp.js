@@ -91,6 +91,7 @@ var UpgradePopUp = (function (_super) {
             egret.Tween.removeTweens(_this.upgradeGroup);
             ViewManager.inst().close(UpgradePopUp);
             MessageManager.inst().dispatch("start");
+            MessageManager.inst().dispatch(CustomEvt.CANCLESKILLCDPAUSE);
         }, this);
     };
     UpgradePopUp.prototype.close = function () {

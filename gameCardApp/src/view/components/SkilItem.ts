@@ -29,33 +29,61 @@ class SkilItem extends eui.ItemRenderer{
 		this.cdGroup.visible = false;
 	}
 	private cdInterval;
+	private count:number;
 	public setCd():void{
 		if(this.data.cd == 0){return}
 		this.touchEnabled = false;
 		this.touchChildren = false;
-		let cdTime:number = this.data.cd;
+		// let cdTime:number = this.data.cd;
 		this.cdGroup.visible = true;
-		this.cdTime.text = cdTime.toString();
-		let count:number = 0;
+		this.cdTime.text = this.data.cd.toString();
+		this.count = 0;
 		let self = this;
 		this._isCd = true;
 		this.cdInterval = setInterval(function() {
-			count += 1;
-			self.cdTime.text = (cdTime - count).toString();
-			if(count >= cdTime){
+			self.count += 1;
+			self.cdTime.text = (self.data.cd - self.count).toString();
+			if(self.count >= self.data.cd){
 				clearInterval(self.cdInterval);
 				self._isCd = false;
 				self.touchEnabled = true;
+				self.count = 0;
 				self.touchChildren = true;
 				self.cdGroup.visible = false;
 			}
 	    }, 1000);
 	}
+	/**技能cd暂停 */
+	public pauseCd():void{
+		if(this.cdInterval){
+			clearInterval(this.cdInterval);
+		}
+	}
+	/**技能cd取消暂停 */
+	public canclePause():void{
+		if(this.data.cd && this.count < this.data.cd){
+			let self = this;
+			this.cdInterval = setInterval(function() {
+				self.count += 1;
+				self.cdTime.text = (self.data.cd - self.count).toString();
+				if(self.count >= self.data.cd){
+					clearInterval(self.cdInterval);
+					self._isCd = false;
+					self.count = 0;
+					self.touchEnabled = true;
+					self.touchChildren = true;
+					self.cdGroup.visible = false;
+				}
+			}, 1000);
+		}
+	}
+	/**技能cd移除 */
 	public removeCd():void{
 		if(this.cdInterval){clearInterval(this.cdInterval)}
 		this.cdGroup.visible = false;
 		this.touchEnabled = true;
 		this.touchChildren = true;
+		this.count = 0;
 		this._isCd = false;
 		this.cdTime.text = "0";
 	}

@@ -30,7 +30,7 @@ var GameApp = (function (_super) {
         ViewManager.inst().open(StartGameView);
         var goldstr = egret.localStorage.getItem(LocalStorageEnum.ROLE_GOLD);
         if (!goldstr) {
-            GameApp.roleGold = 200;
+            GameApp.roleGold = 800;
         }
         else {
             GameApp.roleGold = parseInt(goldstr);

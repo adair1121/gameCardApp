@@ -122,6 +122,7 @@ class GameMainView extends BaseEuiView{
 		this.timer.addEventListener(egret.TimerEvent.TIMER,this.onTimer,this);
 		MessageManager.inst().addListener("start",this.onStart,this);
 		MessageManager.inst().addListener("end",this.onStop,this);
+		MessageManager.inst().addListener(CustomEvt.CANCLESKILLCDPAUSE,this.cancleSkillCdPause,this);
 
 		this.refreshRewardBoxState();
 		let boo:boolean = this.changeTime();
@@ -923,12 +924,32 @@ class GameMainView extends BaseEuiView{
 	}
 	private onaddGem():void{
 		ViewManager.inst().open(ShopPopUp,[{selectIndex:1}])
+		this.pauseSkillCd();
 	}
 	private onaddGold():void{
 		ViewManager.inst().open(ShopPopUp,[{selectIndex:0}])
+		this.pauseSkillCd();
 	}
 	private onUpgrade():void{
 		ViewManager.inst().open(UpgradePopUp);
+		this.pauseSkillCd();		
+	}
+	//技能cd暂停
+	private pauseSkillCd():void{
+		for(let i:number = 0;i<this.list.numChildren;i++){
+			let skillItem:SkilItem = this.list.getChildAt(i) as SkilItem;
+			if(skillItem){
+				skillItem.pauseCd();
+			}
+		}
+	}
+	private cancleSkillCdPause():void{
+		for(let i:number = 0;i<this.list.numChildren;i++){
+			let skillItem:SkilItem = this.list.getChildAt(i) as SkilItem;
+			if(skillItem){
+				skillItem.canclePause();
+			}
+		}
 	}
 	private showEffect(){
 			egret.Tween.get(this.itemGroup).to({top:4},300,egret.Ease.backOut).call(()=>{
@@ -1184,6 +1205,7 @@ class GameMainView extends BaseEuiView{
 	/**音频设置界面 */
 	private onSetHandler():void{
 		ViewManager.inst().open(SettingPopUp);
+		this.pauseSkillCd();
 	}
 	private timeout;
 	private releaseSkill101:boolean = false;
@@ -1230,6 +1252,8 @@ class GameMainView extends BaseEuiView{
 			let self = this;
 			this.timeout = setTimeout(function() {
 				clearTimeout(self.timeout);
+				self.descLab.visible = false;
+				self.descLab.alpha = 0;
 				egret.Tween.removeTweens(self.descLab)
 			}, 2000);
 
@@ -1284,6 +1308,7 @@ class GameMainView extends BaseEuiView{
 		MessageManager.inst().removeListener("start",this.onStart,this);
 		MessageManager.inst().removeListener("end",this.onStop,this);
 		MessageManager.inst().removeListener("closeMain",this.onCloseMain,this);
+		MessageManager.inst().removeListener(CustomEvt.CANCLESKILLCDPAUSE,this.cancleSkillCdPause,this);
 		this.removeEventListener(egret.TouchEvent.TOUCH_BEGIN,this.onBegin,this);
 		this.removeEventListener(egret.TouchEvent.TOUCH_END,this.onEnd,this);
 		this.removeEventListener(egret.TouchEvent.TOUCH_CANCEL,this.onEnd,this);

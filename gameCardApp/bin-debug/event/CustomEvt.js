@@ -32,6 +32,8 @@ var CustomEvt = (function (_super) {
     CustomEvt.BOSS_RELEASESKILL = "boos_releaseskill";
     /**转生成功 */
     CustomEvt.REBORNSUCCESS = "rebornsuccess";
+    /**取消技能cd暂停 */
+    CustomEvt.CANCLESKILLCDPAUSE = "cancleskillcdpause";
     return CustomEvt;
 }(egret.Event));
 __reflect(CustomEvt.prototype, "CustomEvt");

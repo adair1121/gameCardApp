@@ -93,6 +93,7 @@ var GameMainView = (function (_super) {
         this.timer.addEventListener(egret.TimerEvent.TIMER, this.onTimer, this);
         MessageManager.inst().addListener("start", this.onStart, this);
         MessageManager.inst().addListener("end", this.onStop, this);
+        MessageManager.inst().addListener(CustomEvt.CANCLESKILLCDPAUSE, this.cancleSkillCdPause, this);
         this.refreshRewardBoxState();
         var boo = this.changeTime();
         if (boo) {
@@ -910,12 +911,32 @@ var GameMainView = (function (_super) {
     };
     GameMainView.prototype.onaddGem = function () {
         ViewManager.inst().open(ShopPopUp, [{ selectIndex: 1 }]);
+        this.pauseSkillCd();
     };
     GameMainView.prototype.onaddGold = function () {
         ViewManager.inst().open(ShopPopUp, [{ selectIndex: 0 }]);
+        this.pauseSkillCd();
     };
     GameMainView.prototype.onUpgrade = function () {
         ViewManager.inst().open(UpgradePopUp);
+        this.pauseSkillCd();
+    };
+    //技能cd暂停
+    GameMainView.prototype.pauseSkillCd = function () {
+        for (var i = 0; i < this.list.numChildren; i++) {
+            var skillItem = this.list.getChildAt(i);
+            if (skillItem) {
+                skillItem.pauseCd();
+            }
+        }
+    };
+    GameMainView.prototype.cancleSkillCdPause = function () {
+        for (var i = 0; i < this.list.numChildren; i++) {
+            var skillItem = this.list.getChildAt(i);
+            if (skillItem) {
+                skillItem.canclePause();
+            }
+        }
     };
     GameMainView.prototype.showEffect = function () {
         var _this = this;
@@ -1181,6 +1202,7 @@ var GameMainView = (function (_super) {
     /**音频设置界面 */
     GameMainView.prototype.onSetHandler = function () {
         ViewManager.inst().open(SettingPopUp);
+        this.pauseSkillCd();
     };
     GameMainView.prototype.onItemTap = function (evt) {
         var _this = this;
@@ -1222,6 +1244,8 @@ var GameMainView = (function (_super) {
             var self_7 = this;
             this.timeout = setTimeout(function () {
                 clearTimeout(self_7.timeout);
+                self_7.descLab.visible = false;
+                self_7.descLab.alpha = 0;
                 egret.Tween.removeTweens(self_7.descLab);
             }, 2000);
             for (var i = 0; i < this.list.numChildren; i++) {
@@ -1277,6 +1301,7 @@ var GameMainView = (function (_super) {
         MessageManager.inst().removeListener("start", this.onStart, this);
         MessageManager.inst().removeListener("end", this.onStop, this);
         MessageManager.inst().removeListener("closeMain", this.onCloseMain, this);
+        MessageManager.inst().removeListener(CustomEvt.CANCLESKILLCDPAUSE, this.cancleSkillCdPause, this);
         this.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onBegin, this);
         this.removeEventListener(egret.TouchEvent.TOUCH_END, this.onEnd, this);
         this.removeEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onEnd, this);

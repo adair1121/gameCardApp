@@ -9,7 +9,7 @@
 	<e:Image id="nextBtn" source="nextLevelBtn_png" includeIn="win" x="673" y="416"/>
 	<e:Group id="rewardGroup" anchorOffsetX.win="0" width.win="334" anchorOffsetY.win="0" height.win="83.12" anchorOffsetX.fail="0" width.fail="279.33" anchorOffsetY.fail="0" height.fail="60" horizontalCenter.fail="211.5" top.fail="282" horizontalCenter.win="243" top.win="268">
 		<e:Label id="goldNumLab" text="1000" anchorOffsetX="0" width="189" textAlign="left" verticalAlign="middle" top.win="28" x="147" y="0" x.win="154.5" x.fail="164" y.fail="16.66"/>
-		<e:Label text="奖励:" left.win="37" top.win="27" x="0" y="0" x.fail="32" y.fail="16.66"/>
+		<e:Label text="奖励:" left.win="37" top.win="27" x="0" y="0" x.fail="32" y.fail="16.66" text.win="获得:" text.fail="获得:"/>
 		<e:Image source="prompt_gold_png" left.win="116" top.win="32" x="98" y="5" x.fail="118" y.fail="21.66"/>
 	</e:Group>
 	<e:Image id="continueBtn" source="continueBtn_png" includeIn="fail" x="530" y="415"/>

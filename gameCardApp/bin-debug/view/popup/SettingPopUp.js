@@ -73,6 +73,7 @@ var SettingPopUp = (function (_super) {
                 MessageManager.inst().dispatch("start");
                 //只为了调刷新接口
                 ViewManager.inst().open(GameMainView);
+                MessageManager.inst().dispatch(CustomEvt.CANCLESKILLCDPAUSE);
             }
         }, this);
     };

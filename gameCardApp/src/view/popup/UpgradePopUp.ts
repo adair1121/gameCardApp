@@ -80,6 +80,7 @@ class UpgradePopUp extends BaseEuiView{
 			egret.Tween.removeTweens(this.upgradeGroup);
 			ViewManager.inst().close(UpgradePopUp);
 			MessageManager.inst().dispatch("start");
+			MessageManager.inst().dispatch(CustomEvt.CANCLESKILLCDPAUSE);
 		},this)
 	}
 	public close():void{

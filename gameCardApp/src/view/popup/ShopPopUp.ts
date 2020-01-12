@@ -43,6 +43,7 @@ class ShopPopUp extends BaseEuiView{
 			MessageManager.inst().dispatch("start")
 			egret.Tween.removeTweens(this.content);
 			ViewManager.inst().close(ShopPopUp);
+			MessageManager.inst().dispatch(CustomEvt.CANCLESKILLCDPAUSE);
 		},this)
 	}
 	/**点击金币商城 */
