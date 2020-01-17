@@ -99,7 +99,10 @@ class StageUtils extends BaseClass {
 		return scaleMode;
 	}
 	private static isIphoneX():boolean{
-		return window.innerHeight==812 && window.innerWidth==375;
+		return (734 == window.innerWidth && 375 == window.innerHeight) ||
+      (812 == window.innerWidth && 375 == window.innerHeight) ||
+      (896 == window.innerWidth && 414 == window.innerHeight) ||
+      (818 == window.innerWidth && 414 == window.innerHeight)
 	}
 	public static init():void{
 		this.changeStageSize();
