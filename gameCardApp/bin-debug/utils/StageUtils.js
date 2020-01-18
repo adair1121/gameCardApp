@@ -100,7 +100,10 @@ var StageUtils = (function (_super) {
         return scaleMode;
     };
     StageUtils.isIphoneX = function () {
-        return window.innerHeight == 812 && window.innerWidth == 375;
+        return (734 == window.innerWidth && 375 == window.innerHeight) ||
+            (812 == window.innerWidth && 375 == window.innerHeight) ||
+            (896 == window.innerWidth && 414 == window.innerHeight) ||
+            (818 == window.innerWidth && 414 == window.innerHeight);
     };
     StageUtils.init = function () {
         this.changeStageSize();

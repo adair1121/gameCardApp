@@ -59,11 +59,12 @@ var SkilItem = (function (_super) {
     SkilItem.prototype.pauseCd = function () {
         if (this.cdInterval) {
             clearInterval(this.cdInterval);
+            this.cdInterval = null;
         }
     };
     /**技能cd取消暂停 */
     SkilItem.prototype.canclePause = function () {
-        if (this.data.cd && this.count < this.data.cd) {
+        if (this.data.cd && this.count < this.data.cd && !this.cdInterval) {
             var self_1 = this;
             this.cdInterval = setInterval(function () {
                 self_1.count += 1;

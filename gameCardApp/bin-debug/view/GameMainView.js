@@ -169,6 +169,7 @@ var GameMainView = (function (_super) {
                         _this._levelEntitys[i].reduceHp(GameApp.skillCfg[102].atk + ((GameApp.skillCfg[102].atk * 0.2 * GlobalFun.getIndex()) >> 0));
                         egret.Tween.removeTweens(_this._levelEntitys[i]);
                         _this._levelEntitys[i].x -= ((Math.random() * 40) >> 0);
+                        _this._levelEntitys[i].isInAtk = false;
                     }
                 }
             }, 150);

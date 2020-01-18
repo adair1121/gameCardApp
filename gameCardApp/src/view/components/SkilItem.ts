@@ -57,11 +57,12 @@ class SkilItem extends eui.ItemRenderer{
 	public pauseCd():void{
 		if(this.cdInterval){
 			clearInterval(this.cdInterval);
+			this.cdInterval = null;
 		}
 	}
 	/**技能cd取消暂停 */
 	public canclePause():void{
-		if(this.data.cd && this.count < this.data.cd){
+		if(this.data.cd && this.count < this.data.cd && !this.cdInterval){
 			let self = this;
 			this.cdInterval = setInterval(function() {
 				self.count += 1;

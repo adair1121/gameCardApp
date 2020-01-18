@@ -204,6 +204,7 @@ class GameMainView extends BaseEuiView{
 						this._levelEntitys[i].reduceHp(GameApp.skillCfg[102].atk + ((GameApp.skillCfg[102].atk*0.2*GlobalFun.getIndex())>>0));
 						egret.Tween.removeTweens(this._levelEntitys[i])
 						this._levelEntitys[i].x -= ((Math.random()*40)>>0);
+						this._levelEntitys[i].isInAtk = false;
 					}
 				}
 			},150)
