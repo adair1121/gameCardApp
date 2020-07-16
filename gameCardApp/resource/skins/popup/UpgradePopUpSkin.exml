@@ -4,7 +4,7 @@
 	<e:Group id="upgradeGroup" touchChildren="true" touchEnabled="false" touchThrough="true" right="-500" scaleX="0.8" scaleY="0.8" verticalCenter="0">
 		<e:Image source="upgrade_panel_png" x="0" y="2.67" scale9Grid="74,87,448,524" anchorOffsetY="0" height="616.18"/>
 		<e:Scroller id="scroller" width="552" height="536" x="22" y="37" anchorOffsetX="0" anchorOffsetY="0" scrollPolicyH="off">
-			<e:List id="list"/>
+			<e:List id="list" useVirtualLayout="false"/>
 		</e:Scroller>
 		<e:Image id="btnClose" source="upgarde_close_png" x="545" y="0"/>
 	</e:Group>

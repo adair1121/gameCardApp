@@ -191,7 +191,7 @@ class MovieClip extends egret.MovieClip {
 	public destroy() {
 		DisplayUtils.removeFromParent(this);
 		this.dispose();
-		ObjectPool.push(this);
+		
 	}
 
 	private resetMovieClip() {

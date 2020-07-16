@@ -44,7 +44,7 @@ class TimerManager extends BaseClass {
 
 	private static DeleteHandle(handler: TimerHandler) {
 		handler.clear();
-		ObjectPool.push(handler);
+		
 	}
 
 	/**
@@ -113,7 +113,7 @@ class TimerManager extends BaseClass {
 			return;
 		}
 
-		let handler: TimerHandler = ObjectPool.pop("TimerHandler");
+		let handler: TimerHandler = new TimerHandler();
 		handler.forever = repeat == 0;
 		handler.repeatCount = repeat;
 		handler.delay = delay;
@@ -165,7 +165,7 @@ class TimerManager extends BaseClass {
 
 	// 下一帧执行，且只执行一次
 	public doNext(method: Function, methodObj: any) {
-		let handler: TimerHandler = ObjectPool.pop("TimerHandler");
+		let handler: TimerHandler = new TimerHandler();
 		handler.method = method;
 		handler.methodObj = methodObj;
 

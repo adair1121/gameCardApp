@@ -47,6 +47,6 @@ class TipsItem extends BaseView {
 		this.addToEvent = false;
 		DisplayUtils.removeFromParent(this);
 		egret.Tween.removeTweens(this);
-		ObjectPool.push(this);
+		
 	}
 }

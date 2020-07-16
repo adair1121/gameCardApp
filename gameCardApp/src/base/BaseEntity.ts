@@ -25,6 +25,9 @@ class BaseEntity extends eui.Component{
 	public get camp():number{
 		return this._camp;
 	}
+	public set camp(value:number){
+		this._camp = value;
+	}
 	public get instId():number{
 		return this._id;
 	}

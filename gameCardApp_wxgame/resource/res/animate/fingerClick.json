@@ -1,0 +1,28 @@
+{"mc":{
+	"fingerClick":{
+		"frameRate":2,
+		"labels":[
+			{"name":"click","frame":1,"end":2}
+			
+			],
+		"events":[
+			
+			],
+		"frames":[
+			
+			{
+			"res":"1_png",
+			"x":-23,
+			"y":-43
+			},
+			{
+			"res":"2_png",
+			"x":-29,
+			"y":-29
+			}
+			]
+}},
+	"res":{
+		"2_png":{"x":0,"y":63,"w":52,"h":58},
+		"1_png":{"x":0,"y":0,"w":51,"h":61}
+	}}

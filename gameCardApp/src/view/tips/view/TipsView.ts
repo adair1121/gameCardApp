@@ -27,7 +27,7 @@ class TipsView extends BaseEuiView {
 	 * @param str
 	 */
 	public showTips(str: string): void {
-		let tips: TipsItem = ObjectPool.pop("TipsItem");
+		let tips: TipsItem = new TipsItem();
 		tips.horizontalCenter = 0;
 		let bottomNum:number = (StageUtils.inst().getHeight()>>1) + 120;
 		tips.bottom = bottomNum;
@@ -48,7 +48,7 @@ class TipsView extends BaseEuiView {
 		tips.bottom = NaN;
 		let index: number = this.list.indexOf(tips);
 		this.list.splice(index, 1);
-		ObjectPool.push(tips);
+		
 	}
 }
 

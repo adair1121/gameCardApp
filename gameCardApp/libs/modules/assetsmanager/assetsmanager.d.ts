@@ -558,7 +558,7 @@ declare module RES {
      * @platform Web,Native
      * @language zh_CN
      */
-    function getResAsync(key: string): Promise<any> | void;
+    function getResAsync(key: string): Promise<any>;
     /**
      * Asynchronous mode to get the resources in the configuration. As long as the resources exist in the configuration file, you can get it in an asynchronous way.
      * @param key A sbuKeys attribute or name property in a configuration file.
@@ -1041,6 +1041,15 @@ declare module RES.processor {
      */
     function getRelativePath(url: string, file: string): string;
     var ImageProcessor: Processor;
+    const KTXTextureProcessor: RES.processor.Processor;
+    /**
+    *
+    */
+    function makeEtc1SeperatedAlphaResourceInfo(resource: ResourceInfo): ResourceInfo;
+    /**
+    *
+    */
+    const ETC1KTXProcessor: Processor;
     var BinaryProcessor: Processor;
     var TextProcessor: Processor;
     var JsonProcessor: Processor;

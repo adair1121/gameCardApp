@@ -73,7 +73,7 @@ class Main extends eui.UILayer {
     private async loadResource() {
         try {
             
-            await RES.loadConfig("resource/default.res.json", "resource/");
+            await RES.loadConfig("resource/default.res.json", "http://localhost:8080/resource/");
             await this.loadTheme();
             this.stage.addChild(LoadingUI.inst());
             await RES.loadGroup("preload", 0,LoadingUI.inst());

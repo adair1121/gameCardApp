@@ -117,7 +117,7 @@ class MessageCenter extends BaseClass {
 	 *
 	 */
 	public dispatch(type: string, ...param: any[]): void {
-		let vo: MessageVo = ObjectPool.pop("MessageVo");
+		let vo: MessageVo = new MessageVo();
 		vo.type = type;
 		vo.param = param;
 		if (this.type == 0) {
@@ -169,7 +169,7 @@ class MessageCenter extends BaseClass {
 		this.flag--;
 
 		msgVo.dispose();
-		ObjectPool.push(msgVo);
+		
 	}
 
 
