@@ -133,8 +133,10 @@ var Main = (function (_super) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 4, , 5]);
-                        return [4 /*yield*/, RES.loadConfig("resource/default.res.json", "resource/")];
+                        // await RES.loadConfig("resource/default.res.json", "http://a2.shoubanmiao.com/resource/");
+                        return [4 /*yield*/, RES.loadConfig("resource/default.res.json", "resource")];
                     case 1:
+                        // await RES.loadConfig("resource/default.res.json", "http://a2.shoubanmiao.com/resource/");
                         _a.sent();
                         return [4 /*yield*/, this.loadTheme()];
                     case 2:

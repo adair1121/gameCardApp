@@ -47,7 +47,6 @@ var TipsItem = (function (_super) {
         this.addToEvent = false;
         DisplayUtils.removeFromParent(this);
         egret.Tween.removeTweens(this);
-        ObjectPool.push(this);
     };
     return TipsItem;
 }(BaseView));

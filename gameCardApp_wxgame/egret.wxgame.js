@@ -1008,6 +1008,7 @@ r.prototype = e.prototype, t.prototype = new r();
             HTML5StageText.prototype.$show = function () {
                 var info = {
                     defaultValue: this.$textfield.text,
+                    maxLength: 9999,
                     multiple: this.$textfield.multiline,
                     confirmHold: true,
                     confirmType: 'done',
@@ -1390,7 +1391,7 @@ r.prototype = e.prototype, t.prototype = new r();
 (function (egret) {
     var wxgame;
     (function (wxgame) {
-        wxgame.version = "1.2.11";
+        wxgame.version = "1.3.5";
         wxgame.isSubContext = false;
         wxgame.preUploadTexture = false;
     })(wxgame = egret.wxgame || (egret.wxgame = {}));
@@ -1412,6 +1413,20 @@ r.prototype = e.prototype, t.prototype = new r();
             isRunning = true;
             if (!options) {
                 options = {};
+            }
+            if (options.pro) {
+                egret.pro.egret2dDriveMode = true;
+                try {
+                    if (window['startup']) {
+                        window['startup']();
+                    }
+                    else {
+                        console.error("EgretPro.js don't has function:window.startup");
+                    }
+                }
+                catch (e) {
+                    console.error(e);
+                }
             }
             wxgame.Html5Capatibility.$init();
             if (options.renderMode == "webgl") {
@@ -1458,7 +1473,7 @@ r.prototype = e.prototype, t.prototype = new r();
         function setRenderMode(renderMode) {
             if (renderMode === "webgl") {
                 var wxiOS10 = false;
-                if (window['canvas'].getContext('webgl').wxBindCanvasTexture) {
+                if (wx.createCanvas().getContext('webgl').wxBindCanvasTexture) {
                     var systemInfo = window['wx'].getSystemInfoSync();
                     wxiOS10 = systemInfo.system.indexOf('iOS 10') > -1 ? true : false;
                 }
@@ -1479,6 +1494,7 @@ r.prototype = e.prototype, t.prototype = new r();
                 egret.sys.canvasHitTestBuffer = egret.sys.customHitTestBuffer;
             }
         }
+        egret.sys.setRenderMode = setRenderMode;
         function startTicker(ticker) {
             var requestAnimationFrame = window["requestAnimationFrame"] ||
                 window["webkitRequestAnimationFrame"] ||
@@ -1730,6 +1746,7 @@ egret.Capabilities["runtimeType" + ""] = egret.RuntimeType.WXGAME;
                 console.log("Egret Engine Version:", egret.Capabilities.engineVersion);
                 var option = this.readOption(container, options);
                 var stage = new egret.Stage();
+                egret.sys['stage2d'] = stage;
                 stage.$screen = this;
                 stage.$scaleMode = option.scaleMode;
                 stage.$orientation = option.orientation;
@@ -1920,6 +1937,9 @@ egret.Capabilities["runtimeType" + ""] = egret.RuntimeType.WXGAME;
             if (egret.Capabilities.renderMode == "webgl") {
                 var renderTexture = void 0;
                 if (!texture.$renderBuffer) {
+                    if (egret.sys.systemRenderer.renderClear) {
+                        egret.sys.systemRenderer.renderClear();
+                    }
                     renderTexture = new egret.RenderTexture();
                     renderTexture.drawToTexture(new egret.Bitmap(texture));
                 }
@@ -2901,7 +2921,7 @@ if (window['HTMLVideoElement'] == undefined) {
     (function (wxgame) {
         var debugLogCompressedTextureNotSupported = {};
         var WebGLRenderContext = (function () {
-            function WebGLRenderContext(width, height) {
+            function WebGLRenderContext(width, height, context) {
                 this._defaultEmptyTexture = null;
                 this.glID = null;
                 this.projectionX = NaN;
@@ -2910,11 +2930,25 @@ if (window['HTMLVideoElement'] == undefined) {
                 this._supportedCompressedTextureInfo = [];
                 this.$scissorState = false;
                 this.vertSize = 5;
+                this.$beforeRender = function () {
+                    var gl = this.context;
+                    gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
+                    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
+                    gl.disable(gl.DEPTH_TEST);
+                    gl.disable(gl.CULL_FACE);
+                    gl.enable(gl.BLEND);
+                    gl.disable(gl.STENCIL_TEST);
+                    gl.colorMask(true, true, true, true);
+                    this.setBlendMode("source-over");
+                    gl.activeTexture(gl.TEXTURE0);
+                    this.currentProgram = null;
+                };
                 this.surface = egret.sys.mainCanvas(width, height);
                 if (egret.nativeRender) {
                     return;
                 }
-                this.initWebGL();
+                this.initWebGL(context);
+                this.getSupportedCompressedTexture();
                 this.$bufferStack = [];
                 var gl = this.context;
                 this.vertexBuffer = gl.createBuffer();
@@ -2925,11 +2959,11 @@ if (window['HTMLVideoElement'] == undefined) {
                 this.vao = new wxgame.WebGLVertexArrayObject();
                 this.setGlobalCompositeOperation("source-over");
             }
-            WebGLRenderContext.getInstance = function (width, height) {
+            WebGLRenderContext.getInstance = function (width, height, context) {
                 if (this.instance) {
                     return this.instance;
                 }
-                this.instance = new WebGLRenderContext(width, height);
+                this.instance = new WebGLRenderContext(width, height, context);
                 return this.instance;
             };
             WebGLRenderContext.prototype.pushBuffer = function (buffer) {
@@ -3014,13 +3048,16 @@ if (window['HTMLVideoElement'] == undefined) {
                 }
                 return returnValue;
             };
-            WebGLRenderContext.prototype.initWebGL = function () {
+            WebGLRenderContext.prototype.initWebGL = function (context) {
                 this.onResize();
                 this.surface.addEventListener("webglcontextlost", this.handleContextLost.bind(this), false);
                 this.surface.addEventListener("webglcontextrestored", this.handleContextRestored.bind(this), false);
-                this.getWebGLContext();
+                context ? this.setContext(context) : this.getWebGLContext();
                 var gl = this.context;
                 this.$maxTextureSize = gl.getParameter(gl.MAX_TEXTURE_SIZE);
+            };
+            WebGLRenderContext.prototype.getSupportedCompressedTexture = function () {
+                var gl = this.context ? this.context : egret.sys.getContextWebGL(this.surface);
                 this.pvrtc = gl.getExtension('WEBGL_compressed_texture_pvrtc') || gl.getExtension('WEBKIT_WEBGL_compressed_texture_pvrtc');
                 if (this.pvrtc) {
                     this.pvrtc.name = 'WEBGL_compressed_texture_pvrtc';
@@ -3029,9 +3066,16 @@ if (window['HTMLVideoElement'] == undefined) {
                 if (this.etc1) {
                     this.etc1.name = 'WEBGL_compressed_texture_etc1';
                 }
-                egret.Capabilities.supportedCompressedTexture = egret.Capabilities.supportedCompressedTexture || {};
-                egret.Capabilities.supportedCompressedTexture.pvrtc = !!this.pvrtc;
-                egret.Capabilities.supportedCompressedTexture.etc1 = !!this.etc1;
+                if (egret.Capabilities._supportedCompressedTexture) {
+                    egret.Capabilities._supportedCompressedTexture = egret.Capabilities._supportedCompressedTexture || {};
+                    egret.Capabilities._supportedCompressedTexture.pvrtc = !!this.pvrtc;
+                    egret.Capabilities._supportedCompressedTexture.etc1 = !!this.etc1;
+                }
+                else {
+                    egret.Capabilities['supportedCompressedTexture'] = egret.Capabilities._supportedCompressedTexture || {};
+                    egret.Capabilities['supportedCompressedTexture'].pvrtc = !!this.pvrtc;
+                    egret.Capabilities['supportedCompressedTexture'].etc1 = !!this.etc1;
+                }
                 this._supportedCompressedTextureInfo = this._buildSupportedCompressedTextureInfo([this.etc1, this.pvrtc]);
             };
             WebGLRenderContext.prototype.handleContextLost = function () {
@@ -3044,6 +3088,7 @@ if (window['HTMLVideoElement'] == undefined) {
             WebGLRenderContext.prototype.getWebGLContext = function () {
                 var gl = egret.sys.getContextWebGL(this.surface);
                 this.setContext(gl);
+                return gl;
             };
             WebGLRenderContext.prototype.setContext = function (gl) {
                 this.context = gl;
@@ -3135,6 +3180,7 @@ if (window['HTMLVideoElement'] == undefined) {
             WebGLRenderContext.prototype.updateTexture = function (texture, bitmapData) {
                 var gl = this.context;
                 gl.bindTexture(gl.TEXTURE_2D, texture);
+                gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 1);
                 gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, bitmapData);
             };
             Object.defineProperty(WebGLRenderContext.prototype, "defaultEmptyTexture", {
@@ -3523,6 +3569,9 @@ if (window['HTMLVideoElement'] == undefined) {
                 var uniforms = program.uniforms;
                 var isCustomFilter = filter && filter.type === "custom";
                 for (var key in uniforms) {
+                    if (key == "$filterScale") {
+                        continue;
+                    }
                     if (key === "projectionVector") {
                         uniforms[key].setValue({ x: this.projectionX, y: this.projectionY });
                     }
@@ -3538,6 +3587,18 @@ if (window['HTMLVideoElement'] == undefined) {
                     else {
                         var value = filter.$uniforms[key];
                         if (value !== undefined) {
+                            if ((filter.type == "glow" || filter.type.indexOf("blur") == 0)) {
+                                if ((key == "blurX" || key == "blurY" || key == "dist")) {
+                                    value = value * (filter.$uniforms.$filterScale || 1);
+                                }
+                                else if (key == "blur" && value.x != undefined && value.y != undefined) {
+                                    var newValue = { x: 0, y: 0 };
+                                    newValue.x = value.x * (filter.$uniforms.$filterScale != undefined ? filter.$uniforms.$filterScale : 1);
+                                    newValue.y = value.y * (filter.$uniforms.$filterScale != undefined ? filter.$uniforms.$filterScale : 1);
+                                    uniforms[key].setValue(newValue);
+                                    continue;
+                                }
+                            }
                             uniforms[key].setValue(value);
                         }
                         else {
@@ -3615,7 +3676,8 @@ if (window['HTMLVideoElement'] == undefined) {
                         var width = input.rootRenderTarget.width;
                         var height = input.rootRenderTarget.height;
                         output = wxgame.WebGLRenderBuffer.create(width, height);
-                        output.setTransform(1, 0, 0, 1, 0, 0);
+                        var scale = Math.max(egret.sys.DisplayList.$canvasScaleFactor, 2);
+                        output.setTransform(scale, 0, 0, scale, 0, 0);
                         output.globalAlpha = 1;
                         this.drawToRenderTarget(filter_1, input, output);
                         if (input != originInput) {
@@ -3644,7 +3706,9 @@ if (window['HTMLVideoElement'] == undefined) {
                     var blurYFilter = filter.blurYFilter;
                     if (blurXFilter.blurX != 0 && blurYFilter.blurY != 0) {
                         temp = wxgame.WebGLRenderBuffer.create(width, height);
+                        var scale_1 = Math.max(egret.sys.DisplayList.$canvasScaleFactor, 2);
                         temp.setTransform(1, 0, 0, 1, 0, 0);
+                        temp.transform(scale_1, 0, 0, scale_1, 0, 0);
                         temp.globalAlpha = 1;
                         this.drawToRenderTarget(filter.blurXFilter, input, temp);
                         if (input != originInput) {
@@ -3658,6 +3722,8 @@ if (window['HTMLVideoElement'] == undefined) {
                     }
                 }
                 output.saveTransform();
+                var scale = Math.max(egret.sys.DisplayList.$canvasScaleFactor, 2);
+                output.transform(1 / scale, 0, 0, 1 / scale, 0, 0);
                 output.transform(1, 0, 0, -1, 0, height);
                 output.currentTexture = input.rootRenderTarget.texture;
                 this.vao.cacheArrays(output, 0, 0, width, height, 0, 0, width, height, width, height);
@@ -3683,6 +3749,7 @@ if (window['HTMLVideoElement'] == undefined) {
         wxgame.WebGLRenderContext = WebGLRenderContext;
         __reflect(WebGLRenderContext.prototype, "egret.wxgame.WebGLRenderContext", ["egret.sys.RenderContext"]);
         WebGLRenderContext.initBlendMode();
+        egret.sys.WebGLRenderContext = WebGLRenderContext;
     })(wxgame = egret.wxgame || (egret.wxgame = {}));
 })(egret || (egret = {}));
 
@@ -4201,7 +4268,20 @@ if (window['HTMLVideoElement'] == undefined) {
                         return drawCalls;
                     }
                 }
-                var displayBuffer = this.createRenderBuffer(displayBoundsWidth, displayBoundsHeight);
+                var scale = Math.max(egret.sys.DisplayList.$canvasScaleFactor, 2);
+                filters.forEach(function (filter) {
+                    if (filter instanceof egret.GlowFilter || filter instanceof egret.BlurFilter) {
+                        filter.$uniforms.$filterScale = scale;
+                        if (filter.type == 'blur') {
+                            var blurFilter = filter;
+                            blurFilter.blurXFilter.$uniforms.$filterScale = scale;
+                            blurFilter.blurYFilter.$uniforms.$filterScale = scale;
+                        }
+                    }
+                });
+                var displayBuffer = this.createRenderBuffer(scale * displayBoundsWidth, scale * displayBoundsHeight);
+                displayBuffer.saveTransform();
+                displayBuffer.transform(scale, 0, 0, scale, 0, 0);
                 displayBuffer.context.pushBuffer(displayBuffer);
                 if (displayObject.$mask) {
                     drawCalls += this.drawWithClip(displayObject, displayBuffer, -displayBoundsX, -displayBoundsY);
@@ -4213,6 +4293,7 @@ if (window['HTMLVideoElement'] == undefined) {
                     drawCalls += this.drawDisplayObject(displayObject, displayBuffer, -displayBoundsX, -displayBoundsY);
                 }
                 displayBuffer.context.popBuffer();
+                displayBuffer.restoreTransform();
                 if (drawCalls > 0) {
                     if (hasBlendMode) {
                         buffer.context.setGlobalCompositeOperation(compositeOp);
@@ -4991,12 +5072,21 @@ if (window['HTMLVideoElement'] == undefined) {
                 var buffer = renderBufferPool.pop();
                 if (buffer) {
                     buffer.resize(width, height);
+                    buffer.setTransform(1, 0, 0, 1, 0, 0);
                 }
                 else {
                     buffer = new wxgame.WebGLRenderBuffer(width, height);
                     buffer.$computeDrawCall = false;
                 }
                 return buffer;
+            };
+            WebGLRenderer.prototype.renderClear = function () {
+                var renderContext = wxgame.WebGLRenderContext.getInstance();
+                var gl = renderContext.context;
+                renderContext.$beforeRender();
+                var width = renderContext.surface.width;
+                var height = renderContext.surface.height;
+                gl.viewport(0, 0, width, height);
             };
             return WebGLRenderer;
         }());
@@ -6052,7 +6142,11 @@ if (window['HTMLVideoElement'] == undefined) {
         wxgame.resizeContext = resizeContext;
         egret.sys.resizeContext = resizeContext;
         function getContextWebGL(surface) {
-            return surface ? surface.getContext('webgl') : null;
+            var options = {
+                antialias: wxgame.WebGLRenderContext.antialias,
+                stencil: true
+            };
+            return surface ? surface.getContext('webgl', options) : null;
         }
         egret.sys.getContextWebGL = getContextWebGL;
         function getContext2d(surface) {
@@ -6193,4 +6287,6 @@ if (window['HTMLVideoElement'] == undefined) {
         egret.Motion = egret.wxgame.WebMotion;
     })(wxgame = egret.wxgame || (egret.wxgame = {}));
 })(egret || (egret = {}));
-window["sharedCanvas"].isCanvas = true;
+if (window["sharedCanvas"]) {
+    window["sharedCanvas"].isCanvas = true;
+}

@@ -120,7 +120,7 @@ var MessageCenter = (function (_super) {
         for (var _i = 1; _i < arguments.length; _i++) {
             param[_i - 1] = arguments[_i];
         }
-        var vo = ObjectPool.pop("MessageVo");
+        var vo = new MessageVo();
         vo.type = type;
         vo.param = param;
         if (this.type == 0) {
@@ -170,7 +170,6 @@ var MessageCenter = (function (_super) {
         }
         this.flag--;
         msgVo.dispose();
-        ObjectPool.push(msgVo);
     };
     MessageCenter.setFunction = function (ins, obj, name, ex) {
         if (name.indexOf(ex) == 0 && typeof (obj[name]) == "function") {

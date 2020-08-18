@@ -34,7 +34,7 @@ var TipsView = (function (_super) {
      * @param str
      */
     TipsView.prototype.showTips = function (str) {
-        var tips = ObjectPool.pop("TipsItem");
+        var tips = new TipsItem();
         tips.horizontalCenter = 0;
         var bottomNum = (StageUtils.inst().getHeight() >> 1) + 120;
         tips.bottom = bottomNum;
@@ -55,7 +55,6 @@ var TipsView = (function (_super) {
         tips.bottom = NaN;
         var index = this.list.indexOf(tips);
         this.list.splice(index, 1);
-        ObjectPool.push(tips);
     };
     return TipsView;
 }(BaseEuiView));

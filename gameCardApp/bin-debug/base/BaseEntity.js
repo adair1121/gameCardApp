@@ -31,6 +31,9 @@ var BaseEntity = (function (_super) {
         get: function () {
             return this._camp;
         },
+        set: function (value) {
+            this._camp = value;
+        },
         enumerable: true,
         configurable: true
     });

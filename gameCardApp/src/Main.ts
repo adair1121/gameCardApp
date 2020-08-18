@@ -50,13 +50,62 @@ class Main extends eui.UILayer {
         let assetAdapter = new AssetAdapter();
         egret.registerImplementation("eui.IAssetAdapter", assetAdapter);
         egret.registerImplementation("eui.IThemeAdapter", new ThemeAdapter());
-        if (egret.Capabilities.runtimeType == egret.RuntimeType.RUNTIME2) {
-            egret.TextField.default_fontFamily = `${DEFAULT_FONT}`
-        }
-        this.runGame().catch(e => {
-            console.log(e);
+        // if (egret.Capabilities.runtimeType == egret.RuntimeType.RUNTIME2) {
+        //     egret.TextField.default_fontFamily = `${DEFAULT_FONT}`
+        // }
+        // let img:eui.Image = new eui.Image("http://yidianhaoranqi.top/resource/assets/bg.jpg")
+        // img.left = 0;
+        // img.top = 0;
+        // img.right = 0;
+        // img.bottom = 0;
+        // this.addChild(img);
+        wx.showToast({
+            title:"加载中",
+            icon:"loading",
+            image:"http://yidianhaoranqi.top/resource/assets/bg.jpg"
         })
-        window["payCallBack"] = GlobalFun.payCallBack;
+        wx.getSystemInfo({
+            success:(res:wx.systemInfo)=>{
+                
+                let button = wx.createUserInfoButton({
+                type: 'text',
+                text: '获取用户信息',
+                style: {
+                    left: res.screenWidth/2 - 100,
+                    top: res.screenHeight/2,
+                    width: 200,
+                    height: 40,
+                    lineHeight: 40,
+                    backgroundColor: '#f7f7f7',
+                    color: '#000000',
+                    textAlign: 'center',
+                    fontSize: 16,
+                    borderRadius: 4
+                }
+                })
+                button.onTap((res) => {
+                    button.destroy();
+                    if(res.signature != "" && res.userInfo && res.userInfo.nickName)
+                    {
+                        this.runGame().catch(e => {
+                            console.log(e);
+                        })
+                    }
+                    
+                })
+            },
+            fail:()=>{
+
+            },
+            complete:()=>{
+
+            }
+        });
+        
+        
+
+        
+        // window["payCallBack"] = GlobalFun.payCallBack;
     }
 
     private async runGame() {
@@ -73,7 +122,8 @@ class Main extends eui.UILayer {
     private async loadResource() {
         try {
             
-            await RES.loadConfig("resource/default.res.json", "http://localhost:8080/resource/");
+            await RES.loadConfig("default.res.json", "http://yidianhaoranqi.top/resource/");
+            // await RES.loadConfig("resource/default.res.json", "resource");
             await this.loadTheme();
             this.stage.addChild(LoadingUI.inst());
             await RES.loadGroup("preload", 0,LoadingUI.inst());
@@ -115,7 +165,7 @@ class Main extends eui.UILayer {
             this.x *= precentw;
             this.y *= precenth;
         }
-        
+
         // egret.localStorage.clear();
         //获取平台参数;
         let platform_param:string = GlobalFun.getOption("pf");
@@ -124,6 +174,7 @@ class Main extends eui.UILayer {
         }else{
             GameConfig.platform.setting = platform_param;
         }
+        let bg:eui.Image = new eui.Image();
         GameApp.inst().refreshTimespan();
         LayerManager.inst().iniaizlize(this);
         GameApp.inst().load();

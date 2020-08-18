@@ -48,7 +48,6 @@ var TimerManager = (function (_super) {
     };
     TimerManager.DeleteHandle = function (handler) {
         handler.clear();
-        ObjectPool.push(handler);
     };
     /**
      * 每帧执行函数
@@ -110,7 +109,7 @@ var TimerManager = (function (_super) {
         if (delay < 0 || repeat < 0 || method == null) {
             return;
         }
-        var handler = ObjectPool.pop("TimerHandler");
+        var handler = new TimerHandler();
         handler.forever = repeat == 0;
         handler.repeatCount = repeat;
         handler.delay = delay;
@@ -160,7 +159,7 @@ var TimerManager = (function (_super) {
     };
     // 下一帧执行，且只执行一次
     TimerManager.prototype.doNext = function (method, methodObj) {
-        var handler = ObjectPool.pop("TimerHandler");
+        var handler = new TimerHandler();
         handler.method = method;
         handler.methodObj = methodObj;
         if (!this.nexthandles)

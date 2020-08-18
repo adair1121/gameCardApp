@@ -1,7 +1,7 @@
 {
 	"description": "项目配置文件。",
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"enhance": false,
 		"postcss": true,
@@ -29,11 +29,11 @@
 	},
 	"compileType": "game",
 	"libVersion": "game",
-	"appid": "wx6ac3f5090a6b99c5",
-	"projectname": "gamedemo",
+	"appid": "wx842a79d5fb38c623",
+	"projectname": "wxtestgame",
+	"isGameTourist": true,
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
-	"isGameTourist": true,
 	"condition": {
 		"search": {
 			"current": -1,

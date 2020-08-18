@@ -160,7 +160,6 @@ var MovieClip = (function (_super) {
     MovieClip.prototype.destroy = function () {
         DisplayUtils.removeFromParent(this);
         this.dispose();
-        ObjectPool.push(this);
     };
     MovieClip.prototype.resetMovieClip = function () {
         var mc = this;

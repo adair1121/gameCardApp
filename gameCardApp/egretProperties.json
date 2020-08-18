@@ -1,39 +1,39 @@
 {
-	"engineVersion": "5.2.33",
-	"compilerVersion": "5.2.33",
-	"template": {},
-	"target": {
-		"current": "wxgame"
-	},
-	"modules": [
-		{
-			"name": "egret"
-		},
-		{
-			"name": "eui"
-		},
-		{
-			"name": "assetsmanager"
-		},
-		{
-			"name": "tween"
-		},
-		{
-			"name": "game"
-		},
-		{
-			"name": "promise"
-		}
-	],
-	"targets": {
-		"ios": {
-			"appname": "dragon",
-			"packagename": "adair",
-			"hybrid": false
-		},
-		"android": {
-			"appname": "adair",
-			"packagename": "com.companyname"
-		}
-	}
+  "engineVersion": "5.2.33",
+  "compilerVersion": "5.2.33",
+  "template": {},
+  "target": {
+    "current": "wxgame"
+  },
+  "modules": [
+    {
+      "name": "egret"
+    },
+    {
+      "name": "eui"
+    },
+    {
+      "name": "assetsmanager"
+    },
+    {
+      "name": "tween"
+    },
+    {
+      "name": "game"
+    },
+    {
+      "name": "promise"
+    }
+  ],
+  "targets": {
+    "ios": {
+      "appname": "dragon",
+      "packagename": "adair",
+      "hybrid": false
+    },
+    "android": {
+      "appname": "adair",
+      "packagename": "com.companyname"
+    }
+  }
 }

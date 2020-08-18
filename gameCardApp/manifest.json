@@ -50,7 +50,6 @@
 		"bin-debug/manager/DelayOptManager.js",
 		"bin-debug/Main.js",
 		"bin-debug/manager/MessageManager.js",
-		"bin-debug/manager/ObjectPool.js",
 		"bin-debug/manager/TimerManager.js",
 		"bin-debug/Platform.js",
 		"bin-debug/GameLoadingUI.js",
