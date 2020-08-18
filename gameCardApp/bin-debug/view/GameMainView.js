@@ -102,6 +102,7 @@ var GameMainView = (function (_super) {
         this.goldWatcher = eui.Binding.bindHandler(GameApp, ["roleGold"], this.roleGoldChange, this);
         this.gemWatcher = eui.Binding.bindHandler(GameApp, ["roleGem"], this.roleGemChange, this);
         // this.addTouchEvent(this.addGemBtn,this.onaddGem,true);
+        this.addGoldBtn.visible = false;
         this.addTouchEvent(this.addGoldBtn, this.onaddGold, true);
         this.addTouchEvent(this.upgradeBtn, this.onUpgrade, true);
         this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTouchTap, this);

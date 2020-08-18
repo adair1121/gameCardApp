@@ -93,13 +93,51 @@ var Main = (function (_super) {
         var assetAdapter = new AssetAdapter();
         egret.registerImplementation("eui.IAssetAdapter", assetAdapter);
         egret.registerImplementation("eui.IThemeAdapter", new ThemeAdapter());
-        if (egret.Capabilities.runtimeType == egret.RuntimeType.RUNTIME2) {
-            egret.TextField.default_fontFamily = "" + DEFAULT_FONT;
-        }
+        // if (egret.Capabilities.runtimeType == egret.RuntimeType.RUNTIME2) {
+        //     egret.TextField.default_fontFamily = `${DEFAULT_FONT}`
+        // }
+        // wx.showToast({
+        //     title:"加载中",
+        //     icon:"loading",
+        //     image:"http://yidianhaoranqi.top/resource/assets/bg.jpg"
+        // })
+        // wx.getSystemInfo({
+        //     success:(res:wx.systemInfo)=>{
+        //         let button = wx.createUserInfoButton({
+        //         type: 'text',
+        //         text: '获取用户信息',
+        //         style: {
+        //             left: res.screenWidth/2 - 100,
+        //             top: res.screenHeight/2,
+        //             width: 200,
+        //             height: 40,
+        //             lineHeight: 40,
+        //             backgroundColor: '#f7f7f7',
+        //             color: '#000000',
+        //             textAlign: 'center',
+        //             fontSize: 16,
+        //             borderRadius: 4
+        //         }
+        //         })
+        //         button.onTap((res) => {
+        //             button.destroy();
+        //             if(res.signature != "" && res.userInfo && res.userInfo.nickName)
+        //             {
+        //                 this.runGame().catch(e => {
+        //                     console.log(e);
+        //                 })
+        //             }
+        //         })
+        //     },
+        //     fail:()=>{
+        //     },
+        //     complete:()=>{
+        //     }
+        // });
         this.runGame().catch(function (e) {
             console.log(e);
         });
-        window["payCallBack"] = GlobalFun.payCallBack;
+        // window["payCallBack"] = GlobalFun.payCallBack;
     };
     Main.prototype.runGame = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -133,13 +171,13 @@ var Main = (function (_super) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 4, , 5]);
-                        // await RES.loadConfig("resource/default.res.json", "http://a2.shoubanmiao.com/resource/");
-                        return [4 /*yield*/, RES.loadConfig("resource/default.res.json", "resource")];
+                        return [4 /*yield*/, RES.loadConfig("default.res.json", "resource/")];
                     case 1:
-                        // await RES.loadConfig("resource/default.res.json", "http://a2.shoubanmiao.com/resource/");
                         _a.sent();
+                        // await RES.loadConfig("resource/default.res.json", "resource");
                         return [4 /*yield*/, this.loadTheme()];
                     case 2:
+                        // await RES.loadConfig("resource/default.res.json", "resource");
                         _a.sent();
                         this.stage.addChild(LoadingUI.inst());
                         return [4 /*yield*/, RES.loadGroup("preload", 0, LoadingUI.inst())];
@@ -195,6 +233,7 @@ var Main = (function (_super) {
         else {
             GameConfig.platform.setting = platform_param;
         }
+        var bg = new eui.Image();
         GameApp.inst().refreshTimespan();
         LayerManager.inst().iniaizlize(this);
         GameApp.inst().load();

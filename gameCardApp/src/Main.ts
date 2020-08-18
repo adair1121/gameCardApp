@@ -53,56 +53,53 @@ class Main extends eui.UILayer {
         // if (egret.Capabilities.runtimeType == egret.RuntimeType.RUNTIME2) {
         //     egret.TextField.default_fontFamily = `${DEFAULT_FONT}`
         // }
-        // let img:eui.Image = new eui.Image("http://yidianhaoranqi.top/resource/assets/bg.jpg")
-        // img.left = 0;
-        // img.top = 0;
-        // img.right = 0;
-        // img.bottom = 0;
-        // this.addChild(img);
-        wx.showToast({
-            title:"加载中",
-            icon:"loading",
-            image:"http://yidianhaoranqi.top/resource/assets/bg.jpg"
-        })
-        wx.getSystemInfo({
-            success:(res:wx.systemInfo)=>{
+        
+        // wx.showToast({
+        //     title:"加载中",
+        //     icon:"loading",
+        //     image:"http://yidianhaoranqi.top/resource/assets/bg.jpg"
+        // })
+        // wx.getSystemInfo({
+        //     success:(res:wx.systemInfo)=>{
                 
-                let button = wx.createUserInfoButton({
-                type: 'text',
-                text: '获取用户信息',
-                style: {
-                    left: res.screenWidth/2 - 100,
-                    top: res.screenHeight/2,
-                    width: 200,
-                    height: 40,
-                    lineHeight: 40,
-                    backgroundColor: '#f7f7f7',
-                    color: '#000000',
-                    textAlign: 'center',
-                    fontSize: 16,
-                    borderRadius: 4
-                }
-                })
-                button.onTap((res) => {
-                    button.destroy();
-                    if(res.signature != "" && res.userInfo && res.userInfo.nickName)
-                    {
-                        this.runGame().catch(e => {
-                            console.log(e);
-                        })
-                    }
+        //         let button = wx.createUserInfoButton({
+        //         type: 'text',
+        //         text: '获取用户信息',
+        //         style: {
+        //             left: res.screenWidth/2 - 100,
+        //             top: res.screenHeight/2,
+        //             width: 200,
+        //             height: 40,
+        //             lineHeight: 40,
+        //             backgroundColor: '#f7f7f7',
+        //             color: '#000000',
+        //             textAlign: 'center',
+        //             fontSize: 16,
+        //             borderRadius: 4
+        //         }
+        //         })
+        //         button.onTap((res) => {
+        //             button.destroy();
+        //             if(res.signature != "" && res.userInfo && res.userInfo.nickName)
+        //             {
+        //                 this.runGame().catch(e => {
+        //                     console.log(e);
+        //                 })
+        //             }
                     
-                })
-            },
-            fail:()=>{
+        //         })
+        //     },
+        //     fail:()=>{
 
-            },
-            complete:()=>{
+        //     },
+        //     complete:()=>{
 
-            }
-        });
+        //     }
+        // });
         
-        
+        this.runGame().catch(e => {
+            console.log(e);
+        })
 
         
         // window["payCallBack"] = GlobalFun.payCallBack;
@@ -122,7 +119,7 @@ class Main extends eui.UILayer {
     private async loadResource() {
         try {
             
-            await RES.loadConfig("default.res.json", "http://yidianhaoranqi.top/resource/");
+            await RES.loadConfig("default.res.json", "resource/");
             // await RES.loadConfig("resource/default.res.json", "resource");
             await this.loadTheme();
             this.stage.addChild(LoadingUI.inst());
