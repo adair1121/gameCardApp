@@ -291,9 +291,9 @@ class GameMainView extends BaseEuiView{
 			let dmg:number = (GameApp.level)*((Math.random()*10)>>0);
 			this._ownEntitys[i].reduceHp(dmg);
 		}
-		let dmg:number = (GameApp.level )*((Math.random()*10)>>0);
-		this.curHp -= dmg
-		this.onTowerHpReduce({data:{hp:dmg}})
+		// let dmg:number = (GameApp.level )*((Math.random()*10)>>0);
+		// this.curHp -= dmg
+		// this.onTowerHpReduce({data:{hp:dmg}})
 	}
 	private onTowerHpReduce(evt:any):void{
 		this.curHp -= evt.data.hp;
@@ -429,6 +429,7 @@ class GameMainView extends BaseEuiView{
 		this.curCount = 1;
 		this.countNumLab.text = this.curCount+"/"+this.totalCount;
 		this.totalHp = this.curHp = 50*GameApp.level + 950;
+		this.progressMark.width = this.curHp/this.totalHp*277;
 		(this.list.$children[2] as SkilItem).num = 10;
 		this.touchEnabled = false;
 		this.touchChildren = false;
@@ -1235,7 +1236,8 @@ class GameMainView extends BaseEuiView{
 							let item:SkilItem = this.list.$children[i] as SkilItem;
 							item.removeCd();
 							if(item.skillId == 103){
-								item.num = 10;
+								
+								item.num = 10 - this._ownEntitys.length;
 							}
 						}
 					}
